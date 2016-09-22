@@ -2,7 +2,7 @@ name: jekyll-reveal
 markdown: redcarpet
 highlighter: pygments
 
-baseurl: /SlideDeckCollections
+baseurl: /mcu-cursus
 
 collections:
   slides:
