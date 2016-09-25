@@ -24,6 +24,9 @@
 
     <script src="{{ site.baseurl }}/reveal.js/lib/js/head.min.js"></script>
     <script src="{{ site.baseurl }}/reveal.js/js/reveal.js"></script>
+    <link rel="stylesheet" href="{{ site.baseurl }}/highlight.js/styles/arduino-light.css">
+    <script src="{{ site.baseurl }}/highlight.js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 
     <script>
 
@@ -61,7 +64,7 @@
       dependencies: [
         { src: '{{ site.baseurl }}/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
           { src: '{{ site.baseurl }}/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        { src: '{{ site.baseurl }}/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+       //{ src: '{{ site.baseurl }}/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
         { src: '{{ site.baseurl }}/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } }
       ]
 
