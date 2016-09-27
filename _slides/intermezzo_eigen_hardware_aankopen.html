@@ -83,7 +83,7 @@ reveal:
     <li>Arduino</li>
     <li>USB Kabels</li>
     <li>Dupont kabels</li>
-    <li>Drukknopen</li>
+    <li>Switches</li>
     <li>Weerstanden</li>
     <li>LEDs</li>
   </ul>
@@ -137,15 +137,191 @@ reveal:
   <h2>Arduino</h2>
   <ul>
     <li>Arduino vs. Genuino</li>
-    <li>Kloon vs. Origineel</li>
-    <li>Aangeraden model</li>
+    <li>Aziatische kopie vs. Origineel</li>
+    <li>Aanbevolen model</li>
   </ul>
 </section>
 <section>
-  <div style="position: relative;">
-    <div style="position: absolute;"><img src="img/arduino_logo_basic.png" alt=""></div>
-    <div style="position: absolute;"><img src="img/vs.png" alt=""></div>
-    <div style="position: absolute;"><img src="img/genuino_logo.png" alt=""></div>
-    test
+    <div style="display: block; text-align: left; height: 25%;"><img class="plain" src="img/arduino_logo_basic.png" alt="" style="height: 200px; background: none;"></div>
+    <div style="display: block; text-align: center; height: 25%;"><img class="plain" src="img/vs.png" alt="" style="height: 200px; background: none;"></div>
+    <div style="display: block; text-align: right; height: 25%;"><img class="plain" src="img/genuino_logo.png" alt="" style="height: 200px; background: none;"></div>
+</section>
+<section>
+  <h2>Arduino vs. Genuino</h2>
+  <ul>
+    <li>Patentconflict</li>
+    <li>Europese rechten zijn van: Arduino SRL</li>
+    <li>Amerikaanse rechten zijn van: Arduino LLC</li>
+    <li>Arduino LLC in Europa = Genuino</li>
+    <li>Verschil?</li>
+      <ul>
+        <li>Hardware?</li>
+        <li>IDE?</li>
+      </ul>
+  </ul>
+</section>
+<section>
+  <h2>Aziatische kopie vs Origineel</h2>
+  <ul>
+    <li>Verschil</li>
+    <ul>
+      <li>Schematisch?</li>
+      <li>Componenten selectie</li>
+      <li>USB to UART (Programming interface)</li>
+      <ul>
+        <li>Grootste verschil</li>
+        <li>Origineel: FT232</li>
+        <li>Aziatische alternativen</li>
+          <ul>
+            <li>PL2303</li>
+            <li>CP2102</li>
+            <li>CH340</li>
+          </ul>
+        <li>FT232 kloon is niet aangeraden wegens unique ID in de driver</li>
+      </ul>
+    </ul>
+  </ul>
+</section>
+<section>
+  <h2>USB to UART</h2>
+  <div style="float: left; width: 50%">
+    <h3>CH340</h3>
+    <img class="plain" src="img/arduino_nano_ch340.png" style="height: 500px; background: none; margin: auto; transform: rotate(-90deg);" alt="">
+  </div>
+  <div style="float: left; width: 50%">
+    <h3>FT232</h3>
+    <img class="plain" src="img/arduino_nano_ft232.png" style="height: 500px; background: none; margin: auto; transform: rotate(90deg);" alt="">
+  </div>
+</section>
+<section>
+  <h2>Aanbevolen model</h2>
+  <div style="float: left; width: 50%">
+    <h3>Arduino Uno</h3>
+    <img class="plain" src="img/arduino_uno_board.png" style="height: 500px; background: none; margin: auto;" alt="">
+  </div>
+  <div style="float: left; width: 50%">
+    <h3>Arduino nano</h3>
+    <img class="plain" src="img/arduino_nano_board.png" style="height: 500px; background: none; margin: auto;" alt="">
+  </div>
+</section>
+<section data-background-image="img/aliexpress.png" data-background-size="contain" data-background-color="#ffffff">
+</section>
+<section>
+  <h2>Arduino kopen op AliExpress (of ebay)</h2>
+  <ul>
+    <li>Enkele richtlijnen</li>
+    <li>Sorteer op orders</li>
+    <li>Controleer op:</li>
+    <ul>
+      <li>Werkspanning</li>
+      <ul>
+        <li>5v</li>
+        <li>3.3v</li>
+      </ul>
+      <li>Type micrcontroller</li>
+      <li>Programming interface</li>
+    </ul>
+    <li>Lees de feedback</li>
+    <li>Stukprijs per aantal</li>
+  </ul>
+</section>
+<section>
+  <h2>USB Kabel</h2>
+  <div style="float: left; width: 50%">
+  <ul>
+    <li>Micro</li>
+    <li>Mini</li>
+    <li>USB A</li>
+  </ul>
+  </div>
+  <div style="float: left; width: 50%">
+    <img src="img/usb_types.png" style="height: 500px; margin: auto;" alt="">
+  </div>
+</section>
+<section>
+  <h2>Dupont Kabels</h2>
+  <div style="float: left; width: 33%">
+    <h3>Male - Male</h3>
+    <img src="img/dupont_mm.jpg" style="height: 500px; margin: auto;" alt="">
+  </div>
+  <div style="float: left; width: 33%">
+    <h3>Male - Female</h3>
+    <img src="img/dupont_mf.jpg" style="height: 500px; margin: auto;" alt="">
+  </div>
+  <div style="float: left; width: 33%">
+    <h3>Female - Female</h3>
+    <img src="img/dupont_ff.jpg" style="height: 500px; margin: auto;" alt="">
+  </div>
+</section>
+<section>
+  <h2>Dupont Kabels</h2>
+  <ul>
+    <li>Breadboard kabels</li>
+    <li>Zeker kopen, als je een arduino aanschaft</li>
+    <li>Verbinden van componenten</li>
+    <li>Ratio</li>
+    <ul>
+      <li>MM: 70%</li>
+      <li>MF: 15%</li>
+      <li>FF: 15%</li>
+    </ul>
+    <li>Zijn veel te duur op Europese webshops</li>
+    <li>Makkelijk te verliezen</li>
+  </ul>
+</section>
+<section>
+  <h2>Switches</h2>
+  <div style="float: left; width: 50%">
+    <ul>
+      <li>Basic input</li>
+      <li>Zoektermen</li>
+      <ul>
+        <li>Micro push button</li>
+        <li>Tactile switch</li>
+      </ul>
+      <li>Inplugbaar op breadboard</li>
+    </ul>
+  </div>
+  <div style="float: left; width: 50%">
+    <img src="img/pushbutton.jpg" style="height: 500px; margin: auto;" alt="">
+  </div>
+</section>
+<section>
+  <h2>Weerstanden</h2>
+  <div>
+  <div style="float: left; width: 50%">
+    <ul>
+      <li>Film weerstanden</li>
+      <ul>
+        <li>Weerstand</li>
+        <ul>
+          <li>330 ohm</li>
+          <li>1k ohm</li>
+          <li>4k7 / 5k ohm</li>
+        </ul>
+        <li>Vermogen</li>
+        <ul>
+          <li><b>1/4W</b></li>
+        </ul>
+      </ul>
+      <li>Potentiometer 10k type 3362P</li>
+    </ul>
+  </div>
+  <div style="float: left; width: 50%">
+    <h2>3362P Stijl Potentiometers</h2>
+    <img src="img/3362P.jpg" style="height: 500px; margin: auto;" alt="">
+  </div>
+</section>
+<section>
+  <h2>LEDS</h2>
+  <div style="float: left; width: 50%">
+    <ul>
+      <li>5 tot 8 mm</li>
+      <li>Enkele leds per kleur</li>
+      <li>enkele RGB leds</li>
+    </ul>
+  </div>
+  <div style="float: left; width: 50%">
+    <img class="plain" src="img/rgb_led.png" style="height: 500px; background: none; margin: auto;" alt="">
   </div>
 </section>
