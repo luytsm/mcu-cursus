@@ -12,21 +12,263 @@ reveal:
     <li>Digitale Operaties</li>
     <li>Analoge Operaties</li>
     <li>PWM</li>
-    <li>ADC</li>
-    <li></li>
   </ul>
 </section>
 <section>
-  <h2>Digitale Operaties</h2>
-</section>
-<section>
-  <h2>pinMode</h2>
-  <pre><code class="Arduino">
+  <section>
+    <h1>Digitale Operaties</h1>
+  </section>
+  <section>
+    <h2>Digitale Operaties</h2>
+    <div style="float: left; width: 50%">
+      <ul>
+        <li>Hoog signaal (5V)</li>
+        <li>Laag signaal (0V)</li>
+        <li>TTL levels</li>
+        <li>Richting</li>
+        <ul>
+          <li>Output (Currrent Sourcen)</li>
+          <li>Input  (Current Sinken)</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%">
+      <img src="img/ttl_levels.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Hoeveel waarden kan een digitale pin aannemen?</h2>
+    <h2 class="fragment fade-in">3</h2>
+    <h4 class="fragment fade-in">High (5V)</h4>
+    <h4 class="fragment fade-in">Low (0V)</h4>
+    <h4 class="fragment fade-in">High Impedance (?V)</h4>
+  </section>
+  <section>
+    <h2>pinMode</h2>
+    <pre><code class="Arduino">
     void setup()
     {
       pinMode(pinNumber, INPUT);
       pinMode(pinNumber, INPUT_PULLUP);
       pinMode(pinNumber, OUTPUT);
     };
-  </code></pre>
+    </code></pre>
+  </section>
+  <section>
+    <h2>Digitale Input</h2>
+  </section>
+  <section>
+    <h2>Tri State Logica</h2>
+    <div style="float: left; width: 50%">
+      <table style="width: 80%;">
+        <tr>
+          <td style="width: 33%;">A</td>
+          <td style="width: 33%;">B</td>
+          <td style="width: 33%;">C</td>
+        </tr>
+        <tr>
+          <td style="width: 33%;">0</td>
+          <td style="width: 33%;">1</td>
+          <td style="width: 33%;">0</td>
+        </tr>
+        <tr>
+          <td style="width: 33%;">1</td>
+          <td style="width: 33%;">1</td>
+          <td style="width: 33%;">1</td>
+        </tr>
+        <tr style="outline: 5px solid red;">
+          <td style="width: 33%;">X</td>
+          <td style="width: 33%;">0</td>
+          <td style="width: 33%;">Z</td>
+        </tr>
+      </table>
+    </div>
+    <div style="float: left; width: 50%">
+      <img src="img/tri_state_buffer.png" style="height: 400px; background: white; margin: auto;" alt="">
+      <div>
+  </section>
+  <section>
+    <h2>Tri State Logica</h2>
+    <ul>
+      <li>pinMode = INPUT</li>
+      <li>Pin is dan hoog impedant</li>
+      <li>Pin kan dan zweven(Waardes zijn random)</li> 
+      <li>Reden</li>
+      <ul>
+        <li>Ruis op het systeem</li>
+        <li>Capacitieve koppeling</li>
+      </ul>
+      <li>Oplossing</li>
+      <ul>
+        <li>Extern</li>
+        <li>Intern</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Tri State Oplossen</h2>
+    <ul>
+      <li>Extern</li>
+      <ul>
+        <li>Pull Up Weerstand</li>
+        <li>Pull Down Weerstand</li>
+      </ul>
+      <li>Intern</li>
+      <ul>
+        <li>Pull Up Weerstand</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Extern</h2>
+    <div style="float: left; width: 33%">
+      <ul>
+        <li>Pull Up:</li>
+        <ul>
+          <li>constant HIGH signaal</li>
+          <li>constant stroom verbruik</li>
+        </ul>
+        <li>Pull Down:</li>
+        <ul>
+          <li>constant LOW signaal</li>
+          <li>geen stroom verbruik</li>
+        </ul>
+        <li><a href="http://electronics.stackexchange.com/questions/113009/when-to-use-pull-down-vs-pull-up-resistors">Keuze afhankelijk van je input</a></li>
+        <li>Voor een simpele push button kan beide</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 30%">
+      <h3>Pull Up Resistor</h3>
+      <img src="img/pullup_resistor.png" style="background: white;" alt="">
+    </div>
+    <div style="float: left; width: 30%">
+      <h3>Pull Down Resistor</h3>
+      <img src="img/pulldown_resistor.png" style="background: white;" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Weerstand keuze</h2>
+    <ul>
+      <li>Input = Current Sinken</li>
+      <li>Stroom wordt in de MCU gestuurd</li>
+      <li>Geen weerstand = Problemen</li>
+      <li>Max Sink Current / Pin = 20mA</li>
+      <li>Veilige keuze weerstand: 10kΩ</li>
+      <li>R = U/I => I=U/R => 5V/10kΩ=0.5mA</li>
+    </ul>
+  </section>
+  <section data-background-image="img/pullup_arduino.jpg" data-background-size="contain" data-background-color="#ffffff">
+  </section>
+  <section>
+    <h2>Intern</h2>
+    <div style="float: left; width: 40%">
+      <ul>
+        <li>Interne Pull Up weerstand</li>
+        <li>Waarde 20kΩ - 50kΩ</li>
+        <li>Goed genoeg voor een pushbutton</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 60%">
+      <img src="img/internal_pullup.png" style="background: white;" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Digitale Output</h2>
+    <ul>
+      <li>Geen Tri State logica</li>
+      <li>High of Low signaal</li>
+      <li>Output = Current Sourcen</li>
+      <li>max Current = 40mA</li>
+      <li>max Current alle IOs = 200mA</li>
+      <li>Stuur je iets aan, minimale hoeveelheid stroom aanleveren</li>
+    </ul>
+  </section>
+  <section data-background-image="img/pin_atmega328p.png" data-background-size="contain" data-background-color="#ffffff">
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Analoge Operaties</h1>
+  </section>
+  <section>
+    <h2>Analoge Operaties</h2>
+    <ul>
+      <li>Digitaal / Analoge Conversie</li>
+      <li>Analoge Comperator</li>
+      <li><b>Analoog / Digitale Conversie</b></li>
+    </ul>
+    <p><em>Er zijn verschillende analoge operatie maar </br> voor de moment is alleen analoog naar digitaal belangrijk.</em></p>
+  </section>
+  <section>
+    <h2>AnalogRead</h2>
+    <pre><code class="Arduino">
+    int pinValue;
+    int pinNumber = 7;
+
+    void setup()
+    {
+      pinMode(pinNumber, INPUT);
+    }
+
+    void loop()
+    {
+      pinValue = analogRead(pinNumber);
+    }
+    </code></pre>
+  </section>
+  <section>
+    <h2>Analoge Digitale Conversie (ADC)</h2>
+    <div style="float: left; width: 60%">
+      <ul>
+        <li>AnalogRead is een A/D conversie</li>
+        <li>Eigenschappen ADC</li>
+        <li>Resolutie</li>
+        <ul>
+          <li>2^(#Bits ADC)</li>
+          <li>1024</li>
+        </ul>
+        <ul>
+          <li>Range</li>
+          <ul>
+            <li>0 - 2^(#Bits ADC -1)</li>
+            <li>0 - 1023</li>
+          </ul>
+          <li>Accuracy</li>
+          <ul>
+            <li>Vref / Resolutie</li>
+            <li>5V / 1024 ≈ 4,9mV</li>
+          </ul>
+        </ul>
+        <li>analogRead = (Vin * Resolutie)/Vref</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 40%">
+      <img src="img/quantizations.png" alt="">
+    </div>
+  </section>
+  <section data-background-image="img/adc_atmega328p.png" data-background-size="contain" data-background-color="#ffffff">
+  </section>
+</section>
+<section>
+  <section>
+    <h1>PWM</h1>
+  </section>
+  <section>
+    <h2>PWM</h2>
+    <div style="float: left; width: 40%">
+    <ul>
+      <li>Geen analoge actie</li>
+      <li>Analog result with digital means</li>
+      <li>Draait op een frequentie 500Hz</li>
+      <li>De analogWrite bepaalt de dutycycle</li>
+    </ul>
+    </div>
+    <div style="float: left; width: 40%">
+      <img src="img/pwm.gif" style="background: white; "alt="">
+    </div>
+  </section>
+  <section>
+    <h2>PWM op de scope</h2>
+    <img src="img/measuring_pwm.png" alt="">
+  </section>
 </section>
