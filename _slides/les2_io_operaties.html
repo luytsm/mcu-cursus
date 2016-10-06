@@ -421,6 +421,17 @@ detachInterrupt(digitalPinToInterrupt(pin));
     </code></pre>
   </section>
   <section>
+    <h2>Volatile Keyword</h2>
+      <pre><code class="Arduino">
+        volatile int ButtonState = 0;
+      </code></pre>
+      <ul>
+        <li>Actie voor de compiler</li>
+        <li>Plaats de variable in het ram geheugen ipv een register</li>
+        <li>Nodig als je een variable aanpast in een interrupt</li>
+      </ul>
+  </section>
+  <section>
     <h2>Oefening</h2>
     <ul>
       <li><a href="circuits.io">circuits.io</a></li>
