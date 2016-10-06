@@ -12,6 +12,8 @@ reveal:
     <li>Digitale Operaties</li>
     <li>Analoge Operaties</li>
     <li>PWM</li>
+    <li>Interrupts</li>
+    <li>Debouncing</li>
   </ul>
 </section>
 <section>
@@ -157,7 +159,7 @@ reveal:
       <li>R = U/I => I=U/R => 5V/10kΩ=0.5mA</li>
     </ul>
   </section>
-  <section data-background-image="img/pullup_arduino.jpg" data-background-size="contain" data-background-color="#ffffff">
+  <section data-background-image="img/pulldown_arduino.jpg" data-background-size="contain" data-background-color="#ffffff">
   </section>
   <section>
     <h2>Intern</h2>
@@ -169,7 +171,13 @@ reveal:
       </ul>
     </div>
     <div style="float: left; width: 60%">
-      <img src="img/internal_pullup.png" style="background: white;" alt="">
+      <pre><code class="Arduino" style="clear: both;">
+        void setup()
+        {
+          pinMode(pinNumber, INPUT_PULLUP);
+        };
+      </code></pre>
+      <img src="img/internal_pullup.png" style="background: white; height: 400px;" alt="">
     </div>
   </section>
   <section>
@@ -256,12 +264,12 @@ reveal:
   <section>
     <h2>PWM</h2>
     <div style="float: left; width: 40%">
-    <ul>
-      <li>Geen analoge actie</li>
-      <li>Analog result with digital means</li>
-      <li>Draait op een frequentie 500Hz</li>
-      <li>De analogWrite bepaalt de dutycycle</li>
-    </ul>
+      <ul>
+        <li>Geen analoge actie</li>
+        <li>Analog result with digital means</li>
+        <li>Draait op een frequentie 500Hz</li>
+        <li>De analogWrite bepaalt de dutycycle</li>
+      </ul>
     </div>
     <div style="float: left; width: 40%">
       <img src="img/pwm.gif" style="background: white; "alt="">
@@ -270,5 +278,413 @@ reveal:
   <section>
     <h2>PWM op de scope</h2>
     <img src="img/measuring_pwm.png" alt="">
+  </section>
+  <section>
+    <h2>Fading</h2>
+    <pre><code class="Arduino">
+      int ledPin = 9;    // LED connected to digital pin 9
+
+      void setup() {
+      } 
+
+      void loop() {
+        for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
+               analogWrite(ledPin, fadeValue);
+               delay(30);
+               }
+
+               for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
+          analogWrite(ledPin, fadeValue);
+          delay(30);
+        }
+      }
+    </code></pre>
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Interrupts</h1>
+  </section>
+  <section>
+    <h2>Interrupts</h2>
+    <ul>
+      <li>Reactie op een event</li>
+      <li>Non - Blocking</li>
+      <li>Interrupt Types</li>
+      <ul>
+        <li>Hardware</li>
+        <li>Software (Vereist OS)</li>
+      </ul>
+      <li>Interrupt bron</li>
+      <ul>
+        <li>Extern</li>
+        <ul>
+          <li>Meestal verandering op een pin</li>
+          <li>Pin State Change</li>
+          <li>Seriële communicatie</li>
+        </ul>
+        <li>Intern</li>
+        <ul>
+          <li>A/D Conversie voltooid</li>
+          <li>Timer afgelopen</li>
+        </ul>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Interrupts</h2>
+    <ol>
+      <li>Onderbreking huidig processor activiteit</li>
+      <li>Interne of Externe trigger</li>
+      <li>Interrupt Service Routine(ISR)</li>
+      <ul>
+        <li>Na trigger springt de code naar de ISR</li>
+        <li>ISR een koppeling van event naar een functie</li>
+      </ul>
+      <li>Na de ISR springt de code terug</li>
+    </ol>
+  </section>
+  <section>
+    <h2>Interrupts</h2>
+    <img src="img/interrupts.png" style="height: 600px;" alt="">
+  </section>
+  <section>
+    <h2>Wat is de tegenpool van interrupts?</h2>
+  </section>
+  <section>
+    <h2>Polling vs. Interrupts</h2>
+    <table>
+      <tr>
+        <td><em><b>Polling</b></em></td>
+        <td><em><b>Interrupts</b></em></td>
+      </tr>
+      <tr>
+        <td>Synchroon</td>
+        <td>Asynchroon</td>
+      </tr>
+      <tr>
+        <td>Niet dringend</td>
+        <td>Dringend</td>
+      </tr>
+      <tr>
+        <td>Frequent</td>
+        <td>Sporadisch</td>
+      </tr>
+    </table>
+  </section>
+  <section>
+    <h2>Polling vs Interrupts</h2>
+    <img src="img/polling_vs_interrupts.jpg" alt="">
+  </section>
+  <section>
+    <h2>Interrupts & Arduino</h2>
+    <ul>
+      <li>Interrupts zitten verwerkt in de beschikbare library</li>
+      <li>Meest toegankelijke: External Interrupts</li>
+      <ul>
+        <li>Interrupts gebaseerd op Inputs</li>
+        <li>Pin specifiek</li>
+      </ul>
+      <li>4 Functies</li>
+      <li><a href="https://www.arduino.cc/en/Reference/Interrupts">Arduino Interrupt Reference</a></li>
+    </ul>
+  </section>
+  <section>
+    <h2>Interrupts & Arduino: Pins</h2>
+    <table><tbody>
+        <tr><td align="left"><strong>Board</strong></td><td align="left"><strong>Digital Pins Usable For Interrupts</strong></td></tr>
+        <tr><td align="left">Uno, Nano, Mini, other 328-based</td><td>2, 3</td></tr>
+        <tr><td align="left">Mega, Mega2560, MegaADK</td><td align="left">2, 3, 18, 19, 20, 21</td></tr>
+        <tr><td align="left">Micro, Leonardo, other 32u4-based</td><td align="left">0, 1, 2, 3, 7</td></tr>
+        <tr><td align="left">Zero</td><td align="left">all digital pins, except 4</td></tr>
+        <tr><td align="left">MKR1000</td><td align="left">0, 1, 4, 5, 6, 7, 8, 9, A1, A2</td></tr>
+        <tr><td align="left">Due</td><td align="left">all digital pins</td></tr>
+        <tr><td align="left">101</td><td align="left">all digital pins</td></tr>
+      </tbody></table>
+  </section>
+  <section>
+    <h2>Interrupts & Arduino: Functies</h2>
+    <pre><code class="Arduino">
+interrupts()
+//Staat standaard aan
+//Gebruikt na het uitzetten van interrupts
+noInterrupts()
+//Uitzetten van interrupts
+//Kan nodig zijn bij tijd cruciale acties
+attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)
+//digitalPinToInterrupt(pin) - mappen van Arduino Pin naar ATmega328p
+//ISR - Naam van de functie die wordt aangeroepen als de interrupt optreedt.
+//mode - Het soort event waarop de interrupt gaat triggeren
+//mode - LOW, CHANGE, RISING, FALLING 
+detachInterrupt(digitalPinToInterrupt(pin));
+//ontkoppelen van de interrupt
+    </code></pre>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <ul>
+      <li><a href="circuits.io">circuits.io</a></li>
+      <ul>
+        <li>Arduino Simulator</li>
+        <li>Account aanmaken</li>
+      </ul>
+      <li><a href="https://circuits.io/circuits/1357989-interrupt-example#breadboard">Dupliceer deze oefening</a></li>
+      <li>Toggle de status van de interne led met drukknop</li>
+    </ul>
+    <aside class="notes">
+      <pre><code class="Arduino">
+void ext_int_callback(){
+  Serial.println("Interrupt fired");
+};
+
+void setup() {
+  Serial.begin(9600);
+  attachInterrupt(0, ext_int_callback, RISING);
+}
+
+
+void loop() {
+
+}
+      </code></pre>
+    </aside>
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Debouncing a Button</h1>
+  </section>
+  <section>
+    <h2>Het probleem?</h2>
+    <div style="height: 600px";>
+      <img src="img/button_bounce.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Oplossing</h2>
+    <ul>
+      <li>Hardware</li>
+      <ul>
+        <li>Sequentiële Logica</li>
+        <li>RC Circuit</li>
+      </ul>
+      <li>Software</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Startpunt</h2>
+    <p><em><b>Voor zowel de hard -en software vertrekken we van een ...</b></em></p>
+    <div style="float: left; width: 50%">
+      <h3>Pull Up Resistor</h3>
+      <img src="img/pullup_resistor.png" style="background: white;" alt="">
+    </div>
+    <div style="float: left; width: 50%">
+      <h3>Pull Down Resistor</h3>
+      <img src="img/pulldown_resistor.png" style="background: white;" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Hardware: Sequentiële Logica</h2>
+    <div style="float: left; width: 50%">
+      <h3>NAND Poort Oplossing</h3>
+      <img src="img/nand_debounce.gif" style="background: white;" alt="">
+    </div>
+    <div style="float: left; width: 50%">
+      <h3>NOR Poort Oplossing</h3>
+      <img src="img/nor_debounce.gif" style="background: white;" alt="">
+    </div>
+    <p><em><b>Bulky oplossing krijgt geen voorkeur</b></em></p>
+  </section>
+  <section>
+    <h2>Hardware: RC Debouncer</h2>
+    <img src="img/rc_debounce.png" alt="">
+  </section>
+  <section>
+    <h2>RC Debounce</h2>
+    <h3>Wat gaat er gebeuren met het ingangssignaal?</h3>
+  </section>
+  <section>
+    <h2>RC Charging Circuit</h2>
+    <img src="img/rc_charging.png" alt="">
+  </section>
+  <section>
+    <h2>RC Charging Circuit</h2>
+    <div style="float: left; width: 50%">
+      <ul>
+        <li>Tijd nodig om te laden</li>
+        <li>Tijd nodig om te ontladen</li>
+        <li>Ongevoelig voor snelle veranderingen</li>
+        <ul>
+          <li>Filtert de bounce weg</li>
+        </ul>
+        <li>Hardwarematige delay</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%">
+      <img src="img/rc_charging.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>RC Charging Circuit</h2>
+    <div style="float: left; width: 50%">
+      <ul>
+        <li>`tau -= R * C`</li>
+        <ul>
+          <li>Eenheid τ seconden </li>
+        </ul>
+        <li>`V_(C) = V_(S)*(1 - e^(-t/(RC)))`</li>
+        <ul>
+          <li>`V_(C)` Uitgangspanning condensator </li>
+          <ul>
+            <li>`V_(PIN)`</li>
+          </ul>
+          <li>`V_(S)` Ingangsspanning condensator 
+            <ul>
+              <li>`V_(C C)`</li>
+              <li>5V indien het een pulldown / up weerstand die gevoed  is door de Arduino</li>
+            </ul>
+        </ul>
+        <li>Arduino TTL Levels</li>
+        <ul>
+          <li>Logische Hoog vanaf 2,0V</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%">
+      <table>
+        <tr>
+          <td><em><b>Time Constant</b></em></td>
+          <td><em><b>RC Value </b></em></td>
+          <td><em><b>`% V_(S)``</b></em></td>
+        </tr>
+        <tr>
+          <td>`0 tau`</td>
+          <td>`0*RC`</td>
+          <td>`0 %`</td>
+        </tr>
+        <tr>
+          <td>`0.7 tau`</td>
+          <td>`0.7*RC`</td>
+          <td>`50 %`</td>
+        </tr>
+        <tr>
+          <td>`5 tau`</td>
+          <td>`5*RC`</td>
+          <td>`100 %`</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+  <section>
+    <h1>Vraag</h1>
+    <em><b>
+        Als ik delay van ≈50ms wil inbouwen voor dat ik een hoog signaal heb, hoeveel is dan mijn tijdsconstante (met een mogelijke weerstand en condensator waarde)
+      </b></em>
+  </section>
+  <section>
+    <h2>Een goede delay?</h2>
+    <em><b>Een delay tussen de 20 - 50 ms is een goede keuze</b></em>
+    <p><em><b>Hoe rekening met de logische levels</b></em></p>
+  </section>
+  <section>
+    <h1>Alle signaal problemen opgelost?</h1>
+    <h2 class="fragment fade in"> Zo goed als</h2>
+
+  </section>
+  <section>
+    <h2>Hysteris</h2>
+    <img src="img/hysteresis.png" alt="">
+  </section>
+  <section>
+    <h2>Oplossing:Inverting Schmitt Trigger</h2>
+    <img src="img/complete_debouncing.png" style="height: 600px;" alt="">
+  </section>
+  <section>
+    <h2>Oplossing:Inverting Schmitt Trigger</h2>
+    <img src="img/proper_debouncing_scope.png" alt="">
+  </section>
+  <section>
+    <h2>Waarom de extra stap?</h2>
+    <em><p>Met gebruik veranderen de mechanische eigenschappen van een knop</p></em>
+  </section>
+  <section>
+    <h2>Software Oplossing</h2>
+    <ul>
+      <li>Basic (Blocking)</li>
+      <li>Arduino Example(Non - Blocking)</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Basic</h2>
+    <pre><code class="Arduino">
+const int buttonPin = 2;  
+
+int buttonState;             
+int lastButtonState = LOW;   
+
+long debounceDelay = 50;    
+void setup() {
+  pinMode(buttonPin, INPUT);
+}
+
+void loop() {
+  int reading = digitalRead(buttonPin);
+
+  if (reading != lastButtonState) {
+    delay(debounceDelay)
+    lastButtonState = reading;
+  }
+}
+    </code></pre>
+  </section>
+  <section>
+    <h2>Arduino Debounce Example: Variables </h2>
+    <pre><code class="Arduino">
+const int buttonPin = 2;  
+const int ledPin = 13;     
+
+int ledState = HIGH;         
+int buttonState;             
+int lastButtonState = LOW;   
+
+long lastDebounceTime = 0;  
+long debounceDelay = 50;  
+    </code></pre>
+  </section>
+  <section>
+    <h2>Arduino Debounce Example: Setup </h2>
+    <pre><code class="Arduino">
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, ledState);
+}
+    </code></pre>
+  </section>
+  <section>
+    <h2>Arduino Debounce Example: Loop </h2>
+    <pre><code class="Arduino" style="height: 600px;">
+void loop() {
+  int reading = digitalRead(buttonPin);
+
+  if (reading != lastButtonState) {
+    lastDebounceTime = millis();
+  }
+
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+
+    if (reading != buttonState) {
+      buttonState = reading;
+      if (buttonState == HIGH) {
+        ledState = !ledState;
+      }
+    }
+  }
+
+  digitalWrite(ledPin, ledState);
+
+  lastButtonState = reading;
+}
+    </code></pre>
   </section>
 </section>
