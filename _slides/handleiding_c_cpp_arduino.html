@@ -1,0 +1,667 @@
+---
+title: "Handleiding: C/C++ voor het Arduino platform"
+description:  "Vaakt gebruikte C/C++ paradigma op het Arduino platform"
+reveal:
+---
+<section>
+  <h1>Handleiding: C/C++ voor het Arduino platform</h1>
+</section>
+<section>
+  <section>
+    <h1>Preprocessor</h1>
+  </section>
+  <section>
+    <h2>Preprocessor</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Beginnend met <em>#</em></li>
+        <li>One-Liners</li>
+        <li>Geen <em>;</em></li>
+        <li>Een stap voor compilatie</li>
+        <ul>
+          <li>Substitutie</li>
+        </ul>
+        <li>Gebruik</li>
+        <ul>
+          <li>Directives</li>
+          <li>Macros</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre><code class="Arduino">
+        #define THIS_EXISTS
+        #ifdef THIS_EXIST
+          //THEN DO THIS
+        #endif
+
+        #include &ltfile&gt
+
+        #define PI 3.14
+
+        #define EDIT_BIT(bit) (1 &lt&lt BIT )
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Directives</h2>
+    <small>
+      <table style="height: 600px;">
+        <tbody>
+          <tr>
+            <th style="width:20%">Directive</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>#define</td>
+            <td>Substitutes a preprocessor macro.</td>
+          </tr>
+          <tr>
+            <td>#include</td>
+            <td>Inserts a particular header from another file.</td>
+          </tr>
+          <tr>
+            <td>#undef</td>
+            <td>Undefines a preprocessor macro.</td>
+          </tr>
+          <tr>
+            <td>#ifdef</td>
+            <td>Returns true if this macro is defined.</td>
+          </tr>
+          <tr>
+            <td>#ifndef</td>
+            <td>Returns true if this macro is not defined.</td>
+          </tr>
+          <tr>
+            <td>#if</td>
+            <td>Tests if a compile time condition is true.</td>
+          </tr>
+          <tr>
+            <td>#else</td>
+            <td>The alternative for #if.</td>
+          </tr>
+          <tr>
+            <td>#elif</td>
+            <td>#else and #if in one statement.</td>
+          </tr>
+          <tr>
+            <td>#endif</td>
+            <td>Ends preprocessor conditional.</td>
+          </tr>
+          <tr>
+            <td>#error</td>
+            <td>Prints error message on stderr.</td>
+          </tr>
+        </tbody>
+      </table> 
+    </small>
+  </section>
+  <section>
+    <h2>Macros</h2>
+    <div style="float: left; width: 50%">
+      <ul>
+        <li>#define</li>
+        <ul>
+          <li>Object-Like Macro</li>
+          <li>Function-Like Macro</li>
+        </ul>
+        <li>Substitutie</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%">
+      <pre><code class="Arduino">
+        #define THIS_EXISTS
+
+        #define PI 3.14
+
+        #define EDIT_BIT(bit) (1 &lt&lt BIT )
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Verschill Macro en Functies</h2>
+    <small>
+      <table>
+        <tr>
+          <th>Macro</th>
+          <th>Functie</th>
+        </tr>
+        <tr>
+          <td>Macro is Preprocessed</td>
+          <td>Function is Compiled</td>
+        </tr>
+        <tr>
+          <td>No Type Checking</td>
+          <td>Type Checking is Done</td>
+        </tr>
+        <tr>
+          <td>Code Length Increases</td>
+          <td>Code Length remains Same</td>
+        </tr>
+        <tr>
+          <td>Use of macro can lead
+            to side effect</td>
+          <td>No side Effect</td>
+        </tr>
+        <tr>
+          <td>Speed of Execution is Faster</td>
+          <td>Speed of Execution is Slower</td>
+        </tr>
+        <tr>
+          <td>Before Compilation macro name is replaced by macro value</td>
+          <td>During function call , Transfer of Control takes place</td>
+        </tr>
+        <tr>
+          <td>Useful where small code appears many time</td>
+          <td>Useful where large code appears many time</td>
+        </tr>
+        <tr>
+          <td>Generally Macros do not extend beyond one line</td>
+          <td>Function can be of any number of lines</td>
+        </tr>
+        <tr>
+          <td>Macro does not Check Compile Errors</td>
+          <td>Function Checks Compile Errors</td>
+        </tr>
+      </table>
+    </small>
+  </section>
+  <section>
+    <h2>Conditionele Macros</h2>
+    <pre><code class="Arduino">
+#define DEBUG
+#define LOG
+
+#ifdef DEBUG
+  #define DEBUG_INIT() sDebug[128];
+  #define DEBUG_PRINTHEX(T, v) Serial.print(T); sprintf(sDebug, "%x\n\r", v); Serial.print(sDebug);
+  #define DEBUG_PRINTDEC(T, v) Serial.print(T); sprintf(sDebug, "%d\n\r", v); Serial.print(sDebug);
+  #define DEBUG_HALT() (Serial.available() == 0); Serial.setTimeout(1); Serial.readBytes(sDebug, 1);
+#endif
+
+#ifdef LOG
+  #define LOG_INIT sLog[128];
+  #define LOG_PRINTHEX(T, v) Serial.print(T); sprintf(sLog, "%x\n\r", v); Serial.print(sLog);
+  #define LOG_PRINTDEC(T, v) Serial.print(T); sprintf(sLog, "%d\n\r", v); Serial.print(sLog);
+  #define LOG_HALT() while(Serial. available() == 0); Serial.setTimeout(1); Serial.readBytes(sLog, 1);
+#endif
+    </code></pre>
+  </section>
+  <section>
+    <h2>Optimalisatie</h2>
+    <div style="float: left; width: 33%;">
+      <p>Test Code met Variabele</p>
+      <pre><code class="Arduino">
+        #include <stdio.h>
+        static const  foo =  6;
+
+        int  main() {
+          printf("%d", foo);
+          return 0;
+        }
+      </code></pre>
+      <p>Test Code met Macro</p>
+      <pre><code class="Arduino">
+        #include <stdio.h>
+        #define foo 6
+
+        int  main() {
+          printf("%d",foo);
+          return 0;
+        }
+      </code></pre>
+    </div>
+    <div style="float: left; width: 33%;">
+      <p>Gecompileerde ASM Code met Variabele</p>
+      <pre><code class="asm">
+        push rbp
+        mov rbp,rsp
+        sub rsp,0x20
+        call d <main+Oxd>
+        mov eax,0x6
+        mov edx,eax
+        lea rcx,[rip+Ox4]
+        call 20 <main+0x20>
+        mov eax,0x0
+        add rsp,0x20
+        pop rbp
+        ret
+        nop
+      </code></pre>
+      <p>Gecompileerde ASM Code met Macro</p>
+      <pre><code class="asm">
+        push rbp
+        mov rbp,rsp
+        sub rsp,0x20
+        call d <main+Oxd>
+        mov edx,0x6
+        lea rcx,[rip+Ox0]
+        call le <main+Oxle>
+        mov eax,0x0
+        add rsp,0x20
+        pop rbp
+        ret
+        nop
+      </code></pre>
+    </div>
+    <div style="float: left; width: 33%;">
+      <p>Gecompileerde Code</p>
+      <pre><code class="asm">
+        sub rsp,Ox28
+        call 9 <main+0x9>
+        lea rcx,[rip+Ox0]
+        mov edx,0x6
+        call 1a <main+Oxla>
+        xor eax,eax
+        add rsp,Ox28
+        ret
+        nop
+      </code></pre>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Header Files</h1>
+  </section>
+  <section>
+    <h2>Header Files</h2>
+    <ul>
+      <li>Source file: <em>.cpp</em></li>
+      <li>Header file: <em>.h</em></li>
+      <li>Gebruikt voor</li>
+      <ul>
+        <li>definiëren van:</li>
+        <ul>
+          <li>Functie prototypes</li>
+          <li>Variabelen</li>
+          <li>Macros</li>
+        </ul>
+        <li>Bevat geen logica</li>
+        <li>"#include" in source file</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Header file gebruiken</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Door preprocessor te gebruiken</li>
+        <li>Declareer dit in het begin van de source file</li>
+        <ul>
+          <li>#include "TestHeader.h"</li>
+          <ul>
+            <li>"Zoekt in folder"</li>
+          </ul>
+          <li>#include &ltTestHeader.h&gt</li>
+          <ul>
+            <li>"Zoekt in PATH"</li>
+          </ul>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre>
+        <code class="Arduino">
+          #include "mylib.h"
+          #include &ltmylib.h&gt
+          int main(){
+          }
+        </code>
+      </pre>
+    </div>
+  </section>
+  <section>
+    <h2>Werking include</h2>
+    <div class="fragment current-visible" style="position: absolute; z-index: 901; width: 60%;">
+      <em><b>test_header.h</b></em>
+      <pre><code class="Arduino">
+          int ledPin = 7;
+      </code></pre>
+    </div>
+    <div class="fragment current-visible" style="position: absolute; z-index: 901; width: 60%;">
+      <em><b>myproject.ino</b></em>
+      <pre><code class="Arduino">
+          #include "test_header.h"
+          int state = HIGH;
+
+          void setup(){
+            //DO SOMETHING
+          }
+
+          void loop(){
+            //DO SOMETHING
+          }
+      </code></pre>
+    </div>
+    <div class="fragment current-visible" style="position: absolute; z-index: 901; width: 60%;">
+      <em><b>myproject.ino</b></em>
+      <pre><code class="Arduino">
+          int ledPin = 7;
+          int state = HIGH;
+
+          void setup(){
+            //DO SOMETHING
+          }
+
+          void loop(){
+            //DO SOMETHING
+          }
+      </code></pre>
+  </section>
+  <section>
+    <h2>Include Guard</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Geen ambiguïteit </li>
+        <li>Geen 2 dezelfde includes</li>
+        <li>Kan file size verkleinen</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre><code class="Arduino">
+        #ifndef _TEST_LIB_H_
+        #define _TEST_LIB_H_
+
+          /***************/
+          /*             */ 
+          /*    YOUR     */ 
+          /*    CODE     */ 
+          /*    HERE     */ 
+          /*             */ 
+          /***************/
+
+        #endif
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Werking Include Guard</h2>
+    <div style="float: left; width: 33%; height: 600px;">
+      <p><em>mystruct.h</em></p>
+      <pre><code class="Arduino">
+        struct myStruct{
+          int x;
+          double y;
+          char z;
+        };
+      </code></pre>
+    </div>
+    <div style="float: left; width: 33%; height: 600px;">
+      <p><em>myproject.ino</em></p>
+      <pre><code class="Arduino">
+        #include "mystruct.h"
+        #include "mystruct.h"
+
+        void setup(){
+          //DO SOMETHING
+        }
+
+        void loop(){
+          //DO SOMETHING
+        }
+      </code></pre>
+    </div>
+    <div style="float: left; width: 34%; height: 600px;">
+      <p><em>myproject.ino</em></p>
+      <pre><code class="Arduino">
+        struct myStruct{
+          int x;
+          double y;
+          char z;
+        };
+        // Dubbele declaratie 
+        // Compile Error
+        struct myStruct{ 
+          int x;         
+          double y;
+          char z;
+        };
+
+        void setup(){
+          //DO SOMETHING
+        }
+
+        void loop(){
+          //DO SOMETHING
+        }
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Werking Include Guard</h2>
+    <div style="float: left; width: 33%; height: 600px;">
+      <p><em>mystruct.h</em></p>
+      <pre><code class="Arduino">
+        #ifndef _TEST_LIB_H_
+        #define _TEST_LIB_H_
+
+        struct myStruct{
+          int x;
+          double y;
+          char z;
+        };
+        #endif
+      </code></pre>
+    </div>
+    <div style="float: left; width: 33%; height: 600px;">
+      <p><em>myproject.ino</em></p>
+      <pre><code class="Arduino">
+        #include "mystruct.h"
+        #include "mystruct.h"
+
+        void setup(){
+          //DO SOMETHING
+        }
+
+        void loop(){
+          //DO SOMETHING
+        }
+      </code></pre>
+    </div>
+    <div style="float: left; width: 34%; height: 600px;">
+      <p><em>myproject.ino</em></p>
+      <pre><code class="Arduino">
+        struct myStruct{
+          int x;
+          double y;
+          char z;
+        };
+        // Geen compile error
+
+        void setup(){
+          //DO SOMETHING
+        }
+
+        void loop(){
+          //DO SOMETHING
+        }
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Conditional Include</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Selectief Include</li>
+        <li>Specifieke output afhankelijk van compile opties</li>
+        <ul>
+          <li>Cross Compatibility</li>
+          <li>Code verkleinen</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre><code class="Arduino">
+#ifndef _AVR_IO_H_
+#define _AVR_IO_H_
+
+#include <avr/sfr_defs.h>
+
+#if defined (__AVR_AT94K__)
+#  include <avr/ioat94k.h>
+#elif defined (__AVR_AT43USB320__)
+#  include <avr/io43u32x.h>
+#elif defined (__AVR_AT43USB355__)
+#endif
+
+#endif /* _AVR_IO_H_ */
+
+      </code></pre>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Classes</h1>
+  </section>
+  <section>
+    <h2>Classes</h2>
+    <ul>
+      <li>Class Definitions</li>
+      <li>Class Accces Modifiers</li>
+      <li>Class Member Functions</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Class Definitions</h2>
+    <pre><code class="Arduino">
+      class Box {
+        public:
+          double length;         // Length of a box
+          double breadth;        // Breadth of a box
+          double height;         // Height of a box
+          double getVolume(void);// Returns box volume
+      };
+    </code></pre>
+  </section>
+  <section>
+    <h2>Class Accces Modifiers</h2>
+    <div style="float: left; width: 60%">
+      <ul>
+        <li>public</li>
+        <ul>
+          <li>Members toegankelijk buiten de class</li>
+          <li>Geen set/get</li>
+        </ul>
+        <li>protected</li>
+        <ul>
+          <li>Members toegangelijk voor child classes</li>
+          <li>Overerving niet vaak gebruik op het Arduino platform</li>
+        </ul>
+        <li>private</li>
+        <ul>
+          <li>Members alleen toegankelijk voor class members</li>
+          <li>Set / Get nodig</li>
+          <li>Default optie</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 40%">
+      <pre><code class="Arduino">
+        class Base {
+ 
+          public:
+ 
+          // public members go here
+  
+          protected:
+ 
+          // protected members go here
+ 
+          private:
+ 
+          // private members go here
+      }
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Class Members Function</h2>
+    <div style="float: left; width: 50%;">
+      <em><b>Inline Functie</b></em>
+      <pre><code class="Arduino">
+          class Box {
+             public:
+                double length;      // Length of a box
+                double breadth;     // Breadth of a box
+                double height;      // Height of a box
+             
+                double getVolume(void) {
+                   return length * breadth * height;
+                }
+          };
+      </code></pre>
+    </div>
+    <div style="float: left; width: 50%;">
+      <em><b>Functie met Scope Resolution Operator</b></em>
+      <pre><code class="Arduino">
+          class Box {
+             public:
+                double length;      // Length of a box
+                double breadth;     // Breadth of a box
+                double height;      // Height of a box
+          };
+
+          double Box::getVolume(void) {
+            return length * breadth * height;
+          }
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Example</h2>
+    <div style="float: left; width: 50%;">
+      <em><b>Morse.h</b></em>
+      <pre><code class="Arduino">
+        #ifndef Morse_h
+        #define Morse_h
+
+        #include "Arduino.h"
+
+        class Morse
+        {
+          public:
+            Morse(int pin);
+            void dot();
+            void dash();
+          private:
+            int _pin;
+        };
+
+        #endif
+      </code></pre>
+    </div>
+    <div style="float: left; width: 50%;">
+      <em><b>Morse.cpp</b></em>
+      <pre><code class="Arduino">
+        Morse::Morse(int pin)
+        {
+          pinMode(pin, OUTPUT);
+          _pin = pin;
+        }
+
+        void Morse::dot()
+        {
+          digitalWrite(_pin, HIGH);
+          delay(250);
+          digitalWrite(_pin, LOW);
+          delay(250);  
+        }
+
+        void Morse::dash()
+        {
+          digitalWrite(_pin, HIGH);
+          delay(1000);
+          digitalWrite(_pin, LOW);
+          delay(250);
+        }
+      </code></pre>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h1></h1>
+  </section>
+

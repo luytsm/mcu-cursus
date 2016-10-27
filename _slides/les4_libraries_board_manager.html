@@ -1,0 +1,340 @@
+---
+title: "Les 4: Libraries en Board Manager"
+description:  "Gebruiken en maken van libraries voor de Arduino, gebruik maken van de board manager"
+reveal:
+---
+<section>
+  <h1>Les 4: Libraries en Board Manager</h1>
+</section>
+<section>
+  <section>
+    <h1>Libraries</h1>
+  </section>
+  <section>
+    <h2>Libraries</h2>
+    <ul>
+      <li>Welke libraries zijn er beschikbaar?</li>
+      <li>Hoe te gebruiken?</li>
+      <li>Hoe maak je een library?</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Beschikbare libraries</h2>
+    <ul>
+      <li>Standaard libraries</li>
+      <ul class="fragment">
+        <li><em>SPI</em></li>
+      </ul>
+      <li>Recommended libraries</li>
+      <ul class="fragment">
+        <li><em>Adafruit NeoPixel</em></li>
+      </ul>
+      <li>Contributed libraries</li>
+      <ul class="fragment">
+        <li><em>Adafruit NeoPixel</em></li>
+      </ul>
+      <li>Eigen libraries</li>
+      <ul class="fragment">
+        <li><em>Servo</em></li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Libraries gebruiken</h2>
+    <ul>
+      <li>Via de IDE</li>
+      <ul class="fragment">
+        <li><em>Sketch > Include Library > Librarie Selecteren</em></li>
+      </ul>
+      <li>Manueel</li>
+      <ul class="fragment">
+        <li><em>#include &ltLibraryName.h&gt</em></li>
+        <li>Bovenaan file</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Library Manager</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li><em>Sketch > Include Library > Manage Libraries ...</em> </li>
+        <li>Makkelijk toevoegen van Libraries</li>
+        <ul>
+          <li>Libraries downloaden</li>
+          <li>Een gezipte librarie toevoegen</li>
+          <ul>
+            <li><em>Sketch > Include Library > Add .ZIP Library ...</em> </li>
+          </ul>
+        </ul>
+        <li>Locatie</li>
+        <ul>
+          <li><em>$USER_DIR/Arduino/libraries</em></li>
+          <li><em>/home/luytsm/Arduino/libraries</em></li>
+          <li><em>c:/Users/luytsm/Arduino/libraries</em></li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <img src="img/lib_mgr.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Handleiding: C/C++</h2>
+    <p>Zie: </p>
+    <ul>
+      <li>Preprocessor</li>
+      <li>Header Files</li>
+      <li>Classes</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Eigen library maken</h2>
+    <ul>
+      <li>Quick</li>
+      <li>Full</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Quick</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>In project folder</li>
+        <li>Niet meer dan een class declaratie</li>
+        <ul>
+          <li>myLib.h</li>
+          <li>myLib.cpp</li>
+        </ul>
+        <li>#include "myLib.h"</li>
+        <li>Wordt automatisch mee geopend bij project</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <p><em><b>Project Folder Structuur</b></em></p>
+      <pre><code class="bash">
+        labo3_guacamole
+        ├── Guacamole.cpp
+        ├── Guacamole.h
+        └── labo3_guacamole.ino
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Full</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>$USER_DIR/Arduino/libraries</li>
+        <li>Wat voor het meer dan Quick</li>
+        <ul>
+          <li>Syntax Highlighting</li>
+          <li>Examples</li>
+          <li>Toegankelijk voor elk nieuw project</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <p><em><b>Library Folder Structuur</b></em></p>
+      <pre><code class="bash">
+      TestLib
+      ├── examples
+      │   └── SimpleExample.ino
+      ├── keywords.txt
+      ├── library.properties
+      └── src
+          ├── TestLib.cpp
+          └── TestLib.h
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Keywords</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Syntax Highlighting in de Arduino IDE</li>
+        <li>Reflectie van header file</li>
+        <li>KEYWORD1</li>
+        <ul>
+          <li>Datatypes</li>  
+          <li>Class Definities</li>
+        </ul>
+        <li>KEYWORD2</li>
+        <ul>
+          <li>Methoden</li>
+          <li>Functies</li>
+        </ul>
+        <li>LITERAL1</li>
+        <ul>
+          <li>Constanten</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre><code>
+        #######################################
+        # Syntax Coloring Map SPI
+        #######################################
+
+        #######################################
+        # Datatypes (KEYWORD1)
+        #######################################
+
+        SPI	KEYWORD1
+
+        #######################################
+        # Methods and Functions (KEYWORD2)
+        #######################################
+        begin	KEYWORD2
+        end	KEYWORD2
+        transfer	KEYWORD2
+        setBitOrder	KEYWORD2
+        setDataMode	KEYWORD2
+        setClockDivider	KEYWORD2
+
+
+        #######################################
+        # Constants (LITERAL1)
+        #######################################
+        SPI_CLOCK_DIV4	LITERAL1
+        SPI_CLOCK_DIV16	LITERAL1
+        SPI_CLOCK_DIV64	LITERAL1
+        SPI_CLOCK_DIV128	LITERAL1
+        SPI_CLOCK_DIV2	LITERAL1
+        SPI_CLOCK_DIV8	LITERAL1
+        SPI_CLOCK_DIV32	LITERAL1
+        SPI_CLOCK_DIV64	LITERAL1
+        SPI_MODE0	LITERAL1
+        SPI_MODE1	LITERAL1
+        SPI_MODE2	LITERAL1
+        SPI_MODE3	LITERAL1
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Properties File</h2>
+    <p>Metadata voor de Library Manager</p>
+    <pre><code>
+      name=SPI
+      version=1.0
+      author=Arduino
+      maintainer=Arduino <info@arduino.cc>
+      sentence=Enables the communication with devices that use the Serial Peripheral Interface (SPI) Bus.  
+      paragraph=SPI is a synchronous serial data protocol used by microcontrollers for communicating with one or more peripheral devices quickly over short distances. It uses three lines common to all devices (MISO, MOSI and SCK) and one specific for each device.
+      category=Communication
+      url=http://www.arduino.cc/en/Reference/SPI
+      architectures=avr
+    </code></pre>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <div style="float: left; width: 50%;">
+    <ol>
+      <li>Quick Library</li>
+      <ul>
+        <li>Steek deze debug statements in header file</li>
+        <li>Include dit in een bestaand project</li>
+        <li>Roept een *_INIT functie</li>
+        <li>Verify</li>
+      </ul>
+    </ol>
+    </div>
+    <div style="float: left; width: 50%;">
+    <pre><code class="Arduino">
+#define DEBUG
+#define LOG
+
+#ifdef DEBUG
+  #define DEBUG_INIT() sDebug[128];
+  #define DEBUG_PRINTHEX(T, v) Serial.print(T); sprintf(sDebug, "%x\n\r", v); Serial.print(sDebug);
+  #define DEBUG_PRINTDEC(T, v) Serial.print(T); sprintf(sDebug, "%d\n\r", v); Serial.print(sDebug);
+  #define DEBUG_HALT() (Serial.available() == 0); Serial.setTimeout(1); Serial.readBytes(sDebug, 1);
+#endif
+
+#ifdef LOG
+  #define LOG_INIT sLog[128];
+  #define LOG_PRINTHEX(T, v) Serial.print(T); sprintf(sLog, "%x\n\r", v); Serial.print(sLog);
+  #define LOG_PRINTDEC(T, v) Serial.print(T); sprintf(sLog, "%d\n\r", v); Serial.print(sLog);
+  #define LOG_HALT() while(Serial. available() == 0); Serial.setTimeout(1); Serial.readBytes(sLog, 1);
+#endif
+    </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2></h2>
+    <ul>
+      <li>Grote voordeel: encapsulatie & verbergen complexiteit</li>
+      <li>"Standaard" Arduino gebruikers hoeven dit niet te doen/weten.</li>
+      <li>Dit is in principe niets meer dan het concept klasse uit OOP talen.</li>
+      <li>Wat ontbreek: “new” keyword (geen dynamisch geheugen, objecten blijven “altijd” bestaan) </li>
+    </ul>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <div style="float: left; width: 33%;">
+      <ol start="2">
+        <li>Full Library</li>
+        <ul>
+          <li>Conveert de Morse Class naar een full library</li>
+          <ul>
+            <li>Beschikbaar voor elke project</li>
+            <li>Code Highlighting</li>
+          </ul>
+        </ul>
+      </ol>
+    </div>
+    <div style="float: left; width: 30%;">
+      <em><b>Morse.h</b></em>
+      <pre><code class="Arduino">
+        #ifndef Morse_h
+        #define Morse_h
+
+        #include "Arduino.h"
+
+        class Morse
+        {
+          public:
+            Morse(int pin);
+            void dot();
+            void dash();
+          private:
+            int _pin;
+        };
+
+        #endif
+      </code></pre>
+    </div>
+    <div style="float: left; width: 30%;">
+      <em><b>Morse.cpp</b></em>
+      <pre><code class="Arduino">
+        Morse::Morse(int pin)
+        {
+          pinMode(pin, OUTPUT);
+          _pin = pin;
+        }
+
+        void Morse::dot()
+        {
+          digitalWrite(_pin, HIGH);
+          delay(250);
+          digitalWrite(_pin, LOW);
+          delay(250);  
+        }
+
+        void Morse::dash()
+        {
+          digitalWrite(_pin, HIGH);
+          delay(1000);
+          digitalWrite(_pin, LOW);
+          delay(250);
+        }
+      </code></pre>
+
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Board Manager</h1>
+  </section>
+  <section>
+    <h2>Board Manager</h2>
+    <img src="img/board_mgr.png" alt="">
+  </section>
+</section>
