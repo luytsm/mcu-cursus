@@ -303,6 +303,88 @@ reveal:
 </section>
 <section>
   <section>
+    <h1>Timers</h1>
+  </section>
+  <section>
+    <h2>Timers</h2>
+    <ul>
+      <li>Arduino claimt de timers van de mcu</li>
+      <li>Arduino biedt geen directe acces aan</li>
+      <li>Arduino legt exposed de timers dmv:</li>
+      <ul>
+        <li>delay()</li>
+        <li>delayMicros()</li>
+        <li>millis()</li>
+        <li>micros()</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Delay</h2>
+    <ul>
+      <li>delay(int ms)</li>
+      <ul>
+        <li>Pause;</li>
+        <li>milliseconden</li>
+        <li>Blocking</li>
+        <li><a href="https://www.arduino.cc/en/Reference/Delay">Referentie</a></li>
+      </ul>
+      <li>delayMicros(int µs)</li>
+      <ul>
+        <li>≈ delay()</li>
+        <li>microseconden</li>
+        <a href="https://www.arduino.cc/en/Reference/DelayMicroseconds">Referentie</a>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Millis</h2>
+    <ul>
+      <li>millis()</li>
+      <ul>
+        <li>Tijd sinds het opstarten van de mcu</li>
+        <li>milliseconden</li>
+        <li>Overflow na 50 dagen</li>
+        <li><a href="https://www.arduino.cc/en/Reference/Millis">Referentie</a></li>
+      </ul>
+      <li></li>
+      <ul>
+        <li>≈ millis()</li>
+        <li>Tijd sinds het opstarten van de mcu</li>
+        <li>milliseconden</li>
+        <li><a href="https://www.arduino.cc/en/Reference/Micros">Referentie</a></li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Example</h2>
+    <pre><code class="Arduino">
+     const int ledPin =  13; 
+     int ledState = LOW;    
+        
+     long previousMillis = 0;
+
+     const long interval = 1000;    
+
+     void setup() {
+       pinMode(ledPin, OUTPUT);
+     }
+
+     void loop() {
+       unsigned long currentMillis = millis();
+
+       if (currentMillis > interval + previousMillis ) {
+         previousMillis = currentMillis;
+         ledstate = !ledstate
+         digitalWrite(ledPin, ledState);
+       }
+     }
+
+     </code></pre>
+  </section>
+</section>
+<section>
+  <section>
     <h1>Interrupts</h1>
   </section>
   <section>
@@ -387,6 +469,7 @@ reveal:
       </ul>
       <li>4 Functies</li>
       <li><a href="https://www.arduino.cc/en/Reference/Interrupts">Arduino Interrupt Reference</a></li>
+      <li><em>delay() werkt niet in een ISR</em></li>
     </ul>
   </section>
   <section>
@@ -440,7 +523,8 @@ detachInterrupt(digitalPinToInterrupt(pin));
         <li>Account aanmaken</li>
       </ul>
       <li><a href="https://circuits.io/circuits/1357989-interrupt-example#breadboard">Dupliceer deze oefening</a></li>
-      <li>Toggle de status van de interne led met drukknop</li>
+      <li>Toggle de status van een led met drukknop</li>
+      <li>Debounce de interrupt schakelaar met een delay van 1000ms</li>
     </ul>
     <aside class="notes">
       <pre><code class="Arduino">
@@ -487,7 +571,7 @@ void loop() {
     <p><em><b>Voor zowel de hard -en software vertrekken we van een ...</b></em></p>
     <div style="float: left; width: 50%">
       <h3>Pull Up Resistor</h3>
-      <img src="img/pullup_resistor.png" style="background: white;" alt="">
+      <img src="img/pullup_resistor.png" style="background: white;" alt="nn">
     </div>
     <div style="float: left; width: 50%">
       <h3>Pull Down Resistor</h3>
@@ -699,3 +783,4 @@ void loop() {
     </code></pre>
   </section>
 </section>
+
