@@ -1,6 +1,6 @@
 ---
 title: "Les 5: Ditching the Arduino"
-description: "None"
+description: "Beginnen met de microcontrollers, "
 reveal: 
 ---
 <section>
@@ -14,7 +14,67 @@ reveal:
     <li><h6 class="fragment">Ontwikkelingsomgeving</h6></li>
     <li><h6 class="fragment">Rapid Prototyping</h6></li>
   </ul>
+  <h2 class="fragment">Voor wie is de arduino gemaakt?</h2>
+  <h3 class="fragment">Niet voor ons</h3>
 </section>
 <section>
-  
+  <h2>Is het Arduino platform voldoende?</h2>
+  <h2 class="fragment">Nee</h2>
+</section>
+<section>
+  <h2>Waarom niet</h2>
+  <ul>
+    <h6>
+      <li class="fragment"></li>
+      <li class="fragment"></li>
+      <li class="fragment"></li>
+      <li class="fragment"></li>
+      <li class="fragment"></li>
+    </h6>
+  </ul>
+</section>
+<section>
+  <h2>Praktisch Voorbeeld: Memory Usage</h2>
+  <div style="float: left; width: 50%;">
+    <h3>Using the Arduinio libraries</h3>
+			<pre><code style="height: 375px;" class="Arduinio">
+				#include &ltArduino.h&gt
+
+				void setup()
+				{
+					pinMode(LED_BUILTIN, OUTPUT);
+				}
+
+				void loop()
+				{
+					digitalWrite(LED_BUILTIN, HIGH);
+					delay(1000);
+					digitalWrite(LED_BUILTIN, LOW);
+					delay(1000);
+				}
+			</code></pre>
+    <p class="fragment">Compiled size: 1034 bytes (3.2%)</p>
+  </div>
+  <div style="float: left; width: 50%;">
+    <h3>Without the Arduino library</h3>
+		<pre><code style="height: 375px;"class="Arduino">
+        #include &ltavr/io.&gt
+        #include &ltutil/delay.h&gt
+
+        int main(void)
+        {
+            DDRB = 1 &lt&lt 5;
+            while (1)
+            {
+                _delay_ms(500);
+                PORTB ^= 1 &lt&lt 5;
+            }
+            return 0;
+        }
+    </code></pre>
+    <p class="fragment">Compiled size: 158 bytes (0.5%)</p>
+	</div>
+</section>
+<section data-background-image="img/obi_wan.jpg" data-background-size="contain">
+  <div style="float: right;"><h2>Only A Sith Deals In Absolutes</h2></div>
 </section>
