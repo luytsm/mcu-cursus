@@ -22,14 +22,14 @@ reveal:
   <h2 class="fragment">Nee</h2>
 </section>
 <section>
-  <h2>Waarom niet</h2>
+  <h2>Wat is de Arduino niet</h2>
   <ul>
     <h6>
-      <li class="fragment"></li>
-      <li class="fragment"></li>
-      <li class="fragment"></li>
-      <li class="fragment"></li>
-      <li class="fragment"></li>
+      <li class="fragment">Efficiënt</li>
+      <li class="fragment">Licht Gewicht</li>
+      <li class="fragment">Onthullend</li>
+      <li class="fragment">Performant</li>
+      <li class="fragment">Programmeertaal</li>
     </h6>
   </ul>
 </section>
@@ -37,44 +37,150 @@ reveal:
   <h2>Praktisch Voorbeeld: Memory Usage</h2>
   <div style="float: left; width: 50%;">
     <h3>Using the Arduinio libraries</h3>
-			<pre><code style="height: 375px;" class="Arduinio">
-				#include &ltArduino.h&gt
+		<pre><code style="height: 375px;" class="Arduinio">
+#include &ltArduino.h&gt
 
-				void setup()
-				{
-					pinMode(LED_BUILTIN, OUTPUT);
-				}
+void setup()
+{
+    pinMode(LED_BUILTIN, OUTPUT);
+}
 
-				void loop()
-				{
-					digitalWrite(LED_BUILTIN, HIGH);
-					delay(1000);
-					digitalWrite(LED_BUILTIN, LOW);
-					delay(1000);
-				}
-			</code></pre>
-    <p class="fragment">Compiled size: 1034 bytes (3.2%)</p>
+void loop()
+{
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
+}
+  </code></pre>
+  <p class="fragment">Compiled size: 1034 bytes (3.2%)</p>
   </div>
   <div style="float: left; width: 50%;">
     <h3>Without the Arduino library</h3>
 		<pre><code style="height: 375px;"class="Arduino">
-        #include &ltavr/io.&gt
-        #include &ltutil/delay.h&gt
+#include &ltavr/io.&gt
+#include &ltutil/delay.h&gt
 
-        int main(void)
-        {
-            DDRB = 1 &lt&lt 5;
-            while (1)
-            {
-                _delay_ms(500);
-                PORTB ^= 1 &lt&lt 5;
-            }
-            return 0;
-        }
+int main(void)
+{
+    DDRB = 1 &lt&lt 5;
+    while (1)
+    {
+        _delay_ms(500);
+        PORTB ^= 1 &lt&lt 5;
+    }
+  return 0;
+}
     </code></pre>
     <p class="fragment">Compiled size: 158 bytes (0.5%)</p>
 	</div>
 </section>
+<section>
+  <h2>Praktisch Voorbeeld: Efficiëntie</h2>
+  <img style="height: 500px;" src="img/arduino_not_efficient.png" alt="">
+  <p><small>Snelheid digitalWrite vs bitflip</small></p>
+</section>
+<section>
+  <h2>Arduino is geen taal</h2>
+  <ul>
+    <h5>
+      <li>Arduino is C/C++</li>
+      <li>Het Arduino software framework is gebaseerd op wiring</li>
+      <li>.ino zijn "wannabe" .cpp files</li>
+    </h5>
+  </ul>
+</section>
+<section>
+  <div style="float: left; width: 50%;">
+    <h3>main.cpp</h3>
+    <img src="img/maincpp.png" alt="">
+  </div>
+  <h3>Blink</h3>
+  <div style="float: left; width: 50%;">
+    <img src="img/blink_loop.gif" alt="">
+  </div>
+  <p><small>
+    Om een programma te generen voor een Arduino board is er nog heel wat
+    achterliggend proces nodig. Het framework verstop dit voor ons, zodat we
+    moeilijk een beeld kunnen schetsen van de werking.  
+  </small></p>
+</section>
 <section data-background-image="img/obi_wan.jpg" data-background-size="contain">
   <div style="float: right;"><h2>Only A Sith Deals In Absolutes</h2></div>
 </section>
+<section>
+  <h2>Is Arduino geschikt voor ons?</h2>
+  <h2 class="fragment">Ja</h2>
+</section>
+<section>
+  <h2>Wat zijn de voordelen van het Arduino platform</h2>
+  <ul>
+    <h5>
+      <li class="fragment">Out of the box features</li>
+      <li class="fragment">Snel werkend prototype</li>
+      <li class="fragment">Programmeren via USB</li>
+      <li class="fragment">Bootloader</li>
+      <h3><li class="fragment">Hardware Abstraction Layer</li></h3>
+    </h5>
+  </ul>
+</section>
+<section>
+  <h2>Hardware Abstraction Layer</h2>
+  <img style="height: 500px;" src="img/hal.png" alt="">
+</section>
+<section>
+  <h2>HAL Is Resuable Code</h2>
+  <h2>Reuable Code is Portable</h2>
+</section>
+<section>
+  <h2>Resuable Code Is Portable</h2>
+  <img style="height: 500px;" src="img/changed_mcu.png" alt="">
+</section>
+<section>
+  <h2>Resuable Code Is Portable</h2>
+  <img style="height: 500px;" src="img/why_change_mcu.png" alt="">
+</section>
+<section>
+  <h2>Resuable Code Is Portable</h2>
+  <img style="height: 500px;" src="img/why_not_change_mcu.png" alt="">
+</section>
+<section>
+  <h2>Hardware Abstraction Layer</h2>
+  <img style="height: 500px;" src="img/hal_advantages.png" alt="">
+</section>
+<section>
+  <h2>Arduino is een HAL</h2>
+  <h3>Dus de minpunten van een HAL zijn</h3>
+  <ul>
+    <h5>
+      <li class="fragment">Niet Efficiënt</li>
+      <li class="fragment">Zwaar Gewicht</li>
+      <li class="fragment">Limieten capaciteiten</li>
+    </h5>
+  </ul>
+</section>
+<section>
+  <h2>Maar nu de conclusie:</h2>
+  <h4>Arduino is een goed start punt maar we moeten verder met microcontrollers</h4>
+  <h2>Hardware Selectie</h2>
+</section>
+<section>
+  <h2>Computer Systemen</h2>
+  <div style="float: left; width: 70%;">
+    <ul>
+      <h5>
+        <li>Desktop Computers / Servers</li>
+        <li>Single Board Computers</li>
+        <li>System on Chip</li>
+        <li>Microcontrollers</li>
+      </h5>
+    </ul>
+  </div>
+  <div style="float: left; width: 30%; display: flex; flex-direction: column">
+    <p>"Full Stack"</p>
+    <img class="plain" style="background: none; height: 200px" src="img/updown.png" alt="">
+    <p>"Bare Metal"</p>
+  </div>
+
+</section>
+
