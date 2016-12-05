@@ -1,0 +1,367 @@
+---
+title: "Les 6: IO Operaties Naturel"
+description: "IO Operaties door registers aan te spreken"
+reveal:
+---
+<section>
+  <h1>IO Operaties Naturel</h1>
+</section>
+<section>
+  <h2>GPIO Pins</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul style="width: 40%">
+      <h5>
+        <li>2 Richtingen</li>
+        <li>3 States</li>
+        <li>Gedeelte functionaliteit</li>
+        <li>Poort Niveau</li>
+      </h5>
+    </ul>
+    <img src="img/internal_pullup.png" style="height: 400px;" alt="">
+  </div>
+</section>
+<section>
+  <h2>Tri State Logica</h2>
+  <div style="float: left; width: 50%">
+    <table style="width: 80%;">
+      <tr>
+        <td style="width: 33%;">A</td>
+        <td style="width: 33%;">B</td>
+        <td style="width: 33%;">C</td>
+      </tr>
+      <tr>
+        <td style="width: 33%;">0</td>
+        <td style="width: 33%;">1</td>
+        <td style="width: 33%;">0</td>
+      </tr>
+      <tr>
+        <td style="width: 33%;">1</td>
+        <td style="width: 33%;">1</td>
+        <td style="width: 33%;">1</td>
+      </tr>
+      <tr style="outline: 5px solid red;">
+        <td style="width: 33%;">X</td>
+        <td style="width: 33%;">0</td>
+        <td style="width: 33%;">Z</td>
+      </tr>
+    </table>
+  </div>
+  <div style="float: left; width: 50%">
+    <img src="img/tri_state_buffer.png" style="height: 400px; background: white; margin: auto;" alt="">
+    <div>
+</section>
+<section>
+  <h2>Tri State Logica</h2>
+  <ul>
+    <li>pinMode = INPUT</li>
+    <li>Pin is dan hoog impedant</li>
+    <li>Pin kan dan zweven(Waardes zijn random)</li> 
+    <li>Reden</li>
+    <ul>
+      <li>Ruis op het systeem</li>
+      <li>Capacitieve koppeling</li>
+    </ul>
+    <li>Oplossing</li>
+    <ul>
+      <li>Extern</li>
+      <li>Intern</li>
+    </ul>
+  </ul>
+</section>
+<section>
+  <h2>Extern</h2>
+  <div style="float: left; width: 33%">
+    <ul>
+      <li>Pull Up:</li>
+      <ul>
+        <li>constant HIGH signaal</li>
+        <li>constant stroom verbruik</li>
+      </ul>
+      <li>Pull Down:</li>
+      <ul>
+        <li>constant LOW signaal</li>
+        <li>geen stroom verbruik</li>
+      </ul>
+      <li><a href="http://electronics.stackexchange.com/questions/113009/when-to-use-pull-down-vs-pull-up-resistors">Keuze afhankelijk van je input</a></li>
+      <li>Voor een simpele push button kan beide</li>
+    </ul>
+  </div>
+  <div style="float: left; width: 30%">
+    <h3>Pull Up Resistor</h3>
+    <img src="img/pullup_resistor.png" style="background: white;" alt="">
+  </div>
+  <div style="float: left; width: 30%">
+    <h3>Pull Down Resistor</h3>
+    <img src="img/pulldown_resistor.png" style="background: white;" alt="">
+  </div>
+</section>
+<section>
+  <h2>Registers</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul style="width: 40%">
+      <h5>
+        <li>Geheugen locatie</li>
+        <li>Gekoppeld aan een functionaliteit</li>
+        <li>8 Bytes = 255 mogelijkheden </li>
+      </h5>
+    </ul>
+    <img style="height: 400px;"src="img/sfr_mem.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Registers</h2>
+    <img style="height: 400px;"src="img/sfr_example.png" alt="">
+</section>
+<section>
+  <h2>Poorten</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul style="width: 40%;">
+      <h5>
+        <li>Verzameling GPIOs</li>
+        <ul>
+          <li>Fysiek</li>
+          <li>Configuratie</li>
+        </ul>
+        <li>Beïnvloed door meerdere registers</li>
+        <ul>
+          <li>DDRx</li>
+          <li>PORTx</li>
+          <li>PINx</li>
+        </ul>
+        <li>Read/Modify/Write  </li>
+      </h5>
+    </ul>
+    <img src="img/io_port.png" style="height: 500px;"  alt="">
+  </div>
+</section>
+<section>
+  <h2>Poorten</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+  <img style="width: 45%; height: 500px; margin: auto;" src="img/atmega328-pinout.png" alt="">
+  <img style="width: 45%; height: 500px; margin: auto;" src="img/arduino_pinout.jpg" alt="">
+  </div>
+</section>
+<section>
+  <h2>Registers</h2>
+  <ul>
+    <li>PORTx</li>
+    <li>DDRx</li>
+    <li>PINx</li>
+    <li class="fragment">MCUCR</li>
+  </ul>
+</section>
+<section>
+  <h2>Port Register B/C/D (PORTx)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h5>
+        <li>Instellen van logische level</li>
+        <li>Instellen van interne pull up weerdstand</li>
+        <ul>
+          <li>if (DDXy = 0 & PORTxy) then PullUp = 1 </li>
+        </ul>
+      </h5>
+    </ul>
+    <img src="img/portb.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Data Direction Register B/C/D (DDRx)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h5>
+        <li>Input of Output</li>
+        <ul>
+          <li>Input = 0</li>
+          <li>Output = 1</li>
+        </ul>
+      </h5>
+    </ul>
+    <img src="img/ddrb.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Pinmode</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul style="width: 40%">
+      <h5>
+        <li>Arduino Pin != IO Pin</li>
+        <li>Mapping</li>
+        <li>Configuratie door zetten bits</li>
+      </h5>
+    </ul>
+    <pre><code class="Arduino">
+void pinMode(uint8_t pin, uint8_t mode)
+{
+	uint8_t bit = digitalPinToBitMask(pin);
+	uint8_t port = digitalPinToPort(pin);
+	volatile uint8_t *reg, *out;
+
+	if (port == NOT_A_PIN) return;
+
+	// JWS: can I let the optimizer do this?
+	reg = portModeRegister(port);
+	out = portOutputRegister(port);
+
+	if (mode == INPUT) { 
+		uint8_t oldSREG = SREG;
+                cli();
+		*reg &= ~bit;
+		*out &= ~bit;
+		SREG = oldSREG;
+	} else if (mode == INPUT_PULLUP) {
+		uint8_t oldSREG = SREG;
+                cli();
+		*reg &= ~bit;
+		*out |= bit;
+		SREG = oldSREG;
+	} else {
+		uint8_t oldSREG = SREG;
+                cli();
+		*reg |= bit;
+		SREG = oldSREG;
+	}
+}
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Pin Input Register B/C/D (PINx)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h5>
+        <li>Read Only Register</li>
+        <li>Pin State</li>
+        <li>Schrijven heeft geen effect</li>
+      </h5>
+    </ul>
+    <img src="img/pinb.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Microcontroller Control Register (MCUCR)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h5>
+        <li>Read Only Register</li>
+        <li>Pin State</li>
+        <li>Schrijven heeft geen effect</li>
+      </h5>
+    </ul>
+    <img src="img/pinb.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>IO Definition File (io.h)</h2>
+  <div style="display: flex; align-items: center justify-content: center;">
+    <pre style="width: 45%; margin: auto;"><code class="Arduino">
+#ifndef _AVR_IO_H_
+#define _AVR_IO_H_
+
+#include <avr/sfr_defs.h>
+
+#if defined (__AVR_AT94K__)
+#  include <avr/ioat94k.h>
+#elif defined (__AVR_AT43USB320__)
+#  include <avr/io43u32x.h>
+#elif defined (__AVR_AT43USB355__)
+#  include <avr/io43u35x.h>
+#elif defined (__AVR_AT76C711__)
+#  include <avr/io76c711.h>
+#elif defined (__AVR_AT90PWM3__)
+#  include <avr/io90pwmx.h>
+#elif defined (__AVR_AT90PWM3B__)
+#  include <avr/io90pwm3b.h>
+#elif defined (__AVR_AT90PWM216__)
+#  include <avr/io90pwm216.h>
+#elif defined (__AVR_AT90PWM316__)
+#  include <avr/io90pwm316.h>
+#elif defined (__AVR_AT90PWM161__)
+#  include <avr/io90pwm161.h>
+#elif defined (__AVR_AT90PWM81__)
+#  include <avr/io90pwm81.h>
+#elif defined (__AVR_ATmega8U2__)
+#  include <avr/iom8u2.h>
+*****
+    </code></pre>
+    <pre style="width: 45%; margin: auto;"><code class="Arduino">
+#define PINB _SFR_IO8(0x03)
+#define PINB0 0
+#define PINB1 1
+#define PINB2 2
+#define PINB3 3
+#define PINB4 4
+#define PINB5 5
+#define PINB6 6
+#define PINB7 7
+
+#define DDRB _SFR_IO8(0x04)
+#define DDB0 0
+#define DDB1 1
+#define DDB2 2
+#define DDB3 3
+#define DDB4 4
+#define DDB5 5
+#define DDB6 6
+#define DDB7 7
+
+#define PORTB _SFR_IO8(0x05)
+#define PORTB0 0
+#define PORTB1 1
+#define PORTB2 2
+#define PORTB3 3
+#define PORTB4 4
+#define PORTB5 5
+#define PORTB6 6
+#define PORTB7 7
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Oefening #1</h2>
+  <div style="display: flex; align-items: center justify-content: center;">
+    <ul style="width: 40%">
+      <h5>
+        <li>Laad de code op <a href="circuits.io">circuits.io</a></li>
+        <li>Kloon het interrupt Example</li>
+        <li>Geef de waardes van de registers na elke loop</li>
+      </h5>
+    </ul>
+    <pre><code class="Arduino">
+#include <avr/io.>
+#include <util/delay.h>
+
+int main(void)
+{
+    DDRB |= 1 << DDB5;
+    while (1)
+    {
+        _delay_ms(500);
+        PORTB ^= 1 <<  PORTB5;
+    }
+  return 0;
+}
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Oefening #2 </h2>
+  <ul>
+    <h5>
+      <li>Vanuit de interrupt oefening:</li>
+      <ul>
+        <li>Laat een led branden via pin 4 van de Arduino</li>
+      </ul>
+    </h5>
+  </ul>
+  <h2>Oefening #3</h2>
+  <ul>
+    <h5>
+      <li>Vanuit de interrupt oefening</li>
+      <ul>
+        <li>Lees de input van de pushbutton</li>
+        <li>Laat de led branden afhankelijk van de waarde op de button </li>
+      </ul>
+    </h5>
+  </ul>
+</section>

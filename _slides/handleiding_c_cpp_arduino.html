@@ -560,17 +560,17 @@ reveal:
     <div style="float: left; width: 40%">
       <pre><code class="Arduino">
         class Base {
- 
+
           public:
- 
+
           // public members go here
-  
+
           protected:
- 
+
           // protected members go here
- 
+
           private:
- 
+
           // private members go here
       }
       </code></pre>
@@ -586,7 +586,7 @@ reveal:
                 double length;      // Length of a box
                 double breadth;     // Breadth of a box
                 double height;      // Height of a box
-             
+
                 double getVolume(void) {
                    return length * breadth * height;
                 }
@@ -662,6 +662,405 @@ reveal:
 </section>
 <section>
   <section>
-    <h1></h1>
+    <h1>Pointers</h1>
+    <h2>Coming Soon...</h2>
   </section>
+</section>
+<section>
+  <section>
+    <h1>Bit Operaties</h1>
+  </section>
+  <section>
+    <h2>Manipulatie op bitniveau</h2>
+    <ul>
+      <h5>
+        <li>Microcontroller werkt met registers</li>
+        <li>Meer controle, Meer kracht</li>
+        <li>Efficiëntie</li>
+      </h5>
+    </ul>
+  </section>
+  <section>
+    <h1>Stel je eens voor?</h1>
+  </section>
+  <section>
+    <h2>Status van een lamp</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <ul style="width: 60%; ">
+        <h5>
+          <li>Status van een lamp: 1 ? 0</li>
+          <li>1 bit informatie</li>
+          <li>sizeof(int) = 4 bytes</li>
+          <ul>
+            <li>Overkill</li>
+          </ul>
+          <li>Kleinste datatype = </li>
+          <ul>
+            <li class="fragment">Byte</li>
+            <li class="fragment">Oplossing bitoperaties</li>
+          </ul>
+        </h5>
+      </ul>
+      <img class="plain" style="height: 400px; background: none ;" src="img/light_bulb.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Bitwise Operators</h2>
+    <table>
+      <tbody><tr>
+          <th>Symbol</th>
+          <th>Operator</th>
+        </tr>
+        <tr>
+          <td>&amp;</td>
+          <td>bitwise AND</td>
+        </tr>
+        <tr>
+          <td>|</td>
+          <td>bitwise inclusive OR</td>
+        </tr>
+        <tr>
+          <td>^</td>
+          <td>bitwise XOR (eXclusive OR)</td>
+        </tr>
+        <tr>
+          <td>&lt;&lt;</td>
+          <td>left shift</td>
+        </tr>
+        <tr>
+          <td>&gt;&gt;</td>
+          <td>right shift</td>
+        </tr>
+        <tr>
+          <td>~</td>
+          <td>bitwise NOT (one's complement) (unary)</td>
+        </tr>
+      </tbody></table>
+  </section>
+  <section>
+    <h2>Bitwise Operators</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
 
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Bitwise AND (&)</h3>
+        <table class="wikitable">
+          <tbody><tr>
+              <th>bit a</th>
+              <th>bit b</th>
+              <th>a &amp; b (a AND b)</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody></table>
+          <pre><code>
+11001000 & 
+10111000 = 
+-------- 
+10001000
+          </code></pre>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Bitwise OR (|)</h3>
+        <table>
+          <tbody><tr>
+              <th>bit a</th>
+              <th>bit b</th>
+              <th>a | b (a OR b)</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody></table>
+          <pre><code style="he">
+11001110
+| 10011000
+-------- 
+= 11011110
+          </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Bitwise Operators</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Bitwise XOR (^)</h3>
+        <table class="wikitable">
+          <tbody><tr>
+              <th>bit a</th>
+              <th>bit b</th>
+              <th>a ^ b (a XOR b)</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </tbody></table>
+          <pre><code>
+11001110
+| 10011000
+-------- 
+= 01010110
+          </code></pre>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Bitwise OR (|)</h3>
+        <table class="wikitable">
+          <tbody><tr>
+              <th>bit a</th>
+              <th>~a (complement of a)</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </tbody></table>
+          <pre><code>
+
+~11001110
+-------- 
+= 00110001
+          </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Bitwise Operators</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Left Shift</h3>
+        <pre><code>
+11001110 << 1
+           -------- 
+           = 01100010
+        </code></pre>
+        <pre><code>
+11001110 << 5
+           -------- 
+           = 11000000 
+        </code></pre>
+        <ul class="fragment">
+          <h5>
+            <li class="fragment">Opvullen met 0</li>
+            <li class="fragment">Maal 2</li>
+          </h5>
+        </ul>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Right  Shift</h3>
+        <pre><code>
+11001110 >> 1
+-------- 
+= 01100111
+        </code></pre>
+        <pre><code>
+11001110 >> 5
+-------- 
+= 00000110
+        </code></pre>
+        <ul class="fragment">
+          <h5>
+            <li class="fragment">Opvullen met 0</li>
+            <li class="fragment">Delen door 2</li>
+          </h5>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Testje</h2>
+    <a href="https://www.cs.ucsb.edu/~pconrad/cs16/topics/bitOps/?formForQuestion3Response=120">Klik Hier</a>
+  </section>
+  <section>
+    <h2>Bitwise Assigment</h2>
+    <table class="wikitable sortable jquery-tablesorter">
+      <thead><tr>
+          <th>Symbol</th>
+          <th>Operator</th>
+        </tr></thead><tbody>
+          <tr>
+            <td><code>&amp;=</code></td>
+            <td>bitwise AND assignment</td>
+          </tr>
+          <tr>
+            <td><code>|=</code></td>
+            <td>bitwise inclusive OR assignment</td>
+          </tr>
+          <tr>
+            <td><code>^=</code></td>
+            <td>bitwise exclusive OR assignment</td>
+          </tr>
+          <tr>
+            <td><code>&lt;&lt;=</code></td>
+            <td>left shift assignment</td>
+          </tr>
+          <tr>
+            <td><code>&gt;&gt;=</code></td>
+            <td>right shift assignment</td>
+          </tr>
+        </tbody><tfoot></tfoot></table>
+  </section>
+  <section>
+    <h2>Bit mask</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+        <h3>Bits selecteren</h3>
+        <pre><code>
+    10010101   10100101
+ OR 11110000   11110000
+  = 11110101   11110101
+        </code></pre>
+        <pre><code class="c">
+byte x = 0x95A5;
+byte y = 0xF0F0
+byte z = x | y;
+byte z = 0xF5F5;
+        </code></pre>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+        <h3>Bits deselecteren</h3>
+        <pre><code>
+    10010101   10100101
+AND 00001111   00001111
+  = 00000101   00000101
+        </code></pre>
+        <pre><code class="c">
+byte x = 0x95A5;
+byte y = 0x0F0F
+byte z = x & y;
+byte z = 0x05F5;
+        </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Bit mask</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+        <h3>Bitwaarde togglen</h3>
+        <pre><code>
+    10011101   10010101
+XOR 00001111   11111111
+  = 10010010   01101010
+        </code></pre>
+        <pre><code class="c">
+byte x = 0x9D95;
+byte y = 0x0FFF
+byte z = x ^ y;
+byte z = 0x926A;
+        </code></pre>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+        <h3>Bitwaarde opvragen</h3>
+        <pre><code>
+    10011101   10010101
+AND 00001000   00001000
+  = 00001000   00000000
+        </code></pre>
+        <pre><code class="c">
+byte x = 0x97A5;
+byte y = 0x0808;
+byte z = x & y;
+byte z = 0x0808;
+        </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Vaak gebruikte operaties</h2>
+    <ul>
+      <li><b>Set a bit</b></li>
+      <pre style="width: 300px;"><code> bit_fld |= (1 << n)</code></pre>
+      <li><b>Clear a bit</b></li>
+      <pre style="width: 300px;"><code> bit_fld &= ~(1 << n)</code></pre>
+      <li><b>Toggle a bit</b></li>
+      <pre style="width: 300px;"><code> bit_fld ^= (1 << n)</code></pre>
+      <li><b>Test a bit</b></li>
+      <pre style="width: 300px;"><code> bit_fld & (1 << n)</code></pre>
+    </ul>
+  </section>
+  <section>
+    <h2>Voorbeelden</h2>
+    <p><b>Write a function setbits(x,p,n,y) that returns x with the n bits that begin at position p set to the rightmost n bits of y, leaving the other bits unchanged.</b></p>
+    <pre><code class="c">
+unsigned setbits(unsigned x, int p, int n, unsigned y)
+{
+  return (x & ((~0 << (p + 1)) | (~(~0 << (p + 1 - n))))) | ((y & ~(~0 << n)) << (p + 1 - n));
+}
+    </code></pre>
+  </section>
+	<section>
+	  <h2>Voorbeelden</h2>
+	  <p><b>Write a function invert(x,p,n) that returns x with the n bits that begin at position p inverted (i.e., 1 changed into 0 and vice versa), leaving the others unchanged.</b></p>
+	  <pre><code class="c">
+unsigned invert(unsigned x, int p, int n)
+{
+    return x ^ (~(~0U << n) << p);
+}
+		</code></pre>
+	</section>
+  <section>
+    <h2>Oefening</h2>
+    <ul>
+      <li>Schrijf een rotate left (ROL) functie</li>
+      <li>Maak gebruik van unsigned integers</li>
+      <li>Gebruik <a href="circuits.io">circuits.io</a></li>
+    </ul>
+  </section>
+</section>

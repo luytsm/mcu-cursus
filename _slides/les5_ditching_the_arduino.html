@@ -674,17 +674,17 @@ int main(void)
 </section>
 <section>
   <h2>High Level To Machine Code</h2>
-  <img src="img/high_to_machine.jpg" alt="">
+  <img style="height: 500px;" src="img/high_to_machine.jpg" alt="">
 </section>
 <section>
   <h2>Arduino vs C/C++ vs Assembly</h2>
   <table>
     <tr>
       <b>
-      <td></td>
-      <td>"Arduino"</td>
-      <td>C/C++</td>
-      <td>Assembly</td>
+        <td></td>
+        <td>"Arduino"</td>
+        <td>C/C++</td>
+        <td>Assembly</td>
       </b>
     </tr>
     <tr>
@@ -737,8 +737,7 @@ int main(void)
 <section>
   <h2>Arithmetic Logic Unit</h2>
   <div style="display: flex; justify-content: center; align-items: center;">
-  <div style="display: flex; justify-content: center; align-items: center;">
-    <div style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column; width: 40%;">
+    <div style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column; width: 30%;">
       <h5>In</h5>
       <ul>
         <h5>
@@ -755,14 +754,13 @@ int main(void)
         </h5>
       </ul>
     </div>
-    <img style="height: 500px;" src="img/alu.png" alt="">
+    <img style="height: 300px;" src="img/alu.png" alt="">
   </div>
 </section>
 <section>
   <h2>Arithmetic Logic Unit</h2>
   <div style="display: flex; justify-content: center; align-items: center;">
-  <div style="display: flex; justify-content: center; align-items: center;">
-    <div style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column;">
+    <div style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column; width: 30%;">
       <h5>In</h5>
       <ul>
         <h5>
@@ -779,8 +777,26 @@ int main(void)
         </h5>
       </ul>
     </div>
-    <img src="img/alu_feedback.png" alt="">
+    <img style="height: 500px;" src="img/alu_feedback.png" alt="">
   </div>
+</section>
+<section>
+  <h2>Von Neuman Cycle</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul style="width: 40%;">
+      <h5>
+        <li>Fetch-Decode-Execute</li>
+        <li>3 Fases</li>
+        <ol>
+          <li>Fetch: Ophalen Opcde</li>
+          <li>Decode: Decoderen van Opcode</li>
+          <li>Execute Uitvoeren van Opcode</li>
+        </ol>
+      </h5>
+    </ul>
+    <img height="300 px" src="img/von_nuemann_cycle.png" alt="">
+  </div>
+
 </section>
 <section data-state="reg-file" style="text-align: left;">
   <h2 style="color: #000000">Register File</h2>
@@ -796,24 +812,24 @@ int main(void)
 <section>
   <h2>Program Counter</h2>
   <div style="display: flex; justify-content: center; align-items: center;">
-  <ul>
-    <h5>
-      <li>aka Instruction Pointer</li>
-      <li>Adres van volgend instructie</li>
-      <li>Update na uitvoeren instructie</li>
-      <ul>
-        <li>Volgen adres</li>
-        <li>Jump adres</li>
-      </ul>
-      <li>Initieel: 0x0000</li>
-    </h5>
-  </ul>
+    <ul>
+      <h5>
+        <li>aka Instruction Pointer</li>
+        <li>Adres van volgend instructie</li>
+        <li>Update na uitvoeren instructie</li>
+        <ul>
+          <li>Volgen adres</li>
+          <li>Jump adres</li>
+        </ul>
+        <li>Initieel: 0x0000</li>
+      </h5>
+    </ul>
   </div>
 </section>
 <section>
   <h2>Stack Pointer</h2>
   <div style="display: flex; justify-content: center; align-items: center;">
-    <ul>
+    <ul style="width: 30%;">
       <h5>
         <ul>
           <li>Gereserveerd & Opeenvolgend</li>
@@ -827,6 +843,51 @@ int main(void)
         </ul>
       </h5>
     </ul>
-    <img style="height: 500px;" src="img/stack_routine.png" alt="">
+    <img style="height: 400px;" src="img/stack_routine.png" alt="">
   </div>
+</section>
+<section>
+  <h2>Geheugen Types</h2>
+  <img src="img/memory_types_avr.png" alt="">
+</section>
+<section>
+  <h2>AVR Geheugen Map</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul>
+      <h5>
+        <li>Sketch - Flash</li>
+        <li>Variablen - SRAM</li>
+        <li>EEPROM - Alleen maar wanneer aangesproken</li>
+      </h5>
+    </ul>
+    <img src="img/avr_memory_map.jpg" alt="">
+  </div>
+</section>
+<section>
+  <h2>Microcontroller Architectuur</h2>
+  Nuemann vs Harvard
+</section>
+<section>
+  <h2>Special Function Register</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul>
+      <h5>
+        <li>GPR</li>
+        <ul>
+          <li>General Purpose Register</li>
+          <li>Opslagen van willekeurige data</li>
+        </ul>
+        <li>SFR</li>
+        <ul>
+          <li>Special Function Register</li>
+          <li>Vaste Locatie in het geheugen voor een specifieke functie</li>
+        </ul>
+      </h5>
+    </ul>
+    <img src="img/sfr_mem.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Special Function Register</h2>
+  <img src="img/sfr_example.png" style="height: 500px;"alt="">
 </section>
