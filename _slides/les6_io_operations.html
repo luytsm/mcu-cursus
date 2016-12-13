@@ -328,19 +328,15 @@ void pinMode(uint8_t pin, uint8_t mode)
       </h5>
     </ul>
     <pre><code class="Arduino">
-#include <avr/io.>
-#include <util/delay.h>
+void setup(){
 
-int main(void)
-{
-    DDRB |= 1 << DDB5;
-               while (1)
-               {
-               _delay_ms(500);
-               PORTB ^= 1 <<  PORTB5;
-               }
-               return 0;
-               }
+    DDRB |= 1 << DDB0;
+
+}
+void loop(){
+    _delay_ms(500);
+    PORTB ^= 1 <<  PORTB0;
+}
     </code></pre>
   </div>
 </section>
