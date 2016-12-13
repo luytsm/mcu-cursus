@@ -663,7 +663,126 @@ reveal:
 <section>
   <section>
     <h1>Pointers</h1>
-    <h2>Coming Soon...</h2>
+  </section>
+  <section>
+    <h2>Wat is een pointer</h2>
+    <p>
+      <em>Een pointer is een variabele dat een geheugen locatie bevat voor andere
+      elementen in de code. Een pointer de adressen van volgende elementen bevatten</em>
+    </p>
+    <ul>
+      <li>Een adres</li>
+      <li>Variabelen</li>
+      <li>Functies</li>
+      <li>Pointers</li>
+    </ul>
+    <p class="fragment"><b>Geheugen is adresseerbare blok bits!</b></p>
+
+  </section>
+  <section>
+    <h2>Wat is een pointer</h2>
+    <ul>
+      <h5>
+        <li>Zorgt voor efficiëntere code </li>
+        <li>Verhoogt de complexiteit</li>
+        <li>Pointers hangen nauw samen met arrays</li>
+        <li>Pointer hangt vast aan een datatype</li>
+      </h5>
+    </ul>
+  </section>
+  <section>
+    <h2>Wat is een pointer</h2>
+    <img src="img/pointers.png" alt="">
+  </section>
+  <section>
+    <h2>Pointers Declaren</h2>
+    <p>
+    <pre><code class="Arduino">
+    int number = 10;
+    int *pointer = &number;
+    </pre></code>
+    Je wijst een adres toe aan een pointer
+    </p>
+
+  </section>
+  <section>
+    <h2>Pointer Operators</h2>
+    <ul>
+      <h5>
+        <li>Adres <i>&amp</i></li>
+        <ul>
+          <li>Met &amp vraag je het adres op van een variable</li>
+        </ul>
+        <li>Dereferencing <i>*</i></li>
+        <ul>
+          <li>Met * vraag je de achterliggende data op, * ook de indirection operator genoemd.</li>
+        </ul>
+      </h5>
+    </ul>
+  </section>
+  <section>
+    <h2>Pointer Voorbeelden</h2>
+    <table>
+      <tr>
+        <td>Declaratie</td>
+        <td>Value</td>
+        <td>Adres</td>
+      </tr>
+      <tr>
+        <td>int Val = 2</td>
+        <td>2</td>
+        <td>54428</td>
+      </tr>
+      <tr>
+        <td>int *pVal = &Val</td>
+        <td>54428</td>
+        <td>97880</td>
+      </tr>
+      <tr>
+        <td>int secVal = *Val</td>
+        <td>2</td>
+        <td>97932</td>
+      </tr>
+      <tr>
+        <td>*Val = 5</td>
+        <td>5</td>
+        <td>54428</td>
+      </tr>
+      <tr>
+        <td>pVal = pVal + 1</td>
+        <td>54444 <i>(+16)</i></td>
+        <td>97880</td>
+      </tr>
+    </table>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <ul>
+      <li>Declareer 3 integers met de waardes 1, 5, 155</li>
+      <li>Declareer 3 pointers die verwijzen naar </li>
+      <li></li>
+    </ul>
+  </section>
+  <section>
+    <h2>Dus ...</h2>
+    <ul>
+      <li>int *p = &c</li>
+      <ul>
+        <li>De pointer p wijst naar het locatie van c</li>
+      </ul>
+      <li>int k = *p </li>
+      <ul>
+        <li>k is gelijk aan de achterliggende data van p</li>
+      </ul>
+      <li>*p = 0</li>
+      <ul>
+        <li>De achterliggende data = 0</li>
+      </ul>
+      <li>*j = *p</li>
+      <ul>
+        <li>De achterliggende data van j is gelijk aan de achterliggende data van p</li>
+      </ul>
+    </ul>
   </section>
 </section>
 <section>
@@ -960,7 +1079,7 @@ reveal:
     <h2>Bit mask</h2>
     <div style="display: flex; justify-content: center; align-items: center;">
       <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
-        <h3>Bits selecteren</h3>
+        <h3>Bits Activeren</h3>
         <pre><code>
     10010101   10100101
  OR 11110000   11110000
@@ -974,7 +1093,7 @@ byte z = 0xF5F5;
         </code></pre>
       </div>
       <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
-        <h3>Bits deselecteren</h3>
+        <h3>Bits (De)Selecteren</h3>
         <pre><code>
     10010101   10100101
 AND 00001111   00001111
