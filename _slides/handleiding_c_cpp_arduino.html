@@ -816,7 +816,10 @@ reveal:
           <li>Kleinste datatype = </li>
           <ul>
             <li class="fragment">Byte</li>
-            <li class="fragment">Oplossing bitoperaties</li>
+          </ul>
+          <li class="fragment">Oplossing</li>
+          <ul>
+            <li class="fragment">Data verzamelen in één element</li>
           </ul>
         </h5>
       </ul>
@@ -926,10 +929,10 @@ reveal:
             </tr>
           </tbody></table>
           <pre><code style="he">
-11001110
-| 10011000
+11001110 | 
+10011000 =
 -------- 
-= 11011110
+11011110
           </code></pre>
       </div>
     </div>
@@ -968,10 +971,10 @@ reveal:
             </tr>
           </tbody></table>
           <pre><code>
-11001110
-| 10011000
+11001110 ^
+10011000 =
 -------- 
-= 01010110
+01010110
           </code></pre>
       </div>
       <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
@@ -992,8 +995,8 @@ reveal:
           </tbody></table>
           <pre><code>
 
-~11001110
--------- 
+~ 11001110
+---------- 
 = 00110001
           </code></pre>
       </div>
@@ -1005,14 +1008,14 @@ reveal:
       <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
         <h3>Left Shift</h3>
         <pre><code>
-11001110 << 1
-           -------- 
-           = 01100010
+  11001110 &lt&lt 1
+  -------- 
+= 10011100
         </code></pre>
         <pre><code>
-11001110 << 5
-           -------- 
-           = 11000000 
+  11001110 &lt&lt 5
+  -------- 
+= 11000000 
         </code></pre>
         <ul class="fragment">
           <h5>
@@ -1024,13 +1027,13 @@ reveal:
       <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
         <h3>Right  Shift</h3>
         <pre><code>
-11001110 >> 1
--------- 
+  11001110 &gt&gt 1
+  -------- 
 = 01100111
         </code></pre>
         <pre><code>
-11001110 >> 5
--------- 
+  11001110 &gt&gt 5
+  -------- 
 = 00000110
         </code></pre>
         <ul class="fragment">
@@ -1181,5 +1184,17 @@ unsigned invert(unsigned x, int p, int n)
       <li>Maak gebruik van unsigned integers</li>
       <li>Gebruik <a href="circuits.io">circuits.io</a></li>
     </ul>
+  </section>
+  <section>
+    <h2>Oplossing</h2>
+    <pre><code class="Arduino">
+byte rol(byte b, byte amount)
+{
+	amount = amount % 8;
+	uint8_t tmp = b;
+	tmp = (tmp >> (8-amount)) | (tmp << amount);
+	return tmp;
+}
+    </code></pre>
   </section>
 </section>
