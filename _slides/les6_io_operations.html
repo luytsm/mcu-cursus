@@ -372,3 +372,33 @@ void loop(){
     </h5>
   </ul>
 </section>
+<section>
+  <h2>Oefening #3</h2>
+  <pre><code class="Arduino">
+void setup(){
+  DDRD |= 1 << DDD3;    //set pin as output
+  DDRD &= ~(1 << DDD2); //clear set pin as input
+}
+
+void loop(){
+  int state = (PIND >>PIND2) & 0x1; //get pb val
+  PORTD &= ~(1 << PIND3);           //clear pin val
+  PORTD |= (state << PIND3);        //set pin val
+}
+  </code></pre>
+</section>
+<section>
+  <h2>Oefening #4</h2>
+  <pre><code class="Arduino">
+void setup(){
+  DDRD = 0xFF;	//set pin as output
+}
+
+void loop(){
+  PORTD = 0x55  //set port val
+  delay(500);   //delay for blink effect
+  PORTD = 0xAA  //set port val					
+  delay(500);   //delay for blink effect
+}
+  </code></pre>
+</section>
