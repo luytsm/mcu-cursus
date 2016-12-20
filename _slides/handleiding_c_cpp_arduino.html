@@ -667,7 +667,7 @@ reveal:
   <section>
     <h2>Wat is een pointer</h2>
     <p>
-    <em>Een pointer is een variabele dat een geheugen locatie bevat voor andere
+    <em>Een pointer is een variabele dat een geheugen locatie bevat van  andere
       elementen in de code. Een pointer de adressen van volgende elementen bevatten</em>
     </p>
     <ul>
@@ -943,6 +943,33 @@ nt strlen(char *s) /* added by RJH; source: K&R p99 */
   return n;
 }
     </code></pre>
+  </section>
+  <section>
+    <h2>Lengte van een object</h2>
+    <div style="display: flex;">
+    <ul style="width: 50%;">
+      <li>Pointer is een adres</li>
+      <li>Pointers geven niet altijd een lengte mee
+      <li>Functies mbt tot buffers hebben meestal beide nodig</li>
+      <pre class="fragment"><code class="Arduino">
+void RF24::read(void *buf, uint8_t  len)
+bool RF24::write(const void *buf, uint8_t len)
+      </code></pre>
+      <li>De groote van een element - sizeof()</li>
+    </ul>
+    <div style="width: 50%;">
+    <pre class="fragment"><code class="Arduino">
+int data[10]="Hello World"
+for (int i = 0; i < sizeof(data)/sizof(int); i++){
+  //dosomething
+}
+    </code></pre>
+    <pre class="fragment"><code class="Arduino">
+int data[10]="Hello World"
+ write(data, sizeof(data));
+    </code></pre>
+    </div>
+    </div>
   </section>
   <section>
     <h2>Oefening</h2>
