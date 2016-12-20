@@ -1,0 +1,56 @@
+---
+title: "Les 7: AVR Interrupts"
+description: "Interrupts op het AVR Platform"
+reveal:
+---
+<section>
+  <h1>AVR Interrupts</h1>
+</section>
+<section>
+  <h2>Interrupts met Arduino</h2>
+  <div style="display: flex;">
+    <ul style="width: 50%;">
+      <h5>
+        <li>Alleen maar External Interrupts</li>
+        <li>Max 2 pinnen</li>
+        <ul>
+          <li>D2 & D3 voor de Nano</li>
+        </ul>
+        <li>Andere interrupts zijn niet exposed</li>
+      </h5>
+    </ul>
+  <pre><code class="Arduino">
+      interrupts()
+      noInterrupts()
+      attachInterrupt(digitalPinToInterrupt(pin), ISR, mode)
+      detachInterrupt(digitalPinToInterrupt(pin));
+    </code></pre>
+  </div>
+</section>
+<section>
+Nested interrupts
+
+The AVR hardware clears the global interrupt flag in SREG before entering an
+interrupt vector. Thus, normally interrupts will remain disabled inside the
+handler until the handler exits, where the RETI instruction (that is emitted by
+the compiler as part of the normal function epilogue for an interrupt handler)
+will eventually re-enable further interrupts. For that reason, interrupt
+handlers normally do not nest. For most interrupt handlers, this is the desired
+behaviour, for some it is even required in order to prevent infinitely
+recursive interrupts (like UART interrupts, or level-triggered external
+interrupts). In rare circumstances though it might be desired to re-enable the
+global interrupt flag as early as possible in the interrupt handler, in order
+to not defer any other interrupt more than absolutely needed. This could be
+done using an sei() instruction right at the beginning of the interrupt
+handler, but this still leaves few instructions inside the compiler-generated
+function prologue to run with global interrupts disabled. The compiler can be
+instructed to insert an SEI instruction right at the beginning of an interrupt
+handler by declaring the handler the following way:
+
+
+ISR(XXX_vect, ISR_NOBLOCK)
+{
+  ...
+ }
+http://www.nongnu.org/avr-libc/user-manual/group__avr__interrupts.html
+</section>
