@@ -667,7 +667,7 @@ reveal:
   <section>
     <h2>Wat is een pointer</h2>
     <p>
-      <em>Een pointer is een variabele dat een geheugen locatie bevat voor andere
+    <em>Een pointer is een variabele dat een geheugen locatie bevat voor andere
       elementen in de code. Een pointer de adressen van volgende elementen bevatten</em>
     </p>
     <ul>
@@ -692,18 +692,22 @@ reveal:
   </section>
   <section>
     <h2>Wat is een pointer</h2>
-    <img src="img/pointers.png" alt="">
+    <img style="height: 5OOpx;" src="img/pointers.png" alt="">
   </section>
   <section>
     <h2>Pointers Declaren</h2>
-    <p>
-    <pre><code class="Arduino">
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <div style="width: 40%">
+        <p>
+        <pre><code class="Arduino">
     int number = 10;
     int *pointer = &number;
-    </pre></code>
-    Je wijst een adres toe aan een pointer
-    </p>
-
+      </pre></code>
+      Je wijst een adres toe aan een pointer
+        </p>
+      </div>
+      <img style="height: 500px;" src="img/declaring_pointers.png" alt="">
+    </div>
   </section>
   <section>
     <h2>Pointer Operators</h2>
@@ -718,7 +722,6 @@ reveal:
           <li>Met * vraag je de achterliggende data op, * ook de indirection operator genoemd.</li>
         </ul>
       </h5>
-    </ul>
   </section>
   <section>
     <h2>Pointer Voorbeelden</h2>
@@ -756,14 +759,6 @@ reveal:
     </table>
   </section>
   <section>
-    <h2>Oefening</h2>
-    <ul>
-      <li>Declareer 3 integers met de waardes 1, 5, 155</li>
-      <li>Declareer 3 pointers die verwijzen naar </li>
-      <li></li>
-    </ul>
-  </section>
-  <section>
     <h2>Dus ...</h2>
     <ul>
       <li>int *p = &c</li>
@@ -783,6 +778,175 @@ reveal:
         <li>De achterliggende data van j is gelijk aan de achterliggende data van p</li>
       </ul>
     </ul>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <ul>
+      <li>Declareer 3 integers x, y en z met de respectievelijke waardes 1, 5, 155</li>
+      <li>Declareer 3 pointers p_x, p_y, p_z die verwijzen naar de geheugen locaties van x,y,z </li>
+      <li>Print de waardes af van de achterliggende data van de pointers als ook de locaties </li>
+    </ul>
+  </section>
+  <section>
+    <h2>Volgorde van bewerkingen</h2>
+    <ul>
+      <li>* en &amp hebben voorrang op rekenkundige operators </li>
+      <li>*, &amp, ++ en -- hebben dezelfde priorieit</li>
+      <li>* en &amp worden van rechts naar links geëvalueerd</li>
+      <li>*p++ en (*p)++ zijn verschillend</li>
+      <ul>
+        <li>*p++ verhoogt het adres opgeslagen in p en haalt daarna de achterliggende data van het nieuwe adres op</li>
+        <li>(*p)++ verhoogte de achterliggende data op adres p</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Volgorde van bewerkingen</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <div style="width: 40%;">
+        <p><b>Veronderstel dat</b></p>
+        <ul>
+          <li>char c = 5</li>
+          <li>char *p</li>
+          <li>p = &c</li>
+        </ul>
+      </div> 
+      <img src="img/pointers_precedence.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Swap Functie</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <ul style="width: 50%;">
+        <li class="fragment">Het volgende stuk code swap de variabelen niet</li>
+        <li class="fragment">Er word een lokale kopie gemaakt</li>
+        <li class="fragment">Dit noemt Pass By Value</li>
+        <li class="fragment">De originele data word beschermt</li>
+      </ul>
+      <div>
+        <pre><code class="Arduino">
+void swap(int x, int y){
+  int tmp;
+  tmp = x
+  x = y;
+  y = tmp;
+}
+void main(void){
+  int a = 10;
+  int b = 13;
+
+  swap (a, b);
+}
+/*y == ? && z == ?*/
+        </code></pre>
+        <img class="fragment" src="img/pass_by_val.png" alt="">
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Pass By Reference</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <ul style="width: 50%;">
+        <li class="fragment">De data wisselt tussen de variabelen</li>
+        <li class="fragment">Toegang tot de variabele is mogelijk door indirecte toegang</li>
+        <li class="fragment">Data moet niet gedupliceerd worden</li>
+        <li class="fragment">Pass By Reference</li>
+        <li class="fragment">Concept bestaat ook in andere programmeer talen</li>
+      </ul>
+      <div>
+        <pre><code class="Arduino">
+void swap(int *x, int *y){
+  int tmp;
+  tmp = *x
+  *x = *y;
+  *y = tmp;
+}
+void main(void){
+  int a = 10;
+  int b = 13;
+
+  swap (&a, &b);
+}
+/*y == ? && z == ?*/
+        </code></pre>
+        <img class="fragment" src="img/pass_by_ref.png" alt="">
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <ul>
+      <li>Declareer 3 integers x, y en z met de respectievelijke waardes 1, 5, 155</li>
+      <li>Schuif vanuit een functie de waarde x naar y, y naar z en z naar a</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Pointers & Arrays</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <ul style="width: 50%;">
+      <li>Arrays is een blok van dezelfde data types</li>
+      <li>Een array kan beschouwd worden als een pointer van hetzelfde type</li>
+      <li>Een pointer kan een startpunt zijn voor een array</li>
+    </ul>
+    <div>
+      <pre><code class="Arduino">
+int *p
+int a[1O]
+
+p = &(a[2]);
+
+/*Dan klopt het volgende*/
+*p = a[2];
+*(p+ 1) = a[3];
+      </code></pre>
+      <img src="img/arrays_pointers.png" alt="">
+    </div>
+    <div>
+  </section>
+  <section>
+    <h2>Gevaren van pointers</h2>
+    <ul>
+      <li>Rechtstreekse manipulatie van het geheugen</li>
+      <li>Kent geen out of bounds</li>
+      <ul>
+        <pre><code class="Arduino">
+int a[1O]
+int *p = &(a[0]);
+int i = a[11] //error
+int j = *(p + 15) //mogelijk
+        </code></pre>
+      </ul>
+      <li>Datatypes zijn niet belangrijk (void *pointer)</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Null Terminated C String</h2>
+		<ul>
+		  <li>In C worden alle char arrays getermineerd door '\O'</li>
+      <ul>
+        <li>char *x = "hello" == "hello\0"</li>
+        <li>char x[4] = "hello" == "hello\0"</li>
+      </ul>
+		  <li>Dit maakt het mogelijk om simpels char arrays te kunnen  manipuleren</li>
+		  <li></li>
+		</ul>
+     
+    <pre class="fragment"><code class="Arduino">
+nt strlen(char *s) /* added by RJH; source: K&R p99 */
+{
+  int n;
+
+  for(n = 0; *s != '\0'; s++)
+  {
+    n++;
+  }
+  return n;
+}
+    </code></pre>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    Schrijf een functie met pointers waar je een 2 arrays aan elkaar rijgt (concat)
   </section>
 </section>
 <section>
@@ -1161,19 +1325,19 @@ byte z = 0x0808;
 unsigned setbits(unsigned x, int p, int n, unsigned y)
 {
   return (x & ((~0 << (p + 1)) | (~(~0 << (p + 1 - n))))) | ((y & ~(~0 << n)) << (p + 1 - n));
-}
+               }
     </code></pre>
   </section>
-	<section>
-	  <h2>Voorbeelden</h2>
-	  <p><b>Write a function invert(x,p,n) that returns x with the n bits that begin at position p inverted (i.e., 1 changed into 0 and vice versa), leaving the others unchanged.</b></p>
-	  <pre><code class="c">
+  <section>
+    <h2>Voorbeelden</h2>
+    <p><b>Write a function invert(x,p,n) that returns x with the n bits that begin at position p inverted (i.e., 1 changed into 0 and vice versa), leaving the others unchanged.</b></p>
+    <pre><code class="c">
 unsigned invert(unsigned x, int p, int n)
 {
     return x ^ (~(~0U << n) << p);
-}
-		</code></pre>
-	</section>
+               }
+    </code></pre>
+  </section>
   <section>
     <h2>Oefening</h2>
     <ul>
