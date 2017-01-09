@@ -1,10 +1,14 @@
 ---
-title: "Les 7: AVR Interrupts"
-description: "Interrupts op het AVR Platform"
+title: "Les 7: Interrupts Naturel"
+description: "Interrupts zonder de Arduino libraries"
 reveal:
 ---
 <section>
-  <h1>AVR Interrupts</h1>
+  <h1>Interrupts Naturel</h1>
+</section>
+<section>
+  <h2>Interrupts</h2>
+  <img style="" src="img/interrupts.png" alt="">
 </section>
 <section>
   <h2>Interrupts met Arduino</h2>
@@ -16,6 +20,7 @@ reveal:
         <ul>
           <li>D2 & D3 voor de Nano</li>
         </ul>
+        <li>Verschillende triggers mogelijk</li>
         <li>Andere interrupts zijn niet exposed</li>
       </h5>
     </ul>
@@ -26,6 +31,354 @@ reveal:
       detachInterrupt(digitalPinToInterrupt(pin));
     </code></pre>
   </div>
+</section>
+<section>
+  <h2>Interrupts op de AVR</h2>
+  <ul>
+    <li>Externe Interrupts</li>
+    <li>Pin Change Interrupts</li>
+    <li>Software Interrupts</li>
+    <li></li>
+  </ul>
+</section>
+<section>
+  <h2>Interrupt Vectors</h2>
+  <div style="display: flex;">
+    <ul style="width: 40%;">
+      <h5>
+        <li>Tabel met adres van ISR</li>
+        <ul>
+          <li>Interrupt Service Routine</li>
+        </ul>
+        <li>26  ISR beschikbaar</li>
+        <li>Gerankschikt volgens prioriteit</li>
+        <li>Vectors staan vanvoor aan het geheugen</li>
+      </h5>
+    </ul>
+    <img style="height: 500px;" src="img/interrupt_vectors.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Interrupt Vectors</h2>
+  <div style="display: flex;">
+    <ul style="width: 40%;">
+      <h5>
+        <li>Tabel met adres van ISR</li>
+        <ul>
+          <li>Interrupt Service Routine</li>
+        </ul>
+        <li>26  ISR beschikbaar</li>
+        <li>Gerankschikt volgens prioriteit</li>
+        <li>Vectors staan vanvoor aan het geheugen</li>
+      </h5>
+    </ul>
+    <pre><code class="Arduino">
+#define INT0_vect_num     1
+#define INT0_vect         _VECTOR(1)   /* External Interrupt Request 0 */
+
+#define INT1_vect_num     2
+#define INT1_vect         _VECTOR(2)   /* External Interrupt Request 1 */
+
+#define PCINT0_vect_num   3
+#define PCINT0_vect       _VECTOR(3)   /* Pin Change Interrupt Request 0 */
+
+#define PCINT1_vect_num   4
+#define PCINT1_vect       _VECTOR(4)   /* Pin Change Interrupt Request 0 */
+
+#define PCINT2_vect_num   5
+#define PCINT2_vect       _VECTOR(5)   /* Pin Change Interrupt Request 1 */
+
+#define WDT_vect_num      6
+#define WDT_vect          _VECTOR(6)   /* Watchdog Time-out Interrupt */
+
+#define TIMER2_COMPA_vect_num 7
+#define TIMER2_COMPA_vect _VECTOR(7)   /* Timer/Counter2 Compare Match A */
+
+#define TIMER2_COMPB_vect_num 8
+#define TIMER2_COMPB_vect _VECTOR(8)   /* Timer/Counter2 Compare Match A */
+
+#define TIMER2_OVF_vect_num   9
+#define TIMER2_OVF_vect   _VECTOR(9)   /* Timer/Counter2 Overflow */
+
+#define TIMER1_CAPT_vect_num  10
+#define TIMER1_CAPT_vect  _VECTOR(10)  /* Timer/Counter1 Capture Event */
+
+#define TIMER1_COMPA_vect_num 11
+#define TIMER1_COMPA_vect _VECTOR(11)  /* Timer/Counter1 Compare Match A */
+
+#define TIMER1_COMPB_vect_num 12
+#define TIMER1_COMPB_vect _VECTOR(12)  /* Timer/Counter1 Compare Match B */ 
+
+#define TIMER1_OVF_vect_num   13
+#define TIMER1_OVF_vect   _VECTOR(13)  /* Timer/Counter1 Overflow */
+
+#define TIMER0_COMPA_vect_num 14
+#define TIMER0_COMPA_vect _VECTOR(14)  /* TimerCounter0 Compare Match A */
+
+#define TIMER0_COMPB_vect_num 15
+#define TIMER0_COMPB_vect _VECTOR(15)  /* TimerCounter0 Compare Match B */
+
+#define TIMER0_OVF_vect_num  16
+#define TIMER0_OVF_vect   _VECTOR(16)  /* Timer/Couner0 Overflow */
+
+#define SPI_STC_vect_num  17
+#define SPI_STC_vect      _VECTOR(17)  /* SPI Serial Transfer Complete */
+
+#define USART_RX_vect_num 18
+#define USART_RX_vect     _VECTOR(18)  /* USART Rx Complete */
+
+#define USART_UDRE_vect_num   19
+#define USART_UDRE_vect   _VECTOR(19)  /* USART, Data Register Empty */
+
+#define USART_TX_vect_num 20
+#define USART_TX_vect     _VECTOR(20)  /* USART Tx Complete */
+
+#define ADC_vect_num      21
+#define ADC_vect          _VECTOR(21)  /* ADC Conversion Complete */
+
+#define EE_READY_vect_num 22
+#define EE_READY_vect     _VECTOR(22)  /* EEPROM Ready */
+
+#define ANALOG_COMP_vect_num  23
+#define ANALOG_COMP_vect  _VECTOR(23)  /* Analog Comparator */
+
+#define TWI_vect_num      24
+#define TWI_vect          _VECTOR(24)  /* Two-wire Serial Interface */
+
+#define SPM_READY_vect_num    25
+#define SPM_READY_vect    _VECTOR(25)  /* Store Program Memory Read */
+
+#define _VECTORS_SIZE (26 * 4)
+
+
+
+/* Constants */
+#define SPM_PAGESIZE 128
+#define RAMSTART     (0x100)
+#define RAMEND       0x8FF     /* Last On-Chip SRAM Location */
+#define XRAMSIZE     0
+#define XRAMEND      RAMEND
+#define E2END        0x3FF
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>External Interrupt Control Register A</h2>
+  <div style="display: flex;">
+  <ul>
+    <h5>
+      <li>Bepaal de sense control voor:</li>
+      <ul>
+        <li>INT0</li>
+        <li>INT1</li>
+      </ul>
+    </h5>
+  </ul>
+    <div>
+      <img src="img/eicra_register.png" alt="">
+      <img src="img/eicra_interrupt_sense.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>External Interrupt Mask Registers</h2>
+  <div style="display: flex;">
+    <ul style="width: 35%;">
+    <h5>
+      <li>Enable de interrupts:</li>
+      <ul>
+        <li>INT0</li>
+        <li>INT1</li>
+      </ul>
+      <li>States:</li>
+      <ul>
+        <li>Enabled = 1</li>
+        <li>Disabled = 0</li>
+      </ul>
+    </h5>
+  </ul>
+    <div>
+      <img src="img/eimsk_register.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>External Interrupt Flag Register</h2>
+  <div style="display: flex;">
+    <ul style="width: 35%;">
+    <h5>
+      <li>Checkt voor de status van:<li>
+      <ul>
+        <li>INT0</li>
+        <li>INT1</li>
+      </ul>
+      <li>States: </li>
+      <ul>
+        <li>Geen interrupt = 0</li>
+        <li>Interrupt Triggerd = 1</li>
+      </ul>
+    </h5>
+  </ul>
+    <div>
+      <img src="img/eimsk_register.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Pin Change Interrupt Control Registers</h2>
+  <div style="display: flex;">
+    <ul style="width: 35%;">
+    <h5>
+      <li>Enable de interrupts:</li>
+      <ul>
+        <li>PCINT0</li>
+        <li>PCINT1</li>
+        <li>PCINT2</li>
+      </ul>
+      <li>States:</li>
+      <ul>
+        <li>Enabled = 1</li>
+        <li>Disabled = 0</li>
+      </ul>
+    </h5>
+  </ul>
+    <div>
+      <img src="img/pcicr_register.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Pin Change Interrupt Flag Register</h2>
+  <div style="display: flex;">
+    <ul style="width: 35%;">
+    <h5>
+      <li>Checkt voor de status van:<li>
+      <ul>
+        <li>PCINT0</li>
+        <li>PCINT1</li>
+        <li>PCINT2</li>
+      </ul>
+      <li>States: </li>
+      <ul>
+        <li>Geen interrupt = 0</li>
+        <li>Interrupt Triggerd = 1</li>
+      </ul>
+    </h5>
+  </ul>
+    <div>
+      <img src="img/pcifr_register.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Pin Change Mask Register O/1/2</h2>
+  <div style="display: flex;">
+    <ul style="width: 35%;">
+    <h5>
+      <li>Enable de pinnen van de poort<li>
+      <ul>
+        <li>PCINT0</li>
+        <li>...</li>
+        <li>PCINT23</li>
+      </ul>
+      <li>States: </li>
+      <ul>
+        <li>Pin Disabled =  0</li>
+        <li>Pin Enabled = 1</li>
+      </ul>
+    </h5>
+  </ul>
+    <div>
+      <img src="img/pcmsk_register.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Pin Change Mask Register O/1/2</h2>
+  <div style="display: flex;">
+    <ul style="width: 35%;">
+    <h5>
+      <li>Enable de pinnen van de poort<li>
+      <ul>
+        <li>PCINT0</li>
+        <li>...</li>
+        <li>PCINT23</li>
+      </ul>
+      <li>States: </li>
+      <ul>
+        <li>Pin Disabled =  0</li>
+        <li>Pin Enabled = 1</li>
+      </ul>
+    </h5>
+  </ul>
+    <div>
+      <img src="img/arduino_pinout.jpg" alt="">
+    </div>
+  </div>
+</section>
+</section>
+<section>
+  <h2>ISR Enabelen</h2>
+  <div style="display: flex;">
+    <ul>
+      <h5>
+        <li>Correct configuren pinnen</li>
+        <li>Correct configuren interrups</li>
+        <li>ISR schrijven</li>
+      </h5>
+    </ul>
+    <pre><code class="Arduino">
+ISR({VECTOR}_vect)
+{
+  //Perform Task 
+}    
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Voorbeeld</h2>
+  <pre><code class="Arduino">
+void setup()
+{
+  DDRD &= ~(1 << DDD2);
+  EICRA |= ((1 << ISC00) | (1 << ISC01))  ;
+  EIMSK |= (1 << INT0);
+  Serial.begin(9600);
+  sei();
+}
+
+void loop()
+{
+  //do nothing
+}
+
+ISR(INT0_vect)
+{
+  Serial.println("Interrupt fired");
+};
+
+  </code></pre>
+</section>
+<section>
+  <h2>Oefening #2</h2>
+  <ul>
+    <h5>
+      <li>Maak een External Interrupt met volgende voorwaarde: </li>
+      <ul>
+        <li>Interrupt op pin 3</li>
+        <li>Trigger op elke edge</li>
+      </ul>
+    </h5>
+  </ul>
+  <h2>Oefening #3</h2>
+  <ul>
+    <h5>
+      <li>Maak een pin change interrupt met volgende voorwaarden</li>
+      <ul>
+        <li>Detect change op pin D8</li>
+      </ul>
+    </h5>
+  </ul>
 </section>
 <section>
 Nested interrupts
