@@ -8,7 +8,7 @@ reveal:
 </section>
 <section>
   <h2>Interrupts</h2>
-  <img style="" src="img/interrupts.png" alt="">
+  <img style="height: 500px;" src="img/interrupts.png" alt="">
 </section>
 <section>
   <h2>Interrupts met Arduino</h2>
@@ -38,7 +38,6 @@ reveal:
     <li>Externe Interrupts</li>
     <li>Pin Change Interrupts</li>
     <li>Software Interrupts</li>
-    <li></li>
   </ul>
 </section>
 <section>
@@ -336,6 +335,23 @@ ISR({VECTOR}_vect)
   </div>
 </section>
 <section>
+  <h2>Nested Interrupts</h2>
+  <ul>
+    <h5>
+      <li>Kan problematisch zijn</li>
+      <ul>
+        <li>Recursief optreden bij communicatie</li>
+      </ul>
+      <li>Staat standaard af</li>
+      <li>2 manieren om nested interrupts in te stellen</li>
+      <ul>
+        <li>sei() call in het begin van de nested interrupt</li>
+        <li>Non blocking interrupt met ISR(XXX_vect, ISR_NOBLOCK)</li>
+      </ul>
+    </h5>
+  </ul>
+</section>
+<section>
   <h2>Voorbeeld</h2>
   <pre><code class="Arduino">
 void setup()
@@ -379,31 +395,4 @@ ISR(INT0_vect)
       </ul>
     </h5>
   </ul>
-</section>
-<section>
-Nested interrupts
-
-The AVR hardware clears the global interrupt flag in SREG before entering an
-interrupt vector. Thus, normally interrupts will remain disabled inside the
-handler until the handler exits, where the RETI instruction (that is emitted by
-the compiler as part of the normal function epilogue for an interrupt handler)
-will eventually re-enable further interrupts. For that reason, interrupt
-handlers normally do not nest. For most interrupt handlers, this is the desired
-behaviour, for some it is even required in order to prevent infinitely
-recursive interrupts (like UART interrupts, or level-triggered external
-interrupts). In rare circumstances though it might be desired to re-enable the
-global interrupt flag as early as possible in the interrupt handler, in order
-to not defer any other interrupt more than absolutely needed. This could be
-done using an sei() instruction right at the beginning of the interrupt
-handler, but this still leaves few instructions inside the compiler-generated
-function prologue to run with global interrupts disabled. The compiler can be
-instructed to insert an SEI instruction right at the beginning of an interrupt
-handler by declaring the handler the following way:
-
-
-ISR(XXX_vect, ISR_NOBLOCK)
-{
-  ...
- }
-http://www.nongnu.org/avr-libc/user-manual/group__avr__interrupts.html
 </section>
