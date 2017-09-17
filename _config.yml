@@ -1,24 +1,31 @@
 name: jekyll-reveal 
 markdown: redcarpet
-highlighter: pygments
+highlighter: rogue
 
 baseurl: /mcu-cursus
 
 collections:
   slides:
     output: true
+  labs:
+    output: true
 
 defaults:
-  -
-    scope:
+  - scope:
       path: ""
+      type: labs
+    values:
+      layout: labs
+  - scope:
+      path: ""
+      type: slides
     values:
       layout: slides
       reveal:
         controls: true
         progress: true
         slideNumber: true
-        history: true
+        history: false
         keyboard: true
         overview: true
         center: true
@@ -39,6 +46,6 @@ defaults:
         parallaxBackgroundImage:
         parallaxBackgroundSize:
         theme: moon
-        width: 1366
-        height: 768
+        width: 1920
+        height: 1080
         margin: 0.1

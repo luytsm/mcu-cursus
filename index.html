@@ -14,4 +14,12 @@ title: Cursus Micrcocontrollers
     </li>
     {% endfor %}
   </ul>
+  <ul>
+    {% for lab in site.labs %}
+    <li>
+      <a class="slide-entry" href="{{ site.baseurl | append: lab.url }}">{{ lab.title }}</a>
+      <small>{{ lab.description }}</small>
+    </li>
+    {% endfor %}
+  </ul>
 </div>
