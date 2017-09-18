@@ -10,4 +10,8 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.blist {
+  width: 40%;
 } 
