@@ -7,23 +7,87 @@ reveal:
   <h1>{{ page.title }}</h1>
 </section>
 <section>
-  <h2>Wat gaan we zien?</h2>
-  <a href="https://bamaflexweb.ap.be/BMFUIDetailxOLOD.aspx?a=101442&b=5&c=1">Zie ECTS fiche</a>
+  <div class="vcontainer">
+    <h2>Wat gaan we zien?</h2>
+    <ul>
+      <li>Arduino hardware platform </li>
+      <li>Arduino software libraries</li>
+      <li>AVR architectuur en instructieset</li>
+      <li>C/C++ ontwikkeling voor embedded systemen</li>
+      <li>Embedded systeem design</li>
+      <li>Verwerken van analoge sensor data</li>
+      <li>IO operaties</li>
+      <li>Interfacing met PC toepassingen</li>
+      <li>Embedded software bibliotheken</li>
+      <li>Logging en debugging</li>
+      <li>Interrupts: timer en comparator</li>
+    </ul>
+    <a href="https://bamaflexweb.ap.be/BMFUIDetailxOLOD.aspx?a=101442&b=5&c=1">Voor meer info: zie ECTS fiche</a>
+  </div>
+</section>
+<section>
   <h2>Hoe gaan we dat zien?</h2>
   <ul>
     <li>Inwerken in microcontrollers mbv Arduino</li>
     <li>Weg strippen van de Arduino software libraries</li>
-    <li>Project Microcontrollers / Electronic Systems</li>
   </ul>
+
+</section>
+<section>
+  <div class="vcontainer">
+    <h3>Waarom?</h3>
+    <div class=hcontainer style='align-items:baseline;'>
+      <div class="fragment"style="float: left; width: 60%;">
+        <h3>Blink met de Arduinio libraries</h3>
+        <pre><code style="height: 375px;" class="Arduinio">
+#include &ltArduino.h&gt
+
+void setup()
+{
+    pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
+}
+        </code></pre>
+        <p class="fragment">Compiled size: 1034 bytes (3.2%)</p>
+      </div>
+      <div class="fragment" style="float: left; width: 60%;">
+        <h3>blink zonder Arduino library</h3>
+        <pre><code style="height: 375px;"class="Arduino">
+#include &ltavr/io.&gt
+#include &ltutil/delay.h&gt
+
+int main(void)
+{
+    DDRB = 1 &lt&lt 5;
+    while (1)
+    {
+        _delay_ms(500);
+        PORTB ^= 1 &lt&lt 5;
+    }
+  return 0;
+}
+        </code></pre>
+        <p class="fragment">Compiled size: 158 bytes (0.5%)</p>
+      </div>
+    </div>
+  </div>
 </section>
 <section>
   <h2>Wat gaan we doen in de labos</h2>
   <ul>
-    <li>Introductie</li>
-    <li>PWM & Potentiometer</li>
+    <li>Basis IO Operaties</li>
+    <li>Communicatie met de seriele poort</li>
+    <li>Interrupts</li>
     <li>Chronometer</li>
-    <li>Project Microcontrollers / Electronic Systems</li>
-    <li>...</li>
+    <li>Thermostaat</li>
+    <li>....</li>
   </ul>
 </section>
 <section>
@@ -42,7 +106,7 @@ reveal:
     <tr>
       <td>Vaardigheidstoets</td>
       <td>20%</td>
-      <td>Praktisch toets in het jaar (2x)</td>
+      <td>2 Testmomenten doorheen het jaar.</td>
     </tr>
   </table>
 </section>
@@ -108,9 +172,44 @@ reveal:
   <h2>Getting Started: Programmatie</h2>
   <ul>
     <li>Programmers</li>
-    <li>Boatloaders</li>
+    <li>Bootloaders</li>
   </ul>
 </section>
+<section>
+  <h2>Programmer</h2>
+  <ul style="float:left; width: 65%;">
+    <li>Extern toestel data schrijft op het geheugen van de microcontroller</li>
+    <li>Dit is omslachtig</li>
+    <ul>
+      <li>Extra hardware</li>
+      <li>Compatibiliteit</li>
+    </ul>
+    <li>Wordt nog gebruikt voor productie</li>
+    <li>Voor ontwikkeling: Bootloader</li>
+  </ul>
+  <img class="plain" src="img/sam-ice.png" style="float: right; width: 30%; background: none;" alt="">
+</section>
+<section>
+  <h2>Bootloader</h2>
+  <ul>
+    <li>Hetzelfde concept als de bootloader van een computer</li>
+    <ul>
+      <li>Vertelt CPU waar het operating systeem staat</li>
+      <li>Ook mogelijk om het "OS" te overschrijven</li>
+    </ul>
+    <li>Werking Arduino Uno</li>
+    <ul>
+      <li>Data wordt verstuurt vanuit PC</li>
+      <li>ATmega8u2 zet data om van USB naar UART</li>
+      <li>ATmega8u2 reset ATmega328p
+        <li>ATmega8u2 stuurt data door naar ATmega328p</li>
+        <li>ATmega328p detecteert data op de UART binnen een tijds interval na reset</li>
+        <li>Bootloader op ATmega kopieert data naar het flash geheugen</li>
+        <li>Tijdsinterval afgelopen, ATmega328p boot met bestaande code</li>
+    </ul>
+  </ul>
+</section>
+
 <section>
   <h2>Getting Started: Programmeertaal</h2>
   <p>C/C++</p>
@@ -255,7 +354,7 @@ reveal:
 <section data-background-image="img/avr_block_diagram.png" data-background-size="contain" data-background-color="#ffffff">
 </section>
 <section>
-  <h2>Intermezzo: Datasheets lezen</h2>
+  <h2>ATmega Datasheet</h2>
   <ul>
     <li>Samenvatting</li>
     <li>Specificaties</li>
@@ -264,8 +363,8 @@ reveal:
     <li>Absolute maximale waardes</li>
     <li>Waarheidstabellen</li>
     <li>Timing diagrammen</li>
-    <li>Mogelijke toepassing</li>
-    <li><a href="https://www.sparkfun.com/tutorials/223"></a>Tutorial: Datasheets lezen</li>
+    <li>Mogelijke toepassingen</li>
+    <li><a href="https://www.sparkfun.com/tutorials/223">Tutorial: Datasheets lezen</a></li>
     <li>FYI: Datasheets ATmega328p - 444 blz.</li>
   </ul>
 </section>
@@ -313,13 +412,25 @@ reveal:
     <li>Kan spanningen uitlezen</li>
     <li>Zet deze spanning om naar een discrete waarde</li>
     <li>Mapping van 0v tot 5v naar een waarde van 0 tot 1013
-    <li>Kan geen spanning "schrijven"</li>
-    <li>Kan gebruikt worden als digitale output</li>
+    <li>Kan een "spanning schrijven"</li>
+    <li>Kan dubbel gebruikt worden als een digitale pin</li>
   </ul>
 </section>
 <section data-background-image="img/arduino_pinout.jpg" data-background-size="contain" data-background-color="#ffffff">
 </section>
-<section data-background-image="img/arduino_uno_schematic.jpg" data-background-size="contain" data-background-color="#ffffff">
+<section>
+  <h2>Wat gebruiken wij</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h5>Arduino Nano</h5>
+      <ul>
+        <li>Compacte versie van de Uno</li>
+        <li>Gebaseerd op de ATmega328p</li>
+        <li>Waarom? Breadboard friendly</li>
+      </ul>
+    </div>
+   <img style="width: 40%;" src="./img/arduino_nano.jpg" alt="">
+  </div>
 </section>
 <section>
   <h2>Arduino Opensource Hardware</h2>
@@ -330,6 +441,8 @@ reveal:
     <li>Aliexpress</li>
   </ul>
   <img src="img/seeeduino.jpg" style="float: right; width: 40%;" alt="">
+</section>
+<section data-background-image="img/arduino_uno_schematic.jpg" data-background-size="contain" data-background-color="#ffffff">
 </section>
 <section>
   <h2>Arduino: Shields</h2>
@@ -344,6 +457,7 @@ reveal:
       <li>...</li>
     </ul>
     <li>Standaard vorm factor</li>
+    <li>Ready To Use</li>
     <li>Veel resources beschikbaar voor een eigen ontwerp</li>
   </ul>
 </section>
@@ -352,6 +466,32 @@ reveal:
   <img class="plain" src="img/joystick_shield.png" style="float: left; width: 33%; background: none;" alt="">
   <img class="plain" src="img/protoshield.png" style="float: left; width: 33%; background: none;" alt="">
   <img class="plain" src="img/shield_stack.png" style="float: left; width: 33%; background: none;" alt="">
+</section>
+<section>
+  <h2>Arduino Peripherals</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+    <h4>Wat zijn peripherals</h4>
+    <ul>
+      <li>Hardware elementen</li>
+      <li>Koppelen extra functionaliteit aan Arduino</li>
+      <li>Actuators en Sensors</li>
+      <li>Nood aan randcompontenten</li>
+      <li>Opbouwen van schakeling</li>
+    </ul>
+    <h4>Voorbeelden</h4>
+    <ul>
+      <li>7 segment 4 digit display</li>
+      <li>IR Afstandsensor</li>
+      <li>Ultrasone afstandsensor</li>
+    </ul>
+    </div>
+    <div class="vcontainer">
+      <img class="plain" style="height: 200px; background: none; "src="./img/7segment4d.png" alt="">
+      <img class="plain" style="height: 200px; background: none; "src="./img/hrc-sr04.jpg" alt="">
+      <img class="plain" style="height: 200px; background: none; "src="./img/ir_distance_sensor.jpg" alt="">
+    </div>
+  </div>
 </section>
 <section>
   <h2>Arduino: Software</h2>
@@ -372,6 +512,12 @@ reveal:
   </ul>
 </section>
 <section>
+  <h2>Arduino: Getting Started</h2>
+  <ul>
+    <li></li>
+  </ul>
+</section>
+<section>
   <h2>Arduino: IDE</h2>
   <img src="img/arduino_ide.png" style="height: 100%;"></img>
 </section>
@@ -380,7 +526,7 @@ reveal:
   <div style="float:left; "></div>
   <ol style="width: 45%;">
     <li>Verify:</br>
-        Compileert de code met avr-gcc</li>
+      Compileert de code met avr-gcc</li>
     <li>Upload:</br>
       Compileert de code met avr-gcc en</br>
       upload de code met avrdude</li>
@@ -453,8 +599,8 @@ reveal:
   <table>
     <tr>
       <b>
-      <td>void setup()</td>
-      <td>void loop()</td>
+        <td>void setup()</td>
+        <td>void loop()</td>
       </b>
     </tr>
     <tr>
@@ -483,32 +629,3 @@ reveal:
       <i><b>Tools > Board > Arduino Nano / Duemilanove / Uno</i></b></li>
   </ul>
 </section>
-<section>
-  <h2>Bootloader</h2>
-  <ul style="float:left; width: 65%;">
-    <li>Microcontroller wordt geprogrammeerd met een toestel(programmer)</li>
-    <li>Dit is omslachtig</li>
-    <ul>
-      <li>Extra hardware</li>
-      <li>Compatibiliteit</li>
-    </ul>
-    <li>De microcontrollers op de board worden voor geprogrammeerd met een bootloader</li>
-  </ul>
-  <img class="plain" src="img/sam-ice.png" style="float: right; width: 30%; background: none;" alt="">
-</section>
-<section>
-  <h2>Bootloader</h2>
-  <ul>
-    <li>Werking Arduino Uno</li>
-    <ul>
-      <li>Data wordt verstuurt vanuit PC</li>
-      <li>ATmega8u2 zet data om van USB naar UART</li>
-      <li>ATmega8u2 reset ATmega328p
-      <li>ATmega8u2 stuurt data door naar ATmega328p</li>
-      <li>ATmega328p detecteert data op de UART binnen een tijds interval na reset</li>
-      <li>Bootloader op ATmega kopieert data naar het flash geheugen</li>
-      <li>Tijdsinterval afgelopen, ATmega328p boot met bestaande code</li>
-    </ul>
-  </ul>
-</section>
-

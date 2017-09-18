@@ -1,6 +1,6 @@
 ---
 title: "Lab 1: Basis IO Operaties"
-description: "Enkele klassiekers om de te oefenen met GPIO functionaliteit van de Pi"
+description: "Enkele klassiekers om de te oefenen met GPIO functionaliteit van de Arduino"
 ---
 # Labo 1: Basis IO Operaties
 
