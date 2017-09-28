@@ -9,9 +9,15 @@
 .hcontainer{
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .blist {
   width: 40%;
+  margin: 20px;
+  padding-top: 35px;
 } 
+.ard {
+  width: 35%;
+}
+
