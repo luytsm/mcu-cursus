@@ -1,0 +1,52 @@
+---
+title: "Labo 3: Interrupts"
+description: "Whack a Mole"
+reveal:
+---
+<section>
+  <h2>Doel</h2>
+  <em><b>Namaken van het spel whack a mole</b></em>
+</section>
+<section>
+  <h2>Opstelling</h2>
+  <ul>
+    <li>Inputs: </li>
+    <ul>
+      <li>Drukknoppen</li>
+    </ul>
+    <li>Outputs:</li>
+    <ul>
+      <li>4 Leds</li>
+    </ul>
+  </ul>
+</section>
+<section data-background-image="img/pot_pwm_schematic.jpg" data-background-size="contain" data-background-color="#ffffff">
+</section>
+<section>
+  <h2>Functionaliteit</h2>
+  <ul>
+    <li>Laat de ledjes afwisselend branden</li>
+    <ul>
+      <li>Er brand maar 1 led tegelijk</li>
+      <li>De lichtjes branden sequentieel</li>
+      <li>De snelheid van de sequentie is aanpasbaar</li>
+    </ul>
+    <li>Er zijn 2 drukknoppen verbonden aan de Arduino</li>
+    <ul>
+      <li>Als het 3de ledje brand moet je op drukknop 1 drukken</li>
+      <ul>
+        <li>Deze knop is verbonden als een externe interrupt</li>
+        <li>"Raak" je het ledje dan gaat de snelheid van de sequentie omhoog</li>
+        <li>"Mis" je het ledje dan reset de snelheid van de sequentie</li>
+      </ul>
+      <li>Er is een tweede speler dat in bezit is van de 2de drukknop</li>
+      <ul>
+        <li>Deze knop is verbonden als een externe interrupt</li>
+        <li>Als je op deze knop drukt veranderd de richting van de sequentie</li>
+        <li>Er zit een delay tussen elke druk
+        <li>Telkens als je op deze knopt drukt verhoogt de delay</li>
+      </ul>
+    </ul>
+    <li></li>
+  </ul>
+</section>
