@@ -120,14 +120,27 @@ int main(void)
     moeilijk een beeld kunnen schetsen van de werking.  
   </small></p>
 </section>
-<section data-background-image="img/obi_wan.jpg" data-background-size="contain">
-  <div style="float: right;"><h2>Only A Sith Deals In Absolutes</h2></div>
-</section>
 <section>
   <h2>Is Arduino geschikt voor ons?</h2>
   <h2 class="fragment">Ja</h2>
   <h3 class="fragment">Maar ...</h3>
   <h3 class="fragment">A great engineer will do for a quarter what a mediocre (at best) engineer takes a dollar to do.</h3>
+</section>
+<section>
+  <h2>De kostprijs van hardware</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h3>Arduino Uno</h3>
+      <img class="plain" style="background: none; width:40%;" src="img/arduino_uno_board.png" alt="">
+      <em><b>Kostprijs ≈ 25 euro</b></em>
+    </div>
+    <div class="vcontainer">
+      <h3>Standalone ATmega328p</h3>
+      <img src="img/standalone.png" style="float: right; width: 40%;" alt="">
+      <em><b>Kostprijs ≈ 2.5 euro</b></em>
+    </div>
+  </div>
+  <b><em>Dit is geen grondige analyse</em></b>
 </section>
 <section>
   <h2>Wat zijn de voordelen van het Arduino platform</h2>
@@ -233,6 +246,8 @@ int main(void)
           <li>Zeer modulair</li>
           <li>Niet specifiek</li>
           <li>Out of the box</li>
+          <li>Grote vormfactor</li>
+          <li>Hoge prijs</li>
         </ul>
       </div>
       <div style="width: 40%;">
@@ -242,6 +257,8 @@ int main(void)
           <li>Beperkte modulariteit</li>
           <li>Niet specifiek</li>
           <li>Out of the box</li>
+          <li>Integreerbare vormfactor</li>
+          <li>Hoge prijs</li>
         </ul>
       </div>
     </div>
@@ -253,6 +270,8 @@ int main(void)
           <li>Geen modulariteit</li>
           <li>Specifiek</li>
           <li>Vereist programming</li>
+          <li>Integratie nodig</li>
+          <li>Betaalbaar</li>
         </ul>
       </div>
       <div style="width: 40%;">
@@ -262,13 +281,15 @@ int main(void)
           <li>Geen modulariteit</li>
           <li>Specifiek</li>
           <li>Vereist programming</li>
+          <li>Integratie nodig</li>
+          <li>Disposable</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 <section>
-  <h2>Microcontroller Selecteren</h2>
+  <h2>Een Microcontroller Selecteren?</h2>
   <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
     <div style="display: flex; justify-content: center;">
       <div style="width: 50%;">
@@ -401,7 +422,7 @@ int main(void)
   </ul>
 </section>
 <section>
-  <h2>We kiezen voor de microcontroller</h2>
+  <h2>We kiezen voor de microcontroller...</h2>
   <h1 class="fragment">ATmega328p</h1>
 </section>
 <section>
@@ -780,24 +801,6 @@ int main(void)
     <img style="height: 500px;" src="img/alu_feedback.png" alt="">
   </div>
 </section>
-<section>
-  <h2>Von Neuman Cycle</h2>
-  <div style="display: flex; justify-content: center; align-items: center;">
-    <ul style="width: 40%;">
-      <h5>
-        <li>Fetch-Decode-Execute</li>
-        <li>3 Fases</li>
-        <ol>
-          <li>Fetch: Ophalen Opcde</li>
-          <li>Decode: Decoderen van Opcode</li>
-          <li>Execute Uitvoeren van Opcode</li>
-        </ol>
-      </h5>
-    </ul>
-    <img height="300 px" src="img/von_nuemann_cycle.png" alt="">
-  </div>
-
-</section>
 <section data-state="reg-file" style="text-align: left;">
   <h2 style="color: #000000">Register File</h2>
   <ul>
@@ -805,7 +808,7 @@ int main(void)
       <li>Werkgeheugen processor</li>
       <li>Snelste memory</li>
       <li>Index register</li>
-      <li>Instructies worden op data hieruit toegepast</li>
+      <li>Instructies worden op data vanuit de register file toegepast</li>
     </h5>
   </ul>
 </section>
@@ -864,8 +867,38 @@ int main(void)
   </div>
 </section>
 <section>
-  <h2>Microcontroller Architectuur</h2>
-  Nuemann vs Harvard
+  <div class="vcontainer">
+    <h2>Microcontroller Architectuur</h2>
+    <img src="img/ha_vs_vna.png" alt="">
+    <div class="hcontainer">
+      <div style="width: 400px;" class="vcontainer">
+      <h4>Von Neumann Architectuur</h4>
+      <em><b>Heeft 2 klok cycli nodig om 1 instructie uit te voeren</b></em>
+      </div>
+      <div style="width: 400px;" class="vcontainer">
+      <h4>Harvard Architectuur</h4>
+      <em><b>Heeft 1 klok cycli nodig om 1 instructie uit te voeren</b></em>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Von Neuman Cycle</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul style="width: 40%;">
+      <h5>
+        <li>Fetch-Decode-Execute</li>
+        <li>3 Fases</li>
+        <ol>
+          <li>Fetch: Ophalen Opcde</li>
+          <li>Decode: Decoderen van Opcode</li>
+          <li>Execute Uitvoeren van Opcode</li>
+        </ol>
+      </h5>
+    </ul>
+    <img height="300 px" src="img/von_nuemann_cycle.png" alt="">
+  </div>
+
 </section>
 <section>
   <h2>Special Function Register</h2>
