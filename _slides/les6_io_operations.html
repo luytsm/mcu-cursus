@@ -461,18 +461,30 @@ byte z = 0x0808;
 <section>
   <h2>Los Op</h2>
   <ul>
-    <li>Zet de 4 eerste bits van een byte</li>
-    <li>Zet bit 6 en 7 van een byte</li>
-    <li>Clear de 5de bit van een byte</li>
-    <li>Clear de laatste 4 bits van byte </li>
-    <li>Toggle de 1ste bit van een byte</li>
-    <li>Toggle bit 4 en 5 van een byte</li>
+    <li>Zeti bit 0 tot 3  van een byte</li>
+    <li>Zet bit 5 en 6 van een byte</li>
+    <li>Clear bit 4 van een byte</li>
+    <li>Clear bit 4 tot 7 van byte </li>
+    <li>Toggle bit 1 van een byte</li>
+    <li>Toggle bit 3 en 4 van een byte</li>
   </ul>  
+  <table>
+    <tr>
+      <td>Bit 7</td>
+      <td>Bit 6</td>
+      <td>Bit 5</td>
+      <td>Bit 4</td>
+      <td>Bit 3</td>
+      <td>Bit 2</td>
+      <td>Bit 1</td>
+      <td>Bit 0</td>
+    </tr>
+  </table>
   <aside class="notes">
     bit_fld |= 0xF
     bit_fld |= (0x3 &lt&lt 5)
-    bit_fld &= (1 &lt&lt  4)
-    bit_fld &= (0xF &lt&lt  4)
+    bit_fld &= ~(1 &lt&lt  4)
+    bit_fld &= ~(0xF &lt&lt  4)
     bit_fld ^= (1 &lt&lt  0)
     bit_fld ^= (0x3 &lt&lt  3)
   </aside>
@@ -944,5 +956,246 @@ void loop(){
   PORTD = 0xAA  //set port val					
   delay(500);   //delay for blink effect
 }
+  </aside>
+</section>
+<section>
+  <h2>Analoge Digitale Conversie (ADC)</h2>
+  <h3>Eigenschappen ADC</h3>
+  <div style="float: left; width: 60%">
+    <ul>
+      <h5><li>Resolutie</li></h5>
+      <ul>
+        <li>`2^(#Bits ADC)`</li>
+        <li>`1024`</li>
+      </ul>
+      <ul>
+        <h5><li>Range</li></h5>
+        <ul>
+          <li>`0 - 2^(#Bits ADC -1)`</li>
+          <li>`0 - 1023`</li>
+        </ul>
+        <h5><li>Accuracy</li></h5>
+        <ul>
+          <li>`V_(ref) / (Resolutie)`</li>
+          <li style="margin: 30 30 0 0;">`(5V) / 1024 ≈ 4,9mV`</li>
+        </ul>
+      </ul>
+      <li>`analogRead = (V_(IN) * Resolutie)/V_(ref)`</li>
+    </ul>
+  </div>
+  <div style="float: left; width: 40%">
+    <img src="img/quantizations.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Analoge Digitale Conversie (ADC)</h2>
+  <div style="display: flex; align-items: center justify-content: center;">
+    <div class="vcontainer">
+      <img src="img/adc_atmega328p.png" alt="">
+    </div>
+    <div class="vcontainer" style="justify-content: flex-start;">
+      <h3>Configuratie door zetten van register waarde ... </h3>
+      <ul>
+        <li class="fragment">Multiplexer</li>
+        <li class="fragment">Referentie voltage</li>
+        <li class="fragment">Prescaler</li>
+        <li class="fragment">Status Register</li>
+        <li class="fragment">....</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>ADC Multiplexer Selection Register</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>Referentie Voltage Selecteren</li></h4>
+      <h4><li>ADC Pin Selectie</li></h4>
+      <h4><li>Left Adjust</li></h4>
+      <ul>
+        <li>Zie datasheet</li>
+      </ul>
+    </ul>
+    <img src="img/admux.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>ADC Referentie Voltage</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>AVCC Instellen</li></h4>
+      <li>
+        <pre style="float: left; width: 600px;"><code class="arduino">
+ ADMUX |= (1 << REFS0);
+        </code></pre>
+      </li>
+    </ul>
+    <img src="img/ref_adc.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>ADC Pin Selecteren </h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>Je kan maar een pin tegelijk uitlezen</li></h4>
+      <h4><li>ADCX (ATmega328p Pin) = AX(Arduino Pin)</li></h4>
+      <li>
+        <pre style="float: left; width: 600px;"><code class="arduino">
+ADMUX |= (~(1 << MUX1) | ~(1 << MUX0));
+        </code></pre>
+      </li>
+    </ul>
+    <img src="img/mux_adc.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>ADC Status Register A </h2>
+  <div style="display: flex; align-items: flex-end; justify-content: center; flex-direction: column;">
+    <table>
+      <tr>
+        <td>ADEN</td>
+        <td>ADC Enable</td>
+      </tr>
+      <tr>
+        <td>ADSC</td>
+        <td>ADC Start Conversion</td>
+      </tr>
+      <tr>
+        <td>ADATE</td>
+        <td>ADC Auto Trigger Enable</td>
+      </tr>
+      <tr>
+        <td>ADIF</td>
+        <td>ADC Interrupt Flag</td>
+      </tr>
+      <tr>
+        <td>ADIE</td>
+        <td>ADC Interrupt Enable</td>
+      </tr>
+      <tr>
+        <td>ADPS2-0</td>
+        <td>ADC Prescaler bit</td>
+      </tr>
+    </table>
+    <img src="img/adcsra.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>ADC Prescaler Instellen </h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>Frequentie tussen 50kHz en 200kHz</li></h4>
+      <h4><li>Arduino draait op 16 MHz</li></h4>
+      <h4><li>Prescaler is dus altijd 128</li></h4>
+      <ul>
+        <li>`(16MHz) / 128 = 125kHz`</li>
+      </ul>
+      <li>
+        <pre style="float: left; width: 700px;"><code class="arduino">
+ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+        </code></pre>
+      </li>
+    </ul>
+    <img src="img/ps_adc.png" style="width: 50%;"alt="">
+  </div>
+</section>
+<section>
+  <h2>Conversie Starten</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h4>Single Conversion</h4>
+      <ul>
+        <li>Eerst instellingen doen</li>
+        <li>Eenmalig triggeren van ADC</li>
+        <li>Kan herhaalt worden door ADSC terug op een te zetten</li>
+        <li>Makkelijk om van kanaal te wisselen</li>
+        <li>
+          <pre style="float: left; width: 700px;"><code class="arduino">
+ADCSRA |= (1 << ADEN);
+ADCSRA |= (1 << ADSC);
+          </code></pre>
+        </li>
+      </ul>
+    </div>
+    <div class="vcontainer">
+      <h4>Freerunning</h4>
+      <ul>
+        <li>Eerst instellingen doen</li>
+        <li>Continue conversie</li>
+        <li>Disablen door ADEN op nul te zetten</li>
+        <li>Moeilijk om van kanaal te wisselen</li>
+        <li>
+          <pre style="float: left; width: 700px;"><code class="arduino">
+ADCSRA |= (1 << ADATE);              
+ADCSRA |= (1 << ADEN);          
+ADCSRA |= (1 << ADSC);
+          </code></pre>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>ADC Waarde uitlezen (ADCL/ADCH Registers)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>Afhankelijk van ADLAR</li></h4>
+      <h4><li>ADCL eerst uitlezen dan ADCL</li></h4>
+      <li>
+        <pre style="float: left; width: 600px;"><code class="arduino">
+Serial.println(ADCL | (ADCH << 8));
+        </code></pre>
+      </li>
+    </ul>
+    <img src="img/adcl.png" style="width: 50%;"alt="">
+    <img src="img/adch.png" style="width: 50%;"alt="">
+  </div>
+</section>
+<section>
+  <h2>Oefening #1</h2>
+  <div style="display: flex; align-items: center justify-content: center;">
+    <ul style="width: 40%">
+      <h5>
+        <li>Maak een opstelling waar je een pot uitleest op AO</li>
+        <li>Upload en test de volgende code</li>
+      </h5>
+    </ul>
+    <pre><code class="Arduino">
+void setup() {
+  Serial.begin(9600);
+  ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+  ADMUX |= (1 << REFS0);
+  ADCSRA |= (1 << ADEN);
+  ADCSRA |= (1 << ADSC);
+  while ((ADCSRA & (1 << ADSC)));
+  Serial.println((ADCH << 8) | ADCL);
+  Serial.println("DONE");
+}
+
+void loop() {
+  Serial.println(ADCL | (ADCH << 8));
+}
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Oefening #2</h2>
+  <h4>Pas de vorige oefening aan zodat je een freerunning ADC hebt op A3</h4>
+  <aside class="notes">
+void setup() {
+  Serial.begin(9600);
+  ADCSRA |= ((1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0));
+  ADMUX |= (1 << REFS0);
+  ADMUX |= ((1 << MUX1) | (1 << MUX0));
+  ADCSRA |= (1 << ADATE);              
+  ADCSRA |= (1 << ADEN);          
+  ADCSRA |= (1 << ADSC);
+
+}
+
+void loop() {
+  Serial.println(ADCL | (ADCH << 8));
+}
+
   </aside>
 </section>
