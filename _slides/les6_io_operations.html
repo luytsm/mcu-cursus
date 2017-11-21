@@ -1041,7 +1041,7 @@ void loop(){
       <h4><li>ADCX (ATmega328p Pin) = AX(Arduino Pin)</li></h4>
       <li>
         <pre style="float: left; width: 600px;"><code class="arduino">
-ADMUX |= (~(1 << MUX1) | ~(1 << MUX0));
+ADMUX |= ((1 << MUX1) | ~(1 << MUX0));
         </code></pre>
       </li>
     </ul>
@@ -1061,7 +1061,7 @@ ADMUX |= (~(1 << MUX1) | ~(1 << MUX0));
         <td>ADC Start Conversion</td>
       </tr>
       <tr>
-        <td>ADATE</td>
+        <td>ADATE</td>I
         <td>ADC Auto Trigger Enable</td>
       </tr>
       <tr>
@@ -1180,7 +1180,27 @@ void loop() {
 </section>
 <section>
   <h2>Oefening #2</h2>
-  <h4>Pas de vorige oefening aan zodat je een freerunning ADC hebt op A3</h4>
+  <h4>Pas de vorige oefening aan zodat je een waarde kan uitlezen op A5</h4>
+  <aside class="notes">
+void setup() {
+  Serial.begin(9600);
+  ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+  ADMUX |= (1 << REFS0);
+  ADMUX |= ((1 << MUX2) | (1 << MUX0))
+  ADCSRA |= (1 << ADEN);
+  ADCSRA |= (1 << ADSC);
+  while ((ADCSRA & (1 << ADSC)));
+  Serial.println((ADCH << 8) | ADCL);
+  Serial.println("DONE");
+}
+
+void loop() {
+  Serial.println(ADCL | (ADCH << 8));
+}
+
+  </aside>
+  <h2>Oefening #3</h2>
+  <h4>Pas de eerste oefening aan zodat je een freerunning ADC hebt op A3</h4>
   <aside class="notes">
 void setup() {
   Serial.begin(9600);
