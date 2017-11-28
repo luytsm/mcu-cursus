@@ -45,7 +45,9 @@ er een rode led.
 Het home scherm toont de state (On, Armed, Triggered) van het alarm. De
 functionaliteit van 2 de knoppen zijn selectie en volgende menu. Het selecteren
 van dit menu heeft geen effect. Je geeft ook de laatst gemeten afstand weer en
-de status van *alarm drukknop* weer wanneer het alarm armed is.
+de status van *alarm drukknop* weer wanneer het alarm armed is. Op de manier
+kunnen we in een oogopslag zien welke van de 2 inputs het alarm heeft
+getriggered.  
 
 ### (Dis)armed  
 
