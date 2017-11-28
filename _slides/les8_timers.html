@@ -1,0 +1,486 @@
+---
+title: "Les 8: Timers"
+description: "Timing op de ATmega328p"
+reveal:
+---
+<section>
+  <h1>Timers</h1>
+</section>
+<section>
+  <h2>Hoeveel PWM pinnen heeft een Arduino Nano?</h2>
+  <h2 class="fragment">Vanwaar komt deze restrictie?</h2>
+</section>
+<section>
+  <h2>Timer 0 Blok Diagramma</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Veel instellingen</li></h4>
+      <ul>
+        <li>Veel registers</li>
+      </ul>
+      <h4><li>Hoger complexiteit</li></h4>
+    </ul>
+    <img style="height: 85%;"src="img/tc0_block_diagram.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>TC0 Control Register A</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Instellen van Compare Output Mode</li></h4>
+      <ul>
+        <li>COM0xn</li>
+        <li>Channel A (Arduino Pin 5)</li>
+        <li>Channel B (Arduino Pin 6)</li>
+      </ul>
+      <h4><li>Instellen van Waveform Generation Mode</li></h4>
+      <ul>
+        <li>WSG[1:0]</li>
+        <li>Normal</li>
+        <li>Fase Correct PWM</li>
+        <li>CTC</li>
+        <li>Fast PWM</li>
+      </ul>
+    </ul>
+    <img style="width: 65%;"src="img/tccr0a.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>TC0 Control Register B</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>FOCBx</li></h4>
+      <ul>
+        <li>Compatibiliteit met toekomstig devices</li>
+      </ul>
+      <h4><li>Instellen van Waveform Generation Mode</li></h4>
+      <ul>
+        <li>WSG[2]</li>
+      </ul>
+      <h4><li>Clock Select en Prescaler</li></h4>
+      <ul>
+        <li>CS[2:0]</li>
+      </ul>
+    </ul>
+    <img style="width: 65%;"src="img/tccr0b.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Waveform Generation Mode</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Values</li></h4>
+      <ul>
+        <li>BOTTOM = 0x0</li>
+        <li>MAX = 0xFF</li>
+        <li>TOP = MAX || OCR0x</li>
+      </ul>
+      <h4><li>WSG[2]</li></h4>
+      <ul>
+        <li>Frequentie Manipulatie</li>
+        <li>Niet direct gebruikt</li>
+      </ul>
+    </ul>
+    <img style="width: 65%;"src="img/tc0_wsg_table.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>WGM: Normal Mode</h2>
+  <pre><code>
+IF COUNTER == MAX
+  COUNTER = BOT
+  SET INTERRUPT FLAG
+ELSE COUNTER++
+  </code></pre>
+</section>
+<section>
+  <h2>WGM: Clear Timer on Compare Match (CTC)</h2>
+  <div class="hcontainer">
+    <img style="width: 65%;"src="img/ctc_timing.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>WGM: Fast PWM</h2>
+  <div class="hcontainer">
+    <img style="width: 65%;"src="img/fast_pwm_timing.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>WGM: Phase Correct PWM</h2>
+  <div class="hcontainer">
+    <img style="width: 65%;"src="img/phase_correct_pwm_timing.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Fast PWM vs Phase Correct PWM </h2>
+  <div class="hcontainer">
+    <img src="img/pwm_modes.gif" alt="">
+    <img src="img/pwm_modes.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Compare Output Mode (Normal Mode)</h2>
+  <div class="hcontainer">
+    <img style="width: 65%;"src="img/tc_com_normal.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Compare Output Mode (Fast PWM)</h2>
+  <div class="hcontainer">
+    <img style="width: 65%;"src="img/tc_com_fast_pwm.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Compare Output Mode (Phase Correct PWM)</h2>
+  <div class="hcontainer">
+    <img style="width: 65%;"src="img/tc_com_phase_correct_pwm.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Clock Select / Prescaler</h2>
+  <div class="hcontainer">
+    <img style="width: 65%;"src="img/tc0_clock_select.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>TC0 Interrupt Mask Register</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Enablen van Events</li></h4>
+      <ul>
+        <li>Compare Match Interrupts</li>
+        <li>Timer Overflow Event</li>
+      </ul>
+    </ul>
+    <img style="width: 65%;"src="img/timsk0.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>TC Output Compare Register</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Waarde om te vergelijken</li></h4>
+      <ul>
+        <li>0 - 255</li>
+      </ul>
+      <h4><li>Een per channel</li></h4>
+    </ul>
+    <img style="width: 65%;"src="img/ocr0a.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>TC 0 Counter Value Register</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Huidige waarde van Timer</li></h4>
+      <h4><li></li></h4>
+      <h4><li></li></h4>
+    </ul>
+    <img style="width: 65%;"src="img/tcnt0.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>TC 0 Interrupt Flag Register</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Is interrupt getriggerd?</li></h4>
+      <ul>
+        <li>Compare event</li>
+        <li>Overflow event</li>
+      </ul>
+    </ul>
+    <img style="width: 65%;"src="img/tifr0.png" alt="">
+  </div>
+</section>
+<section>
+  <h1>Implementatie op de Arduino</h1>
+</section>
+<section>
+  <h2>Init Functie</h2>
+  <pre><code class="Arduino">
+void init()
+{
+	sei();
+	sbi(TCCR0A, WGM01);
+	sbi(TCCR0A, WGM00);
+
+	// set timer 0 prescale factor to 64
+	sbi(TCCR0B, CS01);
+	sbi(TCCR0B, CS00);
+	// enable timer 0 overflow interrupt
+	sbi(TIMSK0, TOIE0);
+
+	TCCR1B = 0;
+
+	// set timer 1 prescale factor to 64
+	sbi(TCCR1B, CS11);
+	sbi(TCCR1B, CS10);
+	// put timer 1 in 8-bit phase correct pwm mode
+	sbi(TCCR1A, WGM10);
+
+	// set timer 2 prescale factor to 64
+	sbi(TCCR2B, CS22);
+
+	// configure timer 2 for phase correct pwm (8-bit)
+	sbi(TCCR2A, WGM20);
+
+  </code></pre>
+Deze code is te vinden in wiring.c
+</section>
+<section>
+  <h2>AnalogWrite</h2>
+  <div class="hcontainer">
+    <pre style="width: 900px;"><code class="Arduino">
+void analogWrite(uint8_t pin, int val)
+{
+	pinMode(pin, OUTPUT);
+	if (val == 0)
+	{
+		digitalWrite(pin, LOW);
+	}
+	else if (val == 255)
+	{
+		digitalWrite(pin, HIGH);
+	}
+	else
+	{
+		switch(digitalPinToTimer(pin))
+		{
+
+			#if defined(TCCR0A) && defined(COM0A1)
+			case TIMER0A:
+				// connect pwm to pin on timer 0, channel A
+				sbi(TCCR0A, COM0A1);
+				OCR0A = val; // set pwm duty
+				break;
+			#endif
+
+			#if defined(TCCR0A) && defined(COM0B1)
+			case TIMER0B:
+				// connect pwm to pin on timer 0, channel B
+				sbi(TCCR0A, COM0B1);
+				OCR0B = val; // set pwm duty
+				break;
+			#endif
+
+			#if defined(TCCR1A) && defined(COM1A1)
+			case TIMER1A:
+				// connect pwm to pin on timer 1, channel A
+				sbi(TCCR1A, COM1A1);
+				OCR1A = val; // set pwm duty
+				break;
+			#endif
+
+			#if defined(TCCR1A) && defined(COM1B1)
+			case TIMER1B:
+				// connect pwm to pin on timer 1, channel B
+				sbi(TCCR1A, COM1B1);
+				OCR1B = val; // set pwm duty
+				break;
+			#endif
+
+			#if defined(TCCR1A) && defined(COM1C1)
+			case TIMER1C:
+				// connect pwm to pin on timer 1, channel B
+				sbi(TCCR1A, COM1C1);
+				OCR1C = val; // set pwm duty
+				break;
+			#endif
+
+			#if defined(TCCR2) && defined(COM21)
+			case TIMER2:
+				// connect pwm to pin on timer 2
+				sbi(TCCR2, COM21);
+				OCR2 = val; // set pwm duty
+				break;
+			#endif
+
+			#if defined(TCCR2A) && defined(COM2A1)
+			case TIMER2A:
+				// connect pwm to pin on timer 2, channel A
+				sbi(TCCR2A, COM2A1);
+				OCR2A = val; // set pwm duty
+				break;
+			#endif
+
+			#if defined(TCCR2A) && defined(COM2B1)
+			case TIMER2B:
+				// connect pwm to pin on timer 2, channel B
+				sbi(TCCR2A, COM2B1);
+				OCR2B = val; // set pwm duty
+				break;
+			#endif
+			case NOT_ON_TIMER:
+			default:
+				if (val < 128) {
+					digitalWrite(pin, LOW);
+				} else {
+					digitalWrite(pin, HIGH);
+				}
+		}
+	}
+}
+  
+    </code></pre>
+    <pre style="width: 700px;"><code class="Arduino">
+const uint8_t PROGMEM digital_pin_to_timer_PGM[] = {
+	NOT_ON_TIMER, /* 0 - port D */
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	TIMER2B, //pin 3
+	NOT_ON_TIMER,
+	TIMER0B, //pin 5
+	TIMER0A, //pin 6
+	NOT_ON_TIMER,
+	NOT_ON_TIMER, /* 8 - port B */
+	TIMER1A, //pin 9
+	TIMER1B, //pin 10 
+	TIMER2A, //pin 11
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER, /* 14 - port C */
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+	NOT_ON_TIMER,
+};
+    </code></pre>
+  </div>
+</section>
+<section>
+<h2>Delay</h2>
+  <div class="hcontainer">
+    <pre style="width: 600px;"><code class="Arduino">
+void delay(unsigned long ms)
+{
+	uint32_t start = micros();
+
+	while (ms > 0) {
+		yield();
+		while ( ms > 0 && (micros() - start) >= 1000) {
+			ms--;
+			start += 1000;
+		}
+	}
+}
+    </code></pre>
+    <pre style="width: 600px;"><code class="Arduino">
+unsigned long micros() {
+	unsigned long m;
+	uint8_t oldSREG = SREG, t;
+	
+	cli();
+	m = timer0_overflow_count;
+	t = TCNT0;
+
+	if ((TIFR0 & _BV(TOV0)) && (t < 255))
+		m++;
+	SREG = oldSREG;
+	
+	return ((m << 8) + t) * (64 / clockCyclesPerMicrosecond());
+}
+    </code></pre>
+    <pre style="width: 600px;"><code class="Arduino">
+volatile unsigned long timer0_overflow_count = 0;
+volatile unsigned long timer0_millis = 0;
+static unsigned char timer0_fract = 0;
+
+ISR(TIMER0_OVF_vect)
+{
+	unsigned long m = timer0_millis;
+	unsigned char f = timer0_fract;
+
+	m += MILLIS_INC;
+	f += FRACT_INC;
+	if (f >= FRACT_MAX) {
+		f -= FRACT_MAX;
+		m += 1;
+	}
+
+	timer0_fract = f;
+	timer0_millis = m;
+	timer0_overflow_count++;
+}
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Hulp functies</h2>
+  <pre><code class="Arduino">
+#define clockCyclesPerMicrosecond() ( F_CPU / 1000000L )
+#define clockCyclesToMicroseconds(a) ( (a) / clockCyclesPerMicrosecond() )
+#define microsecondsToClockCycles(a) ( (a) * clockCyclesPerMicrosecond() )
+// the prescaler is set so that timer0 ticks every 64 clock cycles, and the
+// the overflow handler is called every 256 ticks.
+#define MICROSECONDS_PER_TIMER0_OVERFLOW (clockCyclesToMicroseconds(64 * 256))
+
+// the whole number of milliseconds per timer0 overflow
+#define MILLIS_INC (MICROSECONDS_PER_TIMER0_OVERFLOW / 1000)
+
+// the fractional number of milliseconds per timer0 overflow. we shift right
+// by three to fit these numbers into a byte. (for the clock speeds we care
+// about - 8 and 16 MHz - this doesn't lose precision.)
+#define FRACT_INC ((MICROSECONDS_PER_TIMER0_OVERFLOW % 1000) >> 3)
+#define FRACT_MAX (1000 >> 3)
+  </code></pre>
+</section>
+<section>
+  <h2>Oefening #3</h2>
+<pre><code>
+const int LEDPIN = 3;
+
+void setup()
+{
+  Serial.begin(9600);
+  DDRD |= (1 << DDD3);
+  TCCR2A |= (1 << COM2B1); //
+  OCR2B = 255;
+}
+void loop()
+{
+}
+</code></pre>
+</section>
+<section>
+  <h2>Oefening #2</h2>
+  <ul>
+    <li>Toggle een led mbv een timer event</li>
+    <li>Configureer een led op pin D3</li>
+    <li>Configureer led met registers</li>
+    <li>Stel op Timer 2 het volgende in</li>
+    <ul>
+      <li>OVF event</li>
+      <li>Fast PWM</li>
+      <li>Prescaler op 1024</li>
+    </ul>
+  </ul>
+  <aside class="notes">
+volatile bool go = false;
+
+void setup()
+{
+  Serial.begin(9600);
+  noInterrupts(); 
+  DDRD |= (1 << DDD3);  
+  TCCR2A |= ((1 << WGM20) | (1 << WGM21)); 
+  TCCR2B |= ((1 << CS22) | (1 << CS21) | (1 << CS20));
+  TIMSK2 |= (1 << TOIE2);  
+  interrupts();
+}
+
+ISR(TIMER2_OVF_vect)      
+{
+  go = !go;
+  PORTD ^= (1 << PORTD3);
+}
+
+void loop()
+{
+  if (go) {
+    Serial.println("Succes");
+    go = false;
+  }
+}
+  </aside>
+</section>
