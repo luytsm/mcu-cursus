@@ -461,7 +461,7 @@ byte z = 0x0808;
 <section>
   <h2>Los Op</h2>
   <ul>
-    <li>Zeti bit 0 tot 3  van een byte</li>
+    <li>Zet bit 0 tot 3  van een byte</li>
     <li>Zet bit 5 en 6 van een byte</li>
     <li>Clear bit 4 van een byte</li>
     <li>Clear bit 4 tot 7 van byte </li>
@@ -494,7 +494,7 @@ byte z = 0x0808;
   <ul>
     <li>Schrijf een rotate left (ROL) functie</li>
     <li>Maak gebruik van unsigned integers</li>
-    <li>Gebruik <a href="circuits.io">circuits.io</a></li>
+    <li>Maak de oefening op de Arduino </li>
   </ul>
   <aside class="notes">
 byte rol(byte b, byte amount)
@@ -647,7 +647,7 @@ return tmp;
         <li>
           <pre style="float: left; width: 400px;"><code class="arduino">
 PORTC |= (1 << PORTC7) 
-PORTC &= (1 << PORTC5) 
+PORTC &= ~(1 << PORTC5) 
           </code></pre>
         </li>
       </h5>
@@ -668,8 +668,8 @@ PORTC &= (1 << PORTC5)
         <li>Voor elke poort een richting register</li>
         <li>
           <pre style="float: left; width: 400px;"><code class="arduino">
-DDRB |= (1 << DDRB7) 
-DDRB &= (1 << DDRB5) 
+DDRB |= (1 << DDB7) 
+DDRB &= ~(1 << DDB5) 
           </code></pre>
         </li>
       </h5>
@@ -885,7 +885,7 @@ PORTC &= (1 << PORTC5)
   <div style="display: flex; align-items: center justify-content: center;">
     <ul style="width: 40%">
       <h5>
-        <li>Maak volgende opstelling <a href="https://www.tinkercad.com"/>https://www.tinkercad.com/</a></li>
+        <li>Maak volgende opstelling</li>
         <li>Kloon het interrupt Example</li>
         <li>Geef de waardes van de registers na elke loop</li>
       </h5>
@@ -1041,7 +1041,11 @@ void loop(){
       <h4><li>ADCX (ATmega328p Pin) = AX(Arduino Pin)</li></h4>
       <li>
         <pre style="float: left; width: 600px;"><code class="arduino">
+<<<<<<< HEAD
 ADMUX |= (~(1 << MUX1) | ~(1 << MUX0));
+=======
+ADMUX |= ((1 << MUX1) | ~(1 << MUX0));
+>>>>>>> a4bbf5a0c2e5ff8dc3efcd80d921774507ca4f55
         </code></pre>
       </li>
     </ul>
@@ -1061,7 +1065,11 @@ ADMUX |= (~(1 << MUX1) | ~(1 << MUX0));
         <td>ADC Start Conversion</td>
       </tr>
       <tr>
+<<<<<<< HEAD
         <td>ADATE</td>
+=======
+        <td>ADATE</td>I
+>>>>>>> a4bbf5a0c2e5ff8dc3efcd80d921774507ca4f55
         <td>ADC Auto Trigger Enable</td>
       </tr>
       <tr>
@@ -1180,7 +1188,31 @@ void loop() {
 </section>
 <section>
   <h2>Oefening #2</h2>
+<<<<<<< HEAD
   <h4>Pas de vorige oefening aan zodat je een freerunning ADC hebt op A3</h4>
+=======
+  <h4>Pas de vorige oefening aan zodat je een waarde kan uitlezen op A5</h4>
+  <aside class="notes">
+void setup() {
+  Serial.begin(9600);
+  ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+  ADMUX |= (1 << REFS0);
+  ADMUX |= ((1 << MUX2) | (1 << MUX0))
+  ADCSRA |= (1 << ADEN);
+  ADCSRA |= (1 << ADSC);
+  while ((ADCSRA & (1 << ADSC)));
+  Serial.println((ADCH << 8) | ADCL);
+  Serial.println("DONE");
+}
+
+void loop() {
+  Serial.println(ADCL | (ADCH << 8));
+}
+
+  </aside>
+  <h2>Oefening #3</h2>
+  <h4>Pas de eerste oefening aan zodat je een freerunning ADC hebt op A3</h4>
+>>>>>>> a4bbf5a0c2e5ff8dc3efcd80d921774507ca4f55
   <aside class="notes">
 void setup() {
   Serial.begin(9600);
