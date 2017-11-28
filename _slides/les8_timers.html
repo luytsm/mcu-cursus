@@ -426,10 +426,8 @@ ISR(TIMER0_OVF_vect)
   </code></pre>
 </section>
 <section>
-  <h2>Oefening #3</h2>
+  <h2>Oefening #1</h2>
 <pre><code>
-const int LEDPIN = 3;
-
 void setup()
 {
   Serial.begin(9600);
@@ -439,6 +437,7 @@ void setup()
 }
 void loop()
 {
+  Serial.println(TCNT2);
 }
 </code></pre>
 </section>
