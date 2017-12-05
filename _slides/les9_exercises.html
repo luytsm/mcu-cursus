@@ -63,11 +63,13 @@ void loop()
 </section>
 <section>
   <h2>Oefening #2</h2>
-  <p>Door gebruik te maken van registers schrijf je een programma waarmee je op
-      PIN D2 tot PIN D7 (ATmega pinnen) een led kunt laten branden. Als eerst
-      brandt de led op D2, met een druk op de knop schuif je door op de pinnen.
-      Als je op pin D7 bent gekomen, dan is de volgende pin D2. In je code mag
-      je geen gebruik maken van for loop of while en maximaal 2 if 
+  <p>      
+      Door gebruik te maken van registers, schrijf je een programma waarmee je
+      op pin D2 tot D7 elk individueel een led kunt aansturen. Bij de start van
+      het programma staat de led op D2 aan. Met een druk op de knop schuift de
+      on status een led verder. Bij pin D7 is de volgende pin D2. In je code
+      mag je geen gebruik maken van for loops of whiles en maximaal 2 ifs. 
+  
   </p> 
   <aside class="notes"> 
 uint8_t current, prev = 0;
