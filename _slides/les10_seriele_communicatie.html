@@ -7,5 +7,314 @@ reveal:
   <h1>Les 10: Seriele Communicatie</h1>
 </section>
 <section>
-  <h2>Getting Started</h2>
+  <h2>Spreekt de ATmega328p op een Arduino Nano rechtstreeks met een onze PC?</h2>
+</section>
+<section>
+  <h2>UART</h2>
+  <ul>
+    <h4><li>Universal Asynchronous Receiver Transmitter</li></h4>
+    <h4><li>Asynchrone Interface</li></h4>
+    <ul>
+      <li>Geen gemeenschappelijke klok</li>
+      <li>Vereist wel een correcte instelling</li>
+    </ul>
+    <h4><li>Vereist 2 draden</li></h4>
+    <ul>
+      <li>Full Duplex mogelijk</li>
+    </ul>
+    <h4><li>Werkt op TTL levels</li></h4>
+    <h4><li>Simpel</li></h4>
+    <h4><li>Altijd aanwezig op een microcontroller</li></h4>
+  </ul>
+</section>
+<section data-background-image="img/uart_frame.png" data-background-size="contain" data-background-color="#FFFFFF">
+</section>
+<section>
+  <h2>UART Frame</h2>
+  <div style="float: left; width: 35%">
+    <ul>
+      <li>IDLE - Lijn in rust</li>
+      <li>St - Start bit</li>
+      <li>(n) - Data bits</li>
+      <li>P - Parity Bit</li>
+      <li>Sp - Stop Bits</li>
+    </ul>
+  </div>
+  <div style="float: left; width: 65%">
+    <img src="img/uart_frame.png" style="height: 150px; vertical-aligment: center;"alt="">
+  </div>
+</section>
+<section>
+  <h2>UART Frame</h2>
+  <div style="float: left; width: 35%">
+    <ul>
+      <h4><li>IDLE</li></h4>
+      <ul>
+        <li>Lijn in rust</li>
+        <li>Altijd een logisch hoog signaal</li>
+      </ul>
+      <h4><li>St</li></h4>
+      <ul>
+        <li>Start Bits</li>
+        <li>Signaleert de start van een frame</li>
+        <li>Altijd een logisch laag signaal</li>
+      </ul>
+    </ul>
+  </div>
+  <div style="float: left; width: 65%">
+    <img src="img/uart_frame.png" style="height: 150px; vertical-aligment: center;"alt="">
+  </div>
+</section>
+<section>
+  <h2>UART Frame</h2>
+  <div style="float: left; width: 35%">
+    <ul>
+      <h4><li>(n)</li></h4>
+      <ul>
+        <li>Aantal data bits</li>
+        <li>Min 5 - Max 9</li>
+        <li>Meestal 8</li>
+      </ul>
+      <h4><li>P</li></h4>
+      <ul>
+        <li>Parity bits</li>
+        <li>Error controle</li>
+        <ul>
+          <li>≠ Error correctie</li>
+        </ul>
+        <li>Meestal niet gebruikt</li>
+      </ul>
+    </ul>
+  </div>
+  <div style="float: left; width: 65%">
+    <img src="img/uart_frame.png" style="height: 150px; vertical-aligment: center;"alt="">
+  </div>
+</section>
+<section>
+  <h2>UART Frame</h2>
+  <div style="float: left; width: 35%">
+    <ul>
+      <li>St</li>
+      <ul>
+        <li>Stop Bits</li>
+        <li>Altijd een logisch hoog signaal</li>
+        <li>Min: 1 - Max: 2</li>
+        <ul>
+          <li>Meestal 1</li>
+          <li>2 Stop bits is een artifact</li>
+        </ul>
+      </ul>
+      <li>St/IDLE</li>
+      <ul>
+        <li>Volgend frame of stoppen met verzenden</li>
+      </ul>
+    </ul>
+  </div>
+  <div style="float: left; width: 65%">
+    <img src="img/uart_frame.png" style="height: 150px; vertical-aligment: center;"alt="">
+  </div>
+</section>
+<section>
+  <h2>UART Configuratie</h2>
+  <p>Uit opbouw van een UART Frame leiden we volgende configuratie mogelijkheden af: </p>
+  <ul>
+    <h4><li>Aantal data bits</li></h4>
+    <h4><li>Parity bit</li></h4>
+    <h4><li>Stop Bits</li></h4>
+    <h4><li class="fragment">Baud rate</li></h4>
+  </ul>
+</section>
+<section>
+  <h2>Baud Rate</h2>
+  <div style="float: left; width: 60%;">
+    <ul>
+      <li>Modulatie snelheid</li>
+      <ul>
+        <li>Aantal symbool veranderingen per seconde</li>
+        <li>In digitale systemen = bits per second (bps)</li>
+      </ul>
+      <li>Keuze afhankelijk van kloksnelheid </li>
+    </ul>
+  </div>
+  <div class="fragment" style="float: left; width: 40%;">
+    <p>Vaak voorkomende waarden</p>
+    <ul>
+      <li>9600</li>
+      <li>19200</li>
+      <li>57600</li>
+      <li>115200</li>
+    </ul>
+  </div>
+</section>
+<section>
+  <h2>UART Synchronisatie</h2>
+  <ul>
+    <li>Asynchroon</li>
+    <ul>
+      <li>Geen klok</li>
+    </ul>
+    <li>Afhankelijk van de correcte instellingen</li>
+    <li>Reciever moet weten wanneer te stoppen met sampelen</li>
+    <ul>
+      <li>d.m.v. Stop Bit</li>
+    </ul>
+    <li>Reciever moeten weten wanneer te sampelen</li>
+    <ul>
+      <li>d.m.v. Start Bit</li>
+    </ul>
+    <li>Er wordt meestal gesampeld op 16x de baud rate</li>
+  </ul>
+</section>
+<section data-background-image="img/uart_connections.png" data-background-size="contain" data-background-color="white"></section>
+<section>
+  <h2>USART I/O Data Register 0</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <li>Een register voor zowel TX als RX buffer</li>
+      <li>uSart</li>
+      <ul>
+        <li>De USART module kan gebruikt worden voor zowel UART als SPI in master mode</li>
+      </ul>
+      <li>Als UDRE0 == 0, dan is het register beveiligd tegen overschrijven</li>
+    </ul>
+    <img style="width: 65%;"src="img/udr0.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>USART Control and Status Register 0 A</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Interrupt Flags</li></h4>
+      <ul>
+        <li>RXC0 - Recieve Complete Interrupt</li>
+        <li>TXCO - Transmit Complete Interrupt</li>
+        <li>UDRE0 - Data Register Empty Interrupt</li>
+      </ul>
+      <h4><li>Nitro</li></h4>
+      <ul>
+        <li>U2X0 - Dubbele snelheid voor de UART communicatie</li>
+      </ul>
+    </ul>
+    <img style="width: 65%;"src="img/ucsr0a.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>USART Control and Status Register 0 B</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>Interrupt Flags</li></h4>
+      <ul>
+        <li>RXCIE0 - Recieve Complete Interrupt Enable</li>
+        <li>TXCIEO - Transmit Complete Interrupt Enable</li>
+        <li>UDRIE0 - Data Register Empty Interrupt Enable</li>
+      </ul>
+      <h4><li>Enable</li></h4>
+      <ul>
+        <li>RXEN0</li>
+        <li>TXEN0</li>
+      </ul>
+      <h4><li>Aantal data bits</li></h4>
+      <ul>
+        <li>UCSZ02</li>
+        <li>Zie ook UCSR0C</li>
+      </ul>
+    </ul>
+    <img style="width: 65%;"src="img/ucsr0b.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>USART Control and Status Register 0 C</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>USART Mode Select</li></h4>
+      <ul>
+        <li>UMSEL0[1:0]</li>
+      </ul>
+      <h4><li>Parity Mode Select</li></h4>
+      <ul>
+        <li>UPM0[1:0]</li>
+        <li>0 - Off</li>
+      </ul>
+      <h4><li>USART Stop Bit Select</li></h4>
+      <ul>
+        <li>USBS0</li>
+        <li>0 - 1 bit</li>
+      </ul>
+      <h4><li>Character Size Select</li></h4>
+      <ul>
+        <li>UCSZ[2:0]</li>
+        <li>0b011 - 8 bits</li>
+      </ul>
+    </ul>
+    <img style="width: 65%;"src="img/ucsr0c.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>USART Baud Rate 0 Register Low/High</h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li>BAUD 12 bits</li></h4>
+      <ul>
+        <li>UBRR0[11:8] - UBRR0H</li>
+        <li>UBRR0[7:0] - UBRR0L</li>
+      </ul>
+    </ul>
+    <div class="vcontainer">
+      <img style="width: 65%;"src="img/ubrr0l.png" alt="">
+      <img style="width: 65%;"src="img/ubrr0h.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Baud Rate Berekenen</h2>
+  <div class="hcontainer">
+    <img style="width: 55%;"src="img/baud_calc.png" alt="">
+    <ul style="width: 45%;">
+      <h4><li>Opvangen van fouten</li></h4>
+      <ul>
+        <li>AVR</li>
+        <ul>
+          <li>`UBR Rn = (F_(CPU) + BAUDRATE * 8L) / (BAUDRATE * 16L) - 1)`</li>
+          <li><a href="http://www.nongnu.org/avr-libc/user-manual/FAQ.html#faq_wrong_baud_rate">AVR FAQ: Klik hier</a></li>
+        </ul>
+        <li>Arduino</li>
+          <ul>
+            <li>`UBR Rn = (((F_(CPU) / 4) / (baud)) - 1) / 2` </li>
+          </ul>
+        </ul>
+    </ul>
+  </div>
+</section>
+<section>
+  <h2></h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li></li></h4>
+      <h4><li></li></h4>
+      <h4><li></li></h4>
+    </ul>
+    <img style="width: 65%;"src="img/.png" alt="">
+  </div>
+</section>
+<section>
+  <h2></h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li></li></h4>
+      <h4><li></li></h4>
+      <h4><li></li></h4>
+    </ul>
+    <img style="width: 65%;"src="img/.png" alt="">
+  </div>
+</section>
+<section>
+  <h2></h2>
+  <div class="hcontainer">
+    <ul style="width: 35%;">
+      <h4><li></li></h4>
+      <h4><li></li></h4>
+      <h4><li></li></h4>
+    </ul>
+    <img style="width: 65%;"src="img/.png" alt="">
+  </div>
 </section>
