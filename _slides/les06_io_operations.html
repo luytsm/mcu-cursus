@@ -1,0 +1,1221 @@
+---
+title: "Les 6: IO Operaties Naturel"
+description: "IO Operaties door registers aan te spreken"
+reveal:
+---
+<section>
+  <h1>IO Operaties Naturel</h1>
+</section>
+<section>
+  <h1>Bit Operaties</h1>
+  <h2>Manipulatie op bitniveau</h2>
+  <ul>
+    <h5>
+      <li>Microcontroller werkt met 8bit geheugenplaatsen</li>
+      <li>Code schrijven met hoge precisie</li>
+      <li>Efficiëntie</li>
+    </h5>
+  </ul>
+</section>
+<section>
+  <h2>Status van een lamp</h2>
+  <div style="display: flex; justify-content: space-around; align-items: center;">
+    <img class="plain" style="height: 400px; background: none ;" src="img/light_bulb.png" alt="">
+    <ul style="width: 30%; ">
+      <h5>
+        <li>Status van een lamp: 1 ? 0</li>
+        <li>1 bit informatie</li>
+        <li>sizeof(int) = 4 bytes</li>
+        <ul>
+          <li>Overkill</li>
+        </ul>
+        <li>Kleinste datatype = </li>
+        <ul>
+          <li class="fragment">Byte / Char</li>
+        </ul>
+        <li class="fragment">Oplossing</li>
+        <ul>
+          <li class="fragment">Data verzamelen in één element</li>
+        </ul>
+      </h5>
+    </ul>
+    <div class="vcontainer">
+    <pre class="fragment" style="width: 50%;"><code class="Arduino">
+int pinValues[8] = {0, 1, 0, 1, 0, 1, 0, 1}
+      </code></pre>
+    <pre class="fragment" style="width: 50%;"><code class="Arduino">
+byte pinValuesBin = 0b01010101; //or
+byte pinValuesHex = 0x55; 
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Bitwise Operators</h2>
+  <table>
+    <tbody><tr>
+        <th>Symbol</th>
+        <th>Operator</th>
+      </tr>
+      <tr>
+        <td>&amp;</td>
+        <td>bitwise AND</td>
+      </tr>
+      <tr>
+        <td>|</td>
+        <td>bitwise  OR</td>
+      </tr>
+      <tr>
+        <td>^</td>
+        <td>bitwise XOR </td>
+      </tr>
+      <tr>
+        <td>&lt;&lt;</td>
+        <td>left shift</td>
+      </tr>
+      <tr>
+        <td>&gt;&gt;</td>
+        <td>right shift</td>
+      </tr>
+      <tr>
+        <td>~</td>
+        <td>bitwise NOT (one's complement) (unary)</td>
+      </tr>
+    </tbody></table>
+</section>
+<section>
+  <h2>Bitwise Operators</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+      <h3>Bitwise AND (&)</h3>
+      <table class="wikitable">
+        <tbody><tr>
+            <th>bit a</th>
+            <th>bit b</th>
+            <th>a &amp; b (a AND b)</th>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </tbody></table>
+        <pre><code>
+11001000 & 
+10111000 = 
+-------- 
+10001000
+        </code></pre>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+      <h3>Bitwise OR (|)</h3>
+      <table>
+        <tbody><tr>
+            <th>bit a</th>
+            <th>bit b</th>
+            <th>a | b (a OR b)</th>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </tbody></table>
+        <pre><code style="he">
+11001110 | 
+10011000 =
+-------- 
+11011110
+        </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Bitwise Operators</h2>
+  <div style="display: flex; justify-content: center; align-items: flex-start;">
+
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+      <h3>Bitwise XOR (^)</h3>
+      <table class="wikitable">
+        <tbody><tr>
+            <th>bit a</th>
+            <th>bit b</th>
+            <th>a ^ b (a XOR b)</th>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+        </tbody></table>
+        <pre><code>
+11001110 ^
+10011000 =
+-------- 
+01010110
+        </code></pre>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+      <h3>Bitwise OR (|)</h3>
+      <table class="wikitable">
+        <tbody><tr>
+            <th>bit a</th>
+            <th>~a (complement of a)</th>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>0</td>
+          </tr>
+          <tr style="visibility: hidden;"><td>empty</td> </tr>
+          <tr style="visibility: hidden;"><td>empty</td> </tr>
+        </tbody></table>
+        <pre><code>
+~ 11001110
+---------- 
+= 00110001
+        </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Bitwise Operators</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+      <h3>Left Shift</h3>
+      <pre><code>
+11001110 &lt&lt 1
+-------- 
+= 10011100
+      </code></pre>
+      <pre><code>
+11001110 &lt&lt 5
+-------- 
+= 11000000 
+      </code></pre>
+      <ul class="fragment">
+        <h5>
+          <li class="fragment">LSB Opvullen met 0</li>
+          <li class="fragment">Maal 2</li>
+        </h5>
+      </ul>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+      <h3>Right  Shift</h3>
+      <pre><code>
+11001110 &gt&gt 1
+-------- 
+= 01100111
+      </code></pre>
+      <pre><code>
+11001110 &gt&gt 5
+-------- 
+= 00000110
+      </code></pre>
+      <ul class="fragment">
+        <h5>
+          <li class="fragment">MSB Opvullen met 0</li>
+          <li class="fragment">Delen door 2</li>
+        </h5>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Los Op</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <pre><code>
+11001011 & 
+11110000 =  ?
+      </code></pre>
+      <pre><code>
+byte x = 0xA3;
+byte y = 0xF;
+byte z = x & y // z = ?
+      </code></pre>
+      <pre><code>
+11000110 || 
+00001111 = ?
+      </code></pre>
+      <pre><code>
+byte x = 0x4B;
+byte y = 0xF0;
+byte z = x | y // z = ?
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <pre><code>
+00000000 ^
+10101010 = ?
+      </code></pre>
+      <pre><code>
+byte x = 0x4C
+byte y = 0x3;
+byte z = x ^ y // z = ?
+      </code></pre>
+      <pre><code>
+
+~ 11110000 = ?
+      </code></pre>
+      <pre><code>
+
+byte y = 0x3;
+byte z = ~y // z = ?
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <pre><code>
+
+1 &lt&lt 4 = ?
+      </code></pre>
+      <pre><code>
+
+byte y = 0x6;
+byte z = y &lt&lt 4 // z = ?
+      </code></pre>
+      <pre><code>
+
+00010110 &gt&gt 5 = ?
+      </code></pre>
+      <pre><code>
+
+byte y = 0xF0;
+byte z = y >> 0x4 // z = ?
+      </code></pre>
+    </div>
+    <aside class="notes">
+      11000000
+      0xA
+      00001111
+      0x4B
+      10101010
+      0x4F
+      00001111
+      0xFC
+      10000
+      0x60
+      0x0
+      0x0F
+    </aside>
+  </div>
+  <a href="https://www.cs.ucsb.edu/~pconrad/cs16/topics/bitOps/?formForQuestion3Response=120">Meer oefeningen: klik hier</a>
+</section>
+<section>
+  <h2>Bitwise Assigment</h2>
+  <table class="wikitable sortable jquery-tablesorter">
+    <thead><tr>
+        <th>Symbol</th>
+        <th>Operator</th>
+      </tr></thead><tbody>
+        <tr>
+          <td><code>&amp;=</code></td>
+          <td>bitwise AND assignment</td>
+        </tr>
+        <tr>
+          <td><code>|=</code></td>
+          <td>bitwise inclusive OR assignment</td>
+        </tr>
+        <tr>
+          <td><code>^=</code></td>
+          <td>bitwise exclusive OR assignment</td>
+        </tr>
+        <tr>
+          <td><code>&lt;&lt;=</code></td>
+          <td>left shift assignment</td>
+        </tr>
+        <tr>
+          <td><code>&gt;&gt;=</code></td>
+          <td>right shift assignment</td>
+        </tr>
+      </tbody><tfoot></tfoot></table>
+</section>
+<section>
+  <h2>Bit mask</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+      <h3>Bits Activeren</h3>
+      <pre><code>
+   10010101   10100101
+OR 11110000   11110000
+=  11110101   11110101
+      </code></pre>
+      <pre><code class="c">
+byte x = 0x95A5;
+byte y = 0xF0F0
+byte z = x | y;
+byte z = 0xF5F5;
+      </code></pre>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+      <h3>Bits (De)Selecteren</h3>
+      <pre><code>
+    10010101   10100101
+AND 00001111   00001111
+=   00000101   00000101
+      </code></pre>
+      <pre><code class="c">
+byte x = 0x95A5;
+byte y = 0x0F0F
+byte z = x & y;
+byte z = 0x05F5;
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Bit mask</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+      <h3>Bitwaarde togglen</h3>
+      <pre><code>
+    10011101   10010101
+XOR 00001111   11111111
+=   10010010   01101010
+      </code></pre>
+      <pre><code class="c">
+byte x = 0x9D95;
+byte y = 0x0FFF
+byte z = x ^ y;
+byte z = 0x926A;
+      </code></pre>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+      <h3>Bitwaarde opvragen</h3>
+      <pre><code>
+    10011101   10010101
+AND 00001000   00001000
+=   00001000   00000000
+      </code></pre>
+      <pre><code class="c">
+byte x = 0x97A5;
+byte y = 0x0808;
+byte z = x & y;
+byte z = 0x0808;
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Vaak gebruikte operaties</h2>
+  <ul>
+    <li><b>Set a bit</b></li>
+    <pre style="width: 300px;"><code> bit_fld |= (1 << n)</code></pre>
+    <li><b>Clear a bit</b></li>
+    <pre style="width: 300px;"><code> bit_fld &= ~(1 << n)</code></pre>
+    <li><b>Toggle a bit</b></li>
+    <pre style="width: 300px;"><code> bit_fld ^= (1 << n)</code></pre>
+    <li><b>Test a bit</b></li>
+    <pre style="width: 300px;"><code> bit_fld & (1 << n)</code></pre>
+  </ul>
+</section>
+<section>
+  <h2>Los Op</h2>
+  <ul>
+    <li>Zet bit 0 tot 3  van een byte</li>
+    <li>Zet bit 5 en 6 van een byte</li>
+    <li>Clear bit 4 van een byte</li>
+    <li>Clear bit 4 tot 7 van byte </li>
+    <li>Toggle bit 1 van een byte</li>
+    <li>Toggle bit 3 en 4 van een byte</li>
+  </ul>  
+  <table>
+    <tr>
+      <td>Bit 7</td>
+      <td>Bit 6</td>
+      <td>Bit 5</td>
+      <td>Bit 4</td>
+      <td>Bit 3</td>
+      <td>Bit 2</td>
+      <td>Bit 1</td>
+      <td>Bit 0</td>
+    </tr>
+  </table>
+  <aside class="notes">
+    bit_fld |= 0xF
+    bit_fld |= (0x3 &lt&lt 5)
+    bit_fld &= ~(1 &lt&lt  4)
+    bit_fld &= ~(0xF &lt&lt  4)
+    bit_fld ^= (1 &lt&lt  0)
+    bit_fld ^= (0x3 &lt&lt  3)
+  </aside>
+</section>
+<section>
+  <h2>Oefening</h2>
+  <ul>
+    <li>Schrijf een rotate left (ROL) functie</li>
+    <li>Maak gebruik van unsigned integers</li>
+    <li>Maak de oefening op de Arduino </li>
+  </ul>
+  <aside class="notes">
+byte rol(byte b, byte amount)
+{
+amount = amount % 8;
+uint8_t tmp = b;
+tmp = (tmp >> (8-amount)) | (tmp &lt&lt amount);
+return tmp;
+}
+  </aside>
+</section>
+<section>
+  <h2>GPIO Pins</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul style="width: 40%">
+      <h5>
+        <li>2 Richtingen</li>
+        <li>3 States</li>
+        <li>Gedeelte functionaliteit</li>
+        <li>Poort Niveau</li>
+      </h5>
+    </ul>
+    <img src="img/internal_pullup.png" style="height: 400px;" alt="">
+  </div>
+</section>
+<section>
+  <h2>Tri State Logica</h2>
+  <div style="float: left; width: 50%">
+    <table style="width: 80%;">
+      <tr>
+        <td style="width: 33%;">A</td>
+        <td style="width: 33%;">B</td>
+        <td style="width: 33%;">C</td>
+      </tr>
+      <tr>
+        <td style="width: 33%;">0</td>
+        <td style="width: 33%;">1</td>
+        <td style="width: 33%;">0</td>
+      </tr>
+      <tr>
+        <td style="width: 33%;">1</td>
+        <td style="width: 33%;">1</td>
+        <td style="width: 33%;">1</td>
+      </tr>
+      <tr style="outline: 5px solid red;">
+        <td style="width: 33%;">X</td>
+        <td style="width: 33%;">0</td>
+        <td style="width: 33%;">Z</td>
+      </tr>
+    </table>
+  </div>
+  <div style="float: left; width: 50%">
+    <img src="img/tri_state_buffer.png" style="height: 400px; background: white; margin: auto;" alt="">
+    <div>
+</section>
+<section>
+  <h2>Tri State Logica</h2>
+  <ul>
+    <li>pinMode = INPUT</li>
+    <li>Pin is dan hoog impedant</li>
+    <li>Pin kan dan zweven(Waardes zijn random)</li> 
+    <li>Reden</li>
+    <ul>
+      <li>Ruis op het systeem</li>
+      <li>Capacitieve koppeling</li>
+    </ul>
+    <li>Oplossing</li>
+    <ul>
+      <li>Extern</li>
+      <li>Intern</li>
+    </ul>
+  </ul>
+</section>
+<section>
+  <h2>Extern</h2>
+  <div style="float: left; width: 33%">
+    <ul>
+      <li>Pull Up:</li>
+      <ul>
+        <li>constant HIGH signaal</li>
+        <li>constant stroom verbruik</li>
+      </ul>
+      <li>Pull Down:</li>
+      <ul>
+        <li>constant LOW signaal</li>
+        <li>geen stroom verbruik</li>
+      </ul>
+      <li><a href="http://electronics.stackexchange.com/questions/113009/when-to-use-pull-down-vs-pull-up-resistors">Keuze afhankelijk van je input</a></li>
+      <li>Voor een simpele push button kan beide</li>
+    </ul>
+  </div>
+  <div style="float: left; width: 30%">
+    <h3>Pull Up Resistor</h3>
+    <img src="img/pullup_resistor.png" style="background: white;" alt="">
+  </div>
+  <div style="float: left; width: 30%">
+    <h3>Pull Down Resistor</h3>
+    <img src="img/pulldown_resistor.png" style="background: white;" alt="">
+  </div>
+</section>
+<section>
+  <h2>Poorten</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul style="width: 40%;">
+      <h5>
+        <li>Verzameling GPIOs</li>
+        <ul>
+          <li>Fysiek</li>
+          <li>Configuratie</li>
+        </ul>
+        <li>Beïnvloed door meerdere registers</li>
+        <ul>
+          <li>DDRx</li>
+          <li>PORTx</li>
+          <li>PINx</li>
+        </ul>
+        <li>Read/Modify/Write  </li>
+      </h5>
+    </ul>
+    <img src="img/io_port.png" style="height: 500px;"  alt="">
+  </div>
+</section>
+<section>
+  <h2>Poorten</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <img style="width: 45%; height: 500px; margin: auto;" src="img/atmega328-pinout.png" alt="">
+    <img style="width: 45%; height: 500px; margin: auto;" src="img/arduino_pinout.jpg" alt="">
+  </div>
+</section>
+<section>
+  <h2>Registers</h2>
+  <ul>
+    <li>PORTx</li>
+    <li>DDRx</li>
+    <li>PINx</li>
+    <li class="fragment">MCUCR</li>
+  </ul>
+</section>
+<section>
+  <h2>Port Register B/C/D (PORTx)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h5>
+        <li>Instellen van logische level</li>
+        <li>Instellen van interne pull up weerdstand</li>
+        <ul>
+          <li>if (DDXy = 0 & PORTxy) then PullUp = 1 </li>
+        </ul>
+        <li>Voor elke poort een Data register</li>
+        <li>
+          <pre style="float: left; width: 400px;"><code class="arduino">
+PORTC |= (1 << PORTC7) 
+PORTC &= ~(1 << PORTC5) 
+          </code></pre>
+        </li>
+      </h5>
+    </ul>
+    <img src="img/portb.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Data Direction Register B/C/D (DDRx)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h5>
+        <li>Input of Output</li>
+        <ul>
+          <li>Input = 0</li>
+          <li>Output = 1</li>
+        </ul>
+        <li>Voor elke poort een richting register</li>
+        <li>
+          <pre style="float: left; width: 400px;"><code class="arduino">
+DDRB |= (1 << DDB7) 
+DDRB &= ~(1 << DDB5) 
+          </code></pre>
+        </li>
+      </h5>
+    </ul>
+    <img src="img/ddrb.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Pinmode</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul style="width: 40%">
+      <h5>
+        <li>Arduino Pin != IO Pin</li>
+        <li>Mapping</li>
+        <li>Configuratie door zetten bits</li>
+      </h5>
+    </ul>
+    <pre><code class="Arduino">
+void pinMode(uint8_t pin, uint8_t mode)
+{
+  uint8_t bit = digitalPinToBitMask(pin);
+  uint8_t port = digitalPinToPort(pin);
+  volatile uint8_t *reg, *out;
+
+  if (port == NOT_A_PIN) return;
+
+  // JWS: can I let the optimizer do this?
+  reg = portModeRegister(port);
+  out = portOutputRegister(port);
+
+  if (mode == INPUT) { 
+    uint8_t oldSREG = SREG;
+    cli();
+    *reg &= ~bit;
+    *out &= ~bit;
+    SREG = oldSREG;
+  } 
+  else if (mode == INPUT_PULLUP) {
+    uint8_t oldSREG = SREG;
+    cli();
+    *reg &= ~bit;
+    *out |= bit;
+    SREG = oldSREG;
+  } 
+  else {
+    uint8_t oldSREG = SREG;
+    cli();
+    *reg |= bit;
+    SREG = oldSREG;
+  }
+}
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Pin Input Register B/C/D (PINx)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h5>
+        <li>Read Only Register</li>
+        <li>Pin State</li>
+        <li>Schrijven heeft geen effect</li>
+        <li>Voor elke poort een pin state register</li>
+        <li>
+          <pre style="float: left; width: 600px;"><code class="arduino">
+byte state = (PIND >> PIND3) & 0x1
+byte x = (PINC >> PIND7) & 0x1
+          </code></pre>
+      </h5>
+    </ul>
+    <img src="img/pinb.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Microcontroller Control Register (MCUCR)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h5>
+        <li>Instellen van algemene enable interne pull up weerstanden </li>
+        <li>PUD = 0 -- Enabled</li>
+        <li>PUD = 1 -- Disabled</li>
+        <li>Staat standaard aan</li>
+      </h5>
+    </ul>
+    <img src="img/mcucr.png" style='width: 100%;'alt="">
+  </div>
+</section>
+<section>
+  <h2>Samengevat</h2>
+  <img src="./img/pin_config_summary.png" alt="">
+</section>
+<section>
+  <h2>Waar vind je  deze informatie</h2>
+  <div class="vcontainer">
+    <ul>
+      <h4><li>ATmega328p Datasheet</li></h4>
+      <h4><li>Hoofdstuk 18 - I/O Ports</li></h4>
+    </ul>
+    <em><b>Lees en zie dat je dit hoofstuk begrijpt. Over dit hoofdstuk kan er op het examen een open vraag gesteld worden</b></em>
+  </div>
+</section>
+<section>
+  <h2>Registers</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul style="width: 40%">
+      <h5>
+        <li>Geheugen locatie</li>
+        <li>Gekoppeld aan een functionaliteit</li>
+        <li>8 Bytes = 255 mogelijkheden </li>
+      </h5>
+    </ul>
+    <img style="height: 400px;"src="img/sfr_mem.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Registers</h2>
+  <img style="height: 400px;"src="img/sfr_example.png" alt="">
+</section>
+<section>
+  <h2>IO Definition File</h2>
+  <div style="display: flex; align-items: center justify-content: center;">
+    <div class="vcontainer">
+      <h4>avr/io.h</h4>
+      <pre style="margin: auto;"><code class="Arduino">
+#ifndef _AVR_IO_H_
+#define _AVR_IO_H_
+
+#include <avr/sfr_defs.h>
+
+#if defined (__AVR_AT94K__)
+#  include <avr/ioat94k.h>
+#elif defined (__AVR_AT43USB320__)
+#  include <avr/io43u32x.h>
+#elif defined (__AVR_AT43USB355__)
+#  include <avr/io43u35x.h>
+#elif defined (__AVR_AT76C711__)
+#  include <avr/io76c711.h>
+#elif defined (__AVR_AT90PWM3__)
+#  include <avr/io90pwmx.h>
+#elif defined (__AVR_AT90PWM3B__)
+#  include <avr/io90pwm3b.h>
+#elif defined (__AVR_AT90PWM216__)
+#  include <avr/io90pwm216.h>
+#elif defined (__AVR_AT90PWM316__)
+#  include <avr/io90pwm316.h>
+#elif defined (__AVR_AT90PWM161__)
+#  include <avr/io90pwm161.h>
+#elif defined (__AVR_AT90PWM81__)
+#  include <avr/io90pwm81.h>
+#elif defined (__AVR_ATmega8U2__)
+#  include <avr/iom8u2.h>
+*****
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <h4>avr/iom328p.h</h4>
+      <pre style="margin: auto;"><code class="Arduino">
+#define PINB _SFR_IO8(0x03)
+#define PINB0 0
+#define PINB1 1
+#define PINB2 2
+#define PINB3 3
+#define PINB4 4
+#define PINB5 5
+#define PINB6 6
+#define PINB7 7
+
+#define DDRB _SFR_IO8(0x04)
+#define DDB0 0
+#define DDB1 1
+#define DDB2 2
+#define DDB3 3
+#define DDB4 4
+#define DDB5 5
+#define DDB6 6
+#define DDB7 7
+
+#define PORTB _SFR_IO8(0x05)
+#define PORTB0 0
+#define PORTB1 1
+#define PORTB2 2
+#define PORTB3 3
+#define PORTB4 4
+#define PORTB5 5
+#define PORTB6 6
+#define PORTB7 7
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Wat we eigenlijk schrijven</h2>
+  <div class="vcontainer">
+    <div class="hcontainer">
+      <pre><code class="arduino">
+PORTC |= (1 << PORTC7) 
+PORTC &= (1 << PORTC5) 
+      </code></pre>      
+      <pre class="fragment"><code class="arduino">
+0x28 |= (1 << PORTC7) 
+0x28 &= (1 << PORTC5) 
+      </code></pre>      
+    </div>
+    <ul class="fragment">
+      <h4><li>SFR Heeft een vaste locatie</li></h4>
+      <h4><li>Geen automatisch geheugen alloctie nodig </li></h4>
+      <h4><li>Rechstreeks aanspreken is veilig</li></h4>
+    </ul>
+  </div>
+</section>
+<section>
+  <h2>Oefening #1</h2>
+  <div style="display: flex; align-items: center justify-content: center;">
+    <ul style="width: 40%">
+      <h5>
+        <li>Maak volgende opstelling</li>
+        <li>Kloon het interrupt Example</li>
+        <li>Geef de waardes van de registers na elke loop</li>
+      </h5>
+    </ul>
+    <img class='plain' style="height: 20%;"  src="./img/schematic_io_natural_example.png" alt="">
+    <pre><code class="Arduino">
+void setup(){
+
+    DDRD |= 1 << DDRD6;
+
+}
+void loop(){
+    _delay_ms(500);
+    PORTD ^= 1 <<  PORTD6;
+}
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Oefening #2 </h2>
+  <ul>
+    <h5>
+      <li>Vanuit de interrupt oefening:</li>
+      <ul>
+        <li>Laat een led branden via pin 4 van de Arduino</li>
+      </ul>
+    </h5>
+  </ul>
+  <h2>Oefening #3</h2>
+  <ul>
+    <h5>
+      <li>Vanuit de interrupt oefening</li>
+      <ul>
+        <li>Lees de input van de pushbutton</li>
+        <li>Laat de led branden afhankelijk van de waarde op de button </li>
+      </ul>
+    </h5>
+  </ul>
+  <h2>Oefening #4</h2>
+  <ul>
+    <h5>
+      <li>Laad in PORTD volgende waardes in:</li>
+      <ul>
+        <li>0x55</li>
+        <li>0xAA</li>
+      </ul>
+      <li>Toon de werking aan met ledjes</li>
+    </h5>
+  </ul>
+  <aside class="notes">
+void setup(){
+  DDRD |= 1 << DDD3;    //set pin as output
+  DDRD &= ~(1 << DDD2); //clear set pin as input
+}
+
+void loop(){
+  int state = (PIND >>PIND2) & 0x1; //get pb val
+  PORTD &= ~(1 << PIND3);           //clear pin val
+  PORTD |= (state << PIND3);        //set pin val
+}
+void setup(){
+  DDRD = 0xFF;	//set pin as output
+}
+
+void loop(){
+  PORTD = 0x55  //set port val
+  delay(500);   //delay for blink effect
+  PORTD = 0xAA  //set port val					
+  delay(500);   //delay for blink effect
+}
+  </aside>
+</section>
+<section>
+  <h2>Analoge Digitale Conversie (ADC)</h2>
+  <h3>Eigenschappen ADC</h3>
+  <div style="float: left; width: 60%">
+    <ul>
+      <h5><li>Resolutie</li></h5>
+      <ul>
+        <li>`2^(#Bits ADC)`</li>
+        <li>`1024`</li>
+      </ul>
+      <ul>
+        <h5><li>Range</li></h5>
+        <ul>
+          <li>`0 - 2^(#Bits ADC -1)`</li>
+          <li>`0 - 1023`</li>
+        </ul>
+        <h5><li>Accuracy</li></h5>
+        <ul>
+          <li>`V_(ref) / (Resolutie)`</li>
+          <li style="margin: 30 30 0 0;">`(5V) / 1024 ≈ 4,9mV`</li>
+        </ul>
+      </ul>
+      <li>`analogRead = (V_(IN) * Resolutie)/V_(ref)`</li>
+    </ul>
+  </div>
+  <div style="float: left; width: 40%">
+    <img src="img/quantizations.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Analoge Digitale Conversie (ADC)</h2>
+  <div style="display: flex; align-items: center justify-content: center;">
+    <div class="vcontainer">
+      <img src="img/adc_atmega328p.png" alt="">
+    </div>
+    <div class="vcontainer" style="justify-content: flex-start;">
+      <h3>Configuratie door zetten van register waarde ... </h3>
+      <ul>
+        <li class="fragment">Multiplexer</li>
+        <li class="fragment">Referentie voltage</li>
+        <li class="fragment">Prescaler</li>
+        <li class="fragment">Status Register</li>
+        <li class="fragment">....</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>ADC Multiplexer Selection Register</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>Referentie Voltage Selecteren</li></h4>
+      <h4><li>ADC Pin Selectie</li></h4>
+      <h4><li>Left Adjust</li></h4>
+      <ul>
+        <li>Zie datasheet</li>
+      </ul>
+    </ul>
+    <img src="img/admux.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>ADC Referentie Voltage</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>AVCC Instellen</li></h4>
+      <li>
+        <pre style="float: left; width: 600px;"><code class="arduino">
+ ADMUX |= (1 << REFS0);
+        </code></pre>
+      </li>
+    </ul>
+    <img src="img/ref_adc.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>ADC Pin Selecteren </h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>Je kan maar een pin tegelijk uitlezen</li></h4>
+      <h4><li>ADCX (ATmega328p Pin) = AX(Arduino Pin)</li></h4>
+      <li>
+        <pre style="float: left; width: 600px;"><code class="arduino">
+ADMUX |= ((1 << MUX1) | (1 << MUX0));
+        </code></pre>
+      </li>
+    </ul>
+    <img src="img/mux_adc.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>ADC Status Register A </h2>
+  <div style="display: flex; align-items: flex-end; justify-content: center; flex-direction: column;">
+    <table>
+      <tr>
+        <td>ADEN</td>
+        <td>ADC Enable</td>
+      </tr>
+      <tr>
+        <td>ADSC</td>
+        <td>ADC Start Conversion</td>
+      </tr>
+      <tr>
+        <td>ADATE</td>
+        <td>ADC Auto Trigger Enable</td>
+      </tr>
+      <tr>
+        <td>ADIF</td>
+        <td>ADC Interrupt Flag</td>
+      </tr>
+      <tr>
+        <td>ADIE</td>
+        <td>ADC Interrupt Enable</td>
+      </tr>
+      <tr>
+        <td>ADPS2-0</td>
+        <td>ADC Prescaler bit</td>
+      </tr>
+    </table>
+    <img src="img/adcsra.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>ADC Prescaler Instellen </h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>Frequentie tussen 50kHz en 200kHz</li></h4>
+      <h4><li>Arduino draait op 16 MHz</li></h4>
+      <h4><li>Prescaler is dus altijd 128</li></h4>
+      <ul>
+        <li>`(16MHz) / 128 = 125kHz`</li>
+      </ul>
+      <li>
+        <pre style="float: left; width: 700px;"><code class="arduino">
+ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+        </code></pre>
+      </li>
+    </ul>
+    <img src="img/ps_adc.png" style="width: 50%;"alt="">
+  </div>
+</section>
+<section>
+  <h2>Conversie Starten</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h4>Single Conversion</h4>
+      <ul>
+        <li>Eerst instellingen doen</li>
+        <li>Eenmalig triggeren van ADC</li>
+        <li>Kan herhaalt worden door ADSC terug op een te zetten</li>
+        <li>Makkelijk om van kanaal te wisselen</li>
+        <li>
+          <pre style="float: left; width: 700px;"><code class="arduino">
+ADCSRA |= (1 << ADEN);
+ADCSRA |= (1 << ADSC);
+          </code></pre>
+        </li>
+      </ul>
+    </div>
+    <div class="vcontainer">
+      <h4>Freerunning</h4>
+      <ul>
+        <li>Eerst instellingen doen</li>
+        <li>Continue conversie</li>
+        <li>Disablen door ADEN op nul te zetten</li>
+        <li>Moeilijk om van kanaal te wisselen</li>
+        <li>
+          <pre style="float: left; width: 700px;"><code class="arduino">
+ADCSRA |= (1 << ADATE);              
+ADCSRA |= (1 << ADEN);          
+ADCSRA |= (1 << ADSC);
+          </code></pre>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>ADC Waarde uitlezen (ADCL/ADCH Registers)</h2>
+  <div style="display: flex; align-items: center justify-content: center; flex-direction: column;">
+    <ul>
+      <h4><li>Afhankelijk van ADLAR</li></h4>
+      <h4><li>ADCL eerst uitlezen dan ADCL</li></h4>
+      <li>
+        <pre style="float: left; width: 600px;"><code class="arduino">
+Serial.println(ADCL | (ADCH << 8));
+        </code></pre>
+      </li>
+    </ul>
+    <img src="img/adcl.png" style="width: 50%;"alt="">
+    <img src="img/adch.png" style="width: 50%;"alt="">
+  </div>
+</section>
+<section>
+  <h2>Oefening #1</h2>
+  <div style="display: flex; align-items: center justify-content: center;">
+    <ul style="width: 40%">
+      <h5>
+        <li>Maak een opstelling waar je een pot uitleest op AO</li>
+        <li>Upload en test de volgende code</li>
+      </h5>
+    </ul>
+    <pre><code class="Arduino">
+void setup() {
+  Serial.begin(9600);
+  ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+  ADMUX |= (1 << REFS0);
+  ADCSRA |= (1 << ADEN);
+  ADCSRA |= (1 << ADSC);
+  while ((ADCSRA & (1 << ADSC)));
+  Serial.println((ADCH << 8) | ADCL);
+  Serial.println("DONE");
+}
+
+void loop() {
+  Serial.println(ADCL | (ADCH << 8));
+}
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Oefening #2</h2>
+  <h4>Pas de vorige oefening aan zodat je een freerunning ADC hebt op A3</h4>
+  <aside class="notes">
+void setup() {
+  Serial.begin(9600);
+  ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+  ADMUX |= (1 << REFS0);
+  ADMUX |= ((1 << MUX2) | (1 << MUX0))
+  ADCSRA |= (1 << ADEN);
+  ADCSRA |= (1 << ADSC);
+  while ((ADCSRA & (1 << ADSC)));
+  Serial.println((ADCH << 8) | ADCL);
+  Serial.println("DONE");
+}
+
+void loop() {
+  Serial.println(ADCL | (ADCH << 8));
+}
+
+  </aside>
+  <h2>Oefening #3</h2>
+  <h4>Pas de eerste oefening aan zodat je een freerunning ADC hebt op A3</h4>
+  <aside class="notes">
+void setup() {
+  Serial.begin(9600);
+  ADCSRA |= ((1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0));
+  ADMUX |= (1 << REFS0);
+  ADMUX |= ((1 << MUX1) | (1 << MUX0));
+  ADCSRA |= (1 << ADATE);              
+  ADCSRA |= (1 << ADEN);          
+  ADCSRA |= (1 << ADSC);
+
+}
+
+void loop() {
+  Serial.println(ADCL | (ADCH << 8));
+}
+
+  </aside>
+</section>

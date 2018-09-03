@@ -1,0 +1,25 @@
+---
+layout: default
+title: Cursus Micrcocontrollers 
+---
+
+<div id="home">
+  <h1>Cursus Microcontrollers</h1>
+  <h2>Verzameling van de slides voor het vak microcontrollers</h2>
+  <ul>
+    {% for slide in site.slides %}
+    <li>
+      <a class="slide-entry" href="{{ site.baseurl | append: slide.url }}">{{ slide.title }}</a>
+      <small>{{ slide.description }}</small>
+    </li>
+    {% endfor %}
+  </ul>
+  <ul>
+    {% for lab in site.labs %}
+    <li>
+      <a class="slide-entry" href="{{ site.baseurl | append: lab.url }}">{{ lab.title }}</a>
+      <small>{{ lab.description }}</small>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

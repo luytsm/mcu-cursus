@@ -1,0 +1,926 @@
+---
+title: "Les 5: Ditching the Arduino"
+description: "Beginnen met de microcontrollers, "
+reveal: 
+transition: slide
+---
+<style>
+html.cpu-core body {
+  background:url("img/avr_cpu_core.png");
+  background-position:right center;
+  background-repeat: no-repeat; 
+  background-size: contain;
+  background-color: #ffffff; }
+html.reg-file body {
+  background:url("img/reg_file.png");
+  background-position:right center;
+  background-repeat: no-repeat; 
+  background-size: 600px;
+  background-color: #ffffff; }
+</style>
+<section>
+  <h1>Ditching the Arduino</h1>
+</section>
+<section>
+  <h2>Wat is Arduino?</h2>
+  <ul>
+    <li><h6 class="fragment">Hardware Boards</h6></li>
+    <li><h6 class="fragment">Embedded Software</h6></li>
+    <li><h6 class="fragment">Ontwikkelingsomgeving</h6></li>
+    <li><h6 class="fragment">Rapid Prototyping</h6></li>
+  </ul>
+  <h2 class="fragment">Voor wie is de arduino gemaakt?</h2>
+  <h3 class="fragment">Niet voor ons</h3>
+</section>
+<section>
+  <h2>Is het Arduino platform voldoende?</h2>
+  <h2 class="fragment">Nee</h2>
+</section>
+<section>
+  <h2>Wat is de Arduino niet</h2>
+  <ul>
+    <h6>
+      <li class="fragment">Efficiënt</li>
+      <li class="fragment">Licht Gewicht</li>
+      <li class="fragment">Onthullend</li>
+      <li class="fragment">Performant</li>
+      <li class="fragment">Programmeertaal</li>
+    </h6>
+  </ul>
+</section>
+<section>
+  <h2>Praktisch Voorbeeld: Memory Usage</h2>
+  <div style="float: left; width: 50%;">
+    <h3>Using the Arduinio libraries</h3>
+    <pre><code style="height: 375px;" class="Arduinio">
+#include &ltArduino.h&gt
+
+void setup()
+{
+    pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
+}
+    </code></pre>
+    <p class="fragment">Compiled size: 1034 bytes (3.2%)</p>
+  </div>
+  <div style="float: left; width: 50%;">
+    <h3>Without the Arduino library</h3>
+    <pre><code style="height: 375px;"class="Arduino">
+#include &ltavr/io.&gt
+#include &ltutil/delay.h&gt
+
+int main(void)
+{
+    DDRB = 1 &lt&lt 5;
+    while (1)
+    {
+        _delay_ms(500);
+        PORTB ^= 1 &lt&lt 5;
+    }
+  return 0;
+}
+    </code></pre>
+    <p class="fragment">Compiled size: 158 bytes (0.5%)</p>
+  </div>
+</section>
+<section>
+  <h2>Praktisch Voorbeeld: Efficiëntie</h2>
+  <img style="height: 500px;" src="img/arduino_not_efficient.png" alt="">
+  <p><small>Snelheid digitalWrite vs bitflip</small></p>
+</section>
+<section>
+  <h2>Arduino is geen taal</h2>
+  <ul>
+    <h5>
+      <li>Arduino is C/C++</li>
+      <li>Het Arduino software framework is gebaseerd op wiring</li>
+      <li>.ino zijn "wannabe" .cpp files</li>
+    </h5>
+  </ul>
+</section>
+<section>
+  <div style="float: left; width: 50%;">
+    <h3>main.cpp</h3>
+    <img src="img/maincpp.png" alt="">
+  </div>
+  <h3>Blink</h3>
+  <div style="float: left; width: 50%;">
+    <img src="img/blink_loop.gif" alt="">
+  </div>
+  <p><small>
+    Om een programma te generen voor een Arduino board is er nog heel wat
+    achterliggend proces nodig. Het framework verstop dit voor ons, zodat we
+    moeilijk een beeld kunnen schetsen van de werking.  
+  </small></p>
+</section>
+<section>
+  <h2>Is Arduino geschikt voor ons?</h2>
+  <h2 class="fragment">Ja</h2>
+  <h3 class="fragment">Maar ...</h3>
+  <h3 class="fragment">A great engineer will do for a quarter what a mediocre (at best) engineer takes a dollar to do.</h3>
+</section>
+<section>
+  <h2>De kostprijs van hardware</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h3>Arduino Uno</h3>
+      <img class="plain" style="background: none; width:40%;" src="img/arduino_uno_board.png" alt="">
+      <em><b>Kostprijs ≈ 25 euro</b></em>
+    </div>
+    <div class="vcontainer">
+      <h3>Standalone ATmega328p</h3>
+      <img src="img/standalone.png" style="float: right; width: 40%;" alt="">
+      <em><b>Kostprijs ≈ 2.5 euro</b></em>
+    </div>
+  </div>
+  <b><em>Dit is geen grondige analyse</em></b>
+</section>
+<section>
+  <h2>Wat zijn de voordelen van het Arduino platform</h2>
+  <ul>
+    <h5>
+      <li class="fragment">Out of the box features</li>
+      <li class="fragment">Snel werkend prototype</li>
+      <li class="fragment">Programmeren via USB</li>
+      <li class="fragment">Bootloader</li>
+      <h3><li class="fragment">Hardware Abstraction Layer</li></h3>
+    </h5>
+  </ul>
+</section>
+<section>
+  <h2>Hardware Abstraction Layer</h2>
+  <img style="height: 500px;" src="img/hal.png" alt="">
+</section>
+<section>
+  <h2>HAL Is Resuable Code</h2>
+  <h2>Reuable Code is Portable</h2>
+</section>
+<section>
+  <h2>Resuable Code Is Portable</h2>
+  <img style="height: 500px;" src="img/changed_mcu.png" alt="">
+</section>
+<section>
+  <h2>Resuable Code Is Portable</h2>
+  <img style="height: 500px;" src="img/why_change_mcu.png" alt="">
+</section>
+<section>
+  <h2>Resuable Code Is Portable</h2>
+  <img style="height: 500px;" src="img/why_not_change_mcu.png" alt="">
+</section>
+<section>
+  <h2>Hardware Abstraction Layer</h2>
+  <img style="height: 500px;" src="img/hal_advantages.png" alt="">
+</section>
+<section>
+  <h2>Arduino is een HAL</h2>
+  <h3>Dus de minpunten van een HAL zijn</h3>
+  <ul>
+    <h5>
+      <li class="fragment">Niet Efficiënt</li>
+      <li class="fragment">Zwaar Gewicht</li>
+      <li class="fragment">Limieten capaciteiten</li>
+    </h5>
+  </ul>
+</section>
+<section>
+  <h2>Ter Conclusie:</h2>
+  <h3>Arduino is een goed start punt maar we moeten verder met microcontrollers</h3>
+  <h2>Wat is er beschikbaar?</h2>
+</section>
+<section>
+  <h2>Computer Systemen</h2>
+  <div style="float: left; width: 70%;">
+    <ul>
+      <h5>
+        <li>Desktop Computers / Servers</li>
+        <li>Single Board Computers</li>
+        <li>System on Chip</li>
+        <li>Microcontrollers</li>
+      </h5>
+    </ul>
+    <br><br><br>
+    <h4>Er zijn er nog vele meer!</h4>
+  </div>
+  <div style="float: left; width: 30%; display: flex; flex-direction: column">
+    <p>"Full Stack"</p>
+    <img class="plain" style="background: none; height: 200px" src="img/updown.png" alt="">
+    <p>"Bare Metal"</p>
+  </div>
+</section>
+<section>
+  <h2>Computer Systemen</h2>
+  <div style="display: flex; justify-content: center">
+    <div style="display: flex; flex-direction: column; width: 20%;">
+      <img src="img/r710.jpg" alt="">
+      <p><b>Server: Dell R710</b></p>
+    </div>
+    <div style="display: flex; flex-direction: column; width: 20%;">
+      <img src="img/rpi2.jpg" alt="">
+      <p><b>Single Board Computer: Raspberry Pi</b></p>
+    </div>
+    <div style="display: flex; flex-direction: column; width: 20%;">
+      <img src="img/soc.jpg" alt="">
+      <p><b>System on Chip: Diagram</b></p>
+    </div>
+    <div style="display: flex; flex-direction: column; width: 20%;">
+      <img src="img/pic18f.jpg" alt="">
+      <p><b>Single Board Computer: Raspberry Pi</b></p>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Computer Systemen</h2>
+  <div style="display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: center;">
+      <div style="width: 40%;">
+        <h4>Desktop Systemen</h4>
+        <ul>
+          <li>Zeer krachtig</li>
+          <li>Zeer modulair</li>
+          <li>Niet specifiek</li>
+          <li>Out of the box</li>
+          <li>Grote vormfactor</li>
+          <li>Hoge prijs</li>
+        </ul>
+      </div>
+      <div style="width: 40%;">
+        <h4>Single Board Computer</h4>
+        <ul>
+          <li>Krachtig</li>
+          <li>Beperkte modulariteit</li>
+          <li>Niet specifiek</li>
+          <li>Out of the box</li>
+          <li>Integreerbare vormfactor</li>
+          <li>Hoge prijs</li>
+        </ul>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: center;">
+      <div style="width: 40%;">
+        <h4>System On Chip</h4>
+        <ul>
+          <li>Minder Krachtig</li>
+          <li>Geen modulariteit</li>
+          <li>Specifiek</li>
+          <li>Vereist programming</li>
+          <li>Integratie nodig</li>
+          <li>Betaalbaar</li>
+        </ul>
+      </div>
+      <div style="width: 40%;">
+        <h4>Single Board Computer</h4>
+        <ul>
+          <li>Zwak</li>
+          <li>Geen modulariteit</li>
+          <li>Specifiek</li>
+          <li>Vereist programming</li>
+          <li>Integratie nodig</li>
+          <li>Disposable</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Een Microcontroller Selecteren?</h2>
+  <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center;">
+      <div style="width: 50%;">
+        <h4>Selectie Criteria</h4>
+        <ul>
+          <li>Vereisten v/d microcontroller</li>
+          <li>Kostprijs</li>
+          <li>Beschikbare know-how</li>
+          <li>Leveranciers</li>
+        </ul>
+      </div>
+      <div style="width: 50%;">
+        <h4>Selectie Fases</h4>
+        <ul>
+          <li>Producent</li>
+          <li>Microcontroller familie</li>
+          <li>Type</li>
+        </ul>
+      </div>
+    </div>
+    <img style="width: 60%;" src="img/mcus_available.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Selectie Criteria</h2>
+  <img style="height: 500px;" src="img/deciding_factor_mcu_selection.png" alt="">
+</section>
+<section>
+  <h2>Selectie Criteria</h2>
+  <img style="height: 500px;" src="img/critical_factors_mcu_selection.png" alt="">
+</section>
+<section>
+  <h2>Volgende Microcontroller?</h2>
+  <img style="height: 500px;" src="img/next_mcu.png" alt="">
+</section>
+<section>
+  <h2>Selectie Criteria</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: 28%;">
+      <h4>Chip Criteria</h4>
+      <ul>
+        <li># Bits</li>
+        <li>Clk Freq</li>
+        <li>GPIOs</li>
+        <li>Communicatie</li>
+        <li>Power Comsumptie</li>
+        <li>Geheugen</li>
+      </ul>
+    </div>
+    <div style="width: 28%;">
+      <h4>Ecosysteem</h4>
+      <ul>
+        <li>Programmer</li>
+        <li>Toolchain</li>
+        <li>Software Library</li>
+        <li>IDE</li>
+        <li>Development Boards</li>
+        <li>Debugger</li>
+      </ul>
+    </div>
+    <div style="width: 28%;">
+      <h4>Vendor</h4>
+      <ul>
+        <li>Atmel</li>
+        <li>Texas Instruments</li>
+        <li>Microchip Technologt</li>
+        <li>NXP</li>
+        <li>Resenas</li>
+        <li>Silicion Labs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Arduino Ecosysteem</h2>
+  <div style="display: flex; justify-content: center; align-items: flex-starft;">
+    <div style="width: 2f5%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3>Programmer</h3>
+      <h6>Bootloader Based</h6>
+      <img src="img/atmel_ice.jpg" alt="">
+    </div>
+    <div style="width: 25%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3>Debugger</h3>
+      <h6>Niet beschikbaar op de arduino</h6>
+      <img src="img/atmel_ice.jpg" alt="">
+    </div>
+    <div style="width: 25%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3>Software Library</h3>
+      <h6>Arduino.h</h6>
+      <h6>Wiring</h6>
+      <img src="img/wiring.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Arduino Ecosysteem</h2>
+  <div style="display: flex; justify-content: center; align-items: flex-start;">
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3>IDE</h3>
+      <h6>Java based</h6>
+      <img style="height: 350px;"src="img/arduino_ide.png" alt="">
+    </div>
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3>Toolchain</h3>
+      <h6>AVR GCC</h6>
+      <img src="img/avr_toolchain.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Arduino Ecosysteem</h2>
+  <h3>Arduino Boards</h3>
+  <img style="height: 500px;" src="img/arduino_boards.png" alt="">
+</section>
+<section>
+  <h1 style="float: left;">Er is veel keus</h1>
+</section>
+<section>
+  <h2>Afkicken van Arduino</h2>
+  <ul>
+    <h5>
+      <li>Welke microcontroller gaan we kiezen?</li>
+      <li>Hoe gaan we dat aanpakken?</li>
+      <ul>
+        <li>Werking microcontrollers in het algemeen</li>
+        <li>Tooling</li>
+        <li>Werking van de mcu componenten</li>
+      </ul>
+    </h5>
+  </ul>
+</section>
+<section>
+  <h2>We kiezen voor de microcontroller...</h2>
+  <h1 class="fragment">ATmega328p</h1>
+</section>
+<section>
+  <h1>Algemene werking microcontrollers</h1>
+</section>
+<section>
+  <h2>Microprocessor (CPU)</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul style="width: 35%;">
+      <h5>
+        <li>Het brein</li>
+        <li>Doet bewerkingen op data</li>
+        <ul>
+          <li>Haalt data op</li>
+          <li>Rekenkundige bewerkingen</li>
+        </ul>
+        <li>Niet standalone</li>
+        <li>Pheripherals nodig</li>
+      </h5>
+    </ul>
+    <img src="img/zilog_z80.jpg" alt="">
+  </div>
+</section>
+<section>
+  <h2>Zilog Z80 PCB</h2>
+  <img style="height: 500px;" src="img/zilog_pcb.png" alt="">
+  <p><b><em>Standalone Z80 PCB op Eurocard (16cm x 10cm) </em></b></p>
+</section>
+<section>
+  <h2>Microcontroller</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul style="width: 35%;">
+      <h5>
+        <li>"Standalone"</li>
+        <li>Meer dan rekenkundige bewerkingen</li>
+        <li>Afmetingen 8mm x 35mm</li>
+      </h5>
+    </ul>
+    <img src="img/atmega328p.jpg" alt="">
+  </div>
+</section>
+<section data-background-image="img/avr_block_diagram.png" data-background-size="contain" data-background-color="white"></section>
+<section>
+  <h2>Verschil</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3>Z80</h3>
+      <img style="height: 400px;" src="img/zilog_pinout.png" alt="">
+    </div>
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h3>ATmega328p</h3>
+      <img src="img/atmega328-pinout.png" alt="">
+    </div>
+  </div>
+</section>
+<section data-background-image="img/arduino_pinout.jpg" data-background-size="contain" data-background-color="#ffffff" ></section>
+<section>
+  <h2>Verschil</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: 35%;">
+      <h5>3 Soorten Pinnen</h5>
+      <ul style="width: 35%;">
+        <h5>
+          <li>Adres pinnen (A0 - A15)</li>
+          <li>Data pinnen (D0 - D7)</li>
+          <li>Control pinnen (INT, WR,RD)</li>
+        </h5>
+    </div>
+      </ul>
+      <img src="img/atmega328p.jpg" alt="">
+  </div>
+</section>
+<section>
+  <h2>Microcontroller</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul style="width: 35%;">
+      <h5>
+        <li>"Standalone"</li>
+        <li>Meer dan rekenkundige bewerkingen</li>
+        <li>Afmetingen 8mm x 35mm</li>
+      </h5>
+    </ul>
+    <img src="img/atmega328p.jpg" alt="">
+  </div>
+</section>
+<section>
+  <h2>Bouwstenen Microcontroller</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: 30%; text-align: left;">
+      <h5>CPU</h5>
+      <ul>
+        <h5>
+          <li>ALU</li>
+          <li>Register File</li>
+          <li>Program Counter</li>
+          <li>Stack Pointer</li>
+          <li>Status & Control</li>
+        </h5>
+      </ul>
+    </div>
+    <img style="height: 500px;" src="img/layout_microcontroller.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Bouwstenen Microcontroller</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: 30%; text-align: left;">
+      <h5>Analoge IO</h5>
+      <ul>
+        <h5>
+          <li>ADC</li>
+          <li>Comperator</li>
+          <li>Kwantiseren van data</li>
+        </h5>
+      </ul>
+      <h5>Digitale IO</h5>
+      <ul>
+        <h5>
+          <li>HIGH</li>
+          <li>LOW</li>
+        </h5>
+      </ul>
+    </div>
+    <img style="height: 500px;" src="img/layout_microcontroller.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Bouwstenen Microcontroller</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: 30%; text-align: left;">
+      <h5>Timer / Counter</h5>
+      <ul>
+        <h5>
+          <li>2 - 3 Counter</li>
+          <li>Timestamping</li>
+          <li>Event Counters</li>
+          <li>Interval Metingen</li>
+        </h5>
+      </ul>
+    </div>
+    <img style="height: 500px;" src="img/layout_microcontroller.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Bouwstenen Microcontroller</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: 30%; text-align: left;">
+      <h5>Interrupt Controller</h5>
+      <ul>
+        <h5>
+          <li>Onderbreken van het programma</li>
+          <li>Speciale hardware interrupts</li>
+          <li>Intern of Extern</li>
+        </h5>
+      </ul>
+      <h5>Memory</h5>
+      <ul>
+        <h5>
+          <li>Program / Data Memory</li>
+          <li>DMA</li>
+          <li>Memory Types</li>
+        </h5>
+      </ul>
+    </div>
+    <img style="height: 500px;" src="img/layout_microcontroller.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Bouwstenen Microcontroller</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: 30%; text-align: left;">
+      <h5>Seriële Interfaces</h5>
+      <ul>
+        <h5>
+          <li>UART</li>
+          <li>I2C</li>
+          <li>SPI</li>
+          <li>...</li>
+        </h5>
+      </ul>
+    </div>
+    <img style="height: 500px;" src="img/layout_microcontroller.png" alt="">
+  </div>
+</section>
+<section data-state="cpu-core" style="text-align: left;">
+  <h2 style="color: #000000">Central Processing Unit</h2>
+  <ul>
+    <h5 style="color: #000000">
+      <li>ALU</li>
+      <li>Register File</li>
+      <li>Program Counter</li>
+      <li>Stack Pointer</li>
+      <li>Status & Control</li>
+    </h5>
+  </ul>
+  <h3 style="color: #000000;"> Wordt aangestuurd mbv een instructieset</h3>
+</section>
+<section>
+  <h2>Instruction Set</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <img style="height: 500px"; src="img/avr_instructions.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Mnemonics & Opcodes</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column;">
+      <h5>Opcodes</h5>
+      <ul>
+        <h5>
+          <li>Operation Code</li>
+          <li>Bytecode dat de CPU kan interpreteren</li>
+        </h5>
+      </ul>
+      <h5>Mnemonics</h5>
+      <ul>
+        <h5>
+          <li>Ezelsbruggetje voor de opcode</li>
+          <li>Human Readable</li>
+        </h5>
+      </ul>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+      <img src="img/opcode.png" alt="">
+      <p>
+      <h5>ADD | ADC | ADIW | SUB | SUBI | JMP | AND | OR</h5>
+      </p>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Wat voor taal hebben we nu beschreven?</h2>
+  <h1 class="fragment">Assembly</h1>
+</section>
+<section>
+  <h2>Instructie Voorbeeld</h2>
+  <img src="img/instruction_example.png" alt="">
+</section>
+<section>
+  <h2>Instruction Types</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul>
+      <h5>
+        <li>Arithmetic</li>
+        <li>Branch</li>
+        <li>Data</li>
+      </h5>
+    </ul>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+      <img src="img/arithmetic_instructions.png" alt="">
+      <img src="img/branch_instructions.png" alt="">
+      <img src="img/data_instructions.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Instruction Types</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul>
+      <h5>
+        <li>Bit</li>
+        <li>Controle</li>
+      </h5>
+    </ul>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+      <img src="img/bit_instructions.png" alt="">
+      <img src="img/control_instructions.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>High Level To Machine Code</h2>
+  <img style="height: 500px;" src="img/high_to_machine.jpg" alt="">
+</section>
+<section>
+  <h2>Arduino vs C/C++ vs Assembly</h2>
+  <table>
+    <tr>
+      <b>
+        <td></td>
+        <td>"Arduino"</td>
+        <td>C/C++</td>
+        <td>Assembly</td>
+      </b>
+    </tr>
+    <tr>
+      <td><b>Voordelen</b></td>
+      <td>
+        <ul>
+          <li>Zeer snelle ontwikkelingstijd</li>
+          <li>Zeer Portable</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>Snelle ontwikkelingstijd</li>
+          <li>Portable</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>Meer controle</li>
+          <li>Snelller</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><b>Nadelen</b></td>
+      <td>
+        <ul>
+          <li>Bulky</li>
+          <li>Traag</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>BMI is Oke</li>
+          <li></li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>Meer vatbaar voor bug</li>
+          <li>Langere ontwikkeltijd</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</section>
+<section>
+  <h2>Wees gerust we houden het tot C/C++</h2>
+</section>
+<section>
+  <h2>Arithmetic Logic Unit</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column; width: 30%;">
+      <h5>In</h5>
+      <ul>
+        <h5>
+          <li>Status</li>
+          <li>Opcode</li>
+          <li>2 Intgers Operands</li>
+        </h5>
+      </ul>
+      <h5>Out</h5>
+      <ul>
+        <h5>
+          <li>Status</li>
+          <li>Integer Resultaat</li>
+        </h5>
+      </ul>
+    </div>
+    <img style="height: 300px;" src="img/alu.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Arithmetic Logic Unit</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column; width: 30%;">
+      <h5>In</h5>
+      <ul>
+        <h5>
+          <li>Status</li>
+          <li>Opcode</li>
+          <li>2 Intgers Operands</li>
+        </h5>
+      </ul>
+      <h5>Out</h5>
+      <ul>
+        <h5>
+          <li>Status</li>
+          <li>Integer Resultaat</li>
+        </h5>
+      </ul>
+    </div>
+    <img style="height: 500px;" src="img/alu_feedback.png" alt="">
+  </div>
+</section>
+<section data-state="reg-file" style="text-align: left;">
+  <h2 style="color: #000000">Register File</h2>
+  <ul>
+    <h5 style="color: #000000">
+      <li>Werkgeheugen processor</li>
+      <li>Snelste memory</li>
+      <li>Index register</li>
+      <li>Instructies worden op data vanuit de register file toegepast</li>
+    </h5>
+  </ul>
+</section>
+<section>
+  <h2>Program Counter</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul>
+      <h5>
+        <li>aka Instruction Pointer</li>
+        <li>Adres van volgend instructie</li>
+        <li>Update na uitvoeren instructie</li>
+        <ul>
+          <li>Volgen adres</li>
+          <li>Jump adres</li>
+        </ul>
+        <li>Initieel: 0x0000</li>
+      </h5>
+    </ul>
+  </div>
+</section>
+<section>
+  <h2>Stack Pointer</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul style="width: 30%;">
+      <h5>
+        <ul>
+          <li>Gereserveerd & Opeenvolgend</li>
+          <li>Push & Pop</li>
+          <li>FILO</li>
+          <li>Houdt bij</li>
+          <ul>
+            <li>Lokaal gedeclareerde variablen</li>
+            <li>Return address</li>
+          </ul>
+        </ul>
+      </h5>
+    </ul>
+    <img style="height: 400px;" src="img/stack_routine.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Geheugen Types</h2>
+  <img src="img/memory_types_avr.png" alt="">
+</section>
+<section>
+  <h2>AVR Geheugen Map</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul>
+      <h5>
+        <li>Sketch - Flash</li>
+        <li>Variablen - SRAM</li>
+        <li>EEPROM - Alleen maar wanneer aangesproken</li>
+      </h5>
+    </ul>
+    <img src="img/avr_memory_map.jpg" alt="">
+  </div>
+</section>
+<section>
+  <div class="vcontainer">
+    <h2>Microcontroller Architectuur</h2>
+    <img src="img/ha_vs_vna.png" alt="">
+    <div class="hcontainer">
+      <div style="width: 400px;" class="vcontainer">
+      <h4>Von Neumann Architectuur</h4>
+      <em><b>Heeft 2 klok cycli nodig om 1 instructie uit te voeren</b></em>
+      </div>
+      <div style="width: 400px;" class="vcontainer">
+      <h4>Harvard Architectuur</h4>
+      <em><b>Heeft 1 klok cycli nodig om 1 instructie uit te voeren</b></em>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Von Neuman Cycle</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul style="width: 40%;">
+      <h5>
+        <li>Fetch-Decode-Execute</li>
+        <li>3 Fases</li>
+        <ol>
+          <li>Fetch: Ophalen Opcde</li>
+          <li>Decode: Decoderen van Opcode</li>
+          <li>Execute Uitvoeren van Opcode</li>
+        </ol>
+      </h5>
+    </ul>
+    <img height="300 px" src="img/von_nuemann_cycle.png" alt="">
+  </div>
+
+</section>
+<section>
+  <h2>Special Function Register</h2>
+  <div style="display: flex; justify-content: center; align-items: center;">
+    <ul>
+      <h5>
+        <li>GPR</li>
+        <ul>
+          <li>General Purpose Register</li>
+          <li>Opslagen van willekeurige data</li>
+        </ul>
+        <li>SFR</li>
+        <ul>
+          <li>Special Function Register</li>
+          <li>Vaste Locatie in het geheugen voor een specifieke functie</li>
+        </ul>
+      </h5>
+    </ul>
+    <img src="img/sfr_mem.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Special Function Register</h2>
+  <img src="img/sfr_example.png" style="height: 500px;"alt="">
+</section>

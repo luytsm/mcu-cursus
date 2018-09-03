@@ -1,0 +1,339 @@
+---
+title: "Les 9: Oefeningen"
+description: "Meer oefeningen op werken met registers"
+---
+<section>
+  <h1>Oefeningen Op registers</h1>
+</section>
+<section>
+  <h2>Oefening #1</h2>
+  <p>Door gebruik te maken van register maak een programma waarmee je de druk van een knop kan timen. Als je 5 seconden op de knop drukt dan voor je functie A uit, druk je vluchtig op de knop functie B </p>
+  <aside class="notes">
+uint8_t current, prev = 0;
+const int HOLD_TIME = 5000;
+
+
+void setup()
+{
+  Serial.begin(9600);
+  DDRD |= ((1 << DDD5) | (1 << DDD4));
+}
+
+uint8_t get_button_state() {
+  return ((PIND >> PIND2) & 0x1);
+}
+
+uint8_t set_power_led(uint8_t state) {
+  return PIND |=  (state << PIND5);
+}
+
+uint8_t get_power_led() {
+  return ((PIND >> PIND5) & 0x1);
+}
+
+uint8_t set_armed_led(uint8_t state) {
+  return PIND |=  (state << PIND4);
+}
+
+uint8_t get_armed_led() {
+  return ((PIND >> PIND4) & 0x1);
+}
+
+void loop()
+{
+
+  current = get_button_state();
+  if (current != prev) {
+    Serial.println(PIND, BIN);
+
+    long start = millis();
+    long count = 0;
+    if (current) {
+      while (get_button_state() && count < HOLD_TIME) {
+        count = millis() - start;
+      }
+    }
+    if (count < HOLD_TIME) set_power_led(!get_power_led());
+    else set_armed_led(!get_armed_led());
+    _delay_ms(100);
+  }
+  prev = current;
+}
+  </aside>
+</section>
+<section>
+  <h2>Oefening #2</h2>
+  <p>      
+      Door gebruik te maken van registers, schrijf je een programma waarmee je
+      op pin D2 tot D7 elk individueel een led kunt aansturen. Bij de start van
+      het programma staat de led op D2 aan. Met een druk op de knop schuift de
+      on status een led verder. Bij pin D7 is de volgende pin D2. In je code
+      mag je geen gebruik maken van for loops of whiles en maximaal 2 ifs. 
+  
+  </p> 
+  <aside class="notes"> 
+uint8_t current, prev = 0;
+
+
+void setup()
+{
+  Serial.begin(9600);
+  DDRD = 0b11111100;
+  PORTD |= 1 << PORTD2;
+}
+
+uint8_t get_button_state() {
+  return ((PINC >> PINC1) & 0x1);
+
+}
+
+void loop()
+{
+  current = get_button_state();
+  if (current != prev) {
+
+    if (current) {
+
+      if (PIND <= 0x80) {
+        uint8_t mask = (PORTD & 0xFC);
+        PORTD ^= mask;
+        PORTD |= mask << 1;
+      }
+      else {
+        PORTD ^= (PORTD & 0xFC);
+        PORTD |= 1 << PORTD2;
+      }
+      Serial.println(PORTD, BIN);
+    }
+    _delay_ms(100);
+  }
+  prev = current;
+}
+
+  </aside>
+</section>
+<section>
+  <h2>Oefening #3</h2>
+  <p>
+    Met een drukknop aangesloten op poort B pin 2, kan je een ADC conversie triggeren op ADC2.
+  </p>
+  <aside class="notes">
+uint8_t current, prev = 1;
+
+void setup()
+{
+  Serial.begin(9600);
+  DDRB |= 1 << DDB2;
+  ADMUX |= (1 << REFS0);
+  ADMUX |= (1 << MUX1);
+  ADCSRA |= (1 << ADEN);
+}
+
+uint16_t get_adc2()
+{
+  ADCSRA |= (1 << ADSC);
+  while ((ADCSRA & (1 << ADSC)));
+  return (ADC);
+}
+
+uint8_t get_button_state() {
+  return ((PINB >> PINB2) & 0x1);
+
+}
+
+void loop()
+{
+  
+  current = get_button_state();
+  if (current != prev) {
+    
+    if (current) {
+    Serial.print("Start");
+    Serial.println(get_adc2());
+    }
+    _delay_ms(100);
+  }
+  prev = current;
+}
+  </aside>
+</section>
+<section>
+  <h2>Oefening #4</h2>
+  <p>
+  Maak een programma waarmee je de volgende states managed:
+    <ol>
+      <li>Slaag de waarde van ADC2 op, neem deze waarde met een single shot methode. </li>
+      <li>Vergelijk deze waarde constant met de waarde ADC3, eens een match gevonden is ga naar de volgende state</li>
+      <li>Idle</li>
+    </ol>
+  </p>
+  <aside class="notes">
+
+uint8_t current, counter, prev = 1;
+uint16_t value;
+
+
+void setup()
+{
+  Serial.begin(9600);
+  DDRB |= 1 << DDB2;
+  ADMUX |= (1 << REFS0);
+  ADMUX |= (1 << MUX1);
+  ADCSRA |= (1 << ADEN);
+}
+
+void set_channel(uint8_t channel) {
+  ADMUX &= ~(0x7);
+  ADMUX |= (channel << MUX0);
+  Serial.print(ADMUX);
+  _delay_ms(1000);
+
+}
+
+uint16_t get_adc()
+{
+  ADCSRA |= (1 << ADSC);
+  while ((ADCSRA & (1 << ADSC)));
+  return (ADC);
+}
+
+uint16_t get_continuous_adc()
+{
+  ADCSRA |= (1 << ADATE);
+  ADCSRA |= (1 << ADSC);
+  uint16_t tmp = ADC;
+  while (tmp != value) {
+    tmp = ADC;
+  }
+}
+
+uint8_t get_button_state() {
+  return ((PINB >> PINB2) & 0x1);
+}
+
+uint16_t set_value()
+{
+  set_channel(2);
+  return get_adc();
+}
+
+uint16_t match_value()
+{
+  set_channel(3);
+  return get_continuous_adc();
+}
+
+
+void handle_button() {
+  current = get_button_state();
+  if (current != prev) {
+
+    if (current) {
+      counter = (counter + 1) % 3;
+    }
+    _delay_ms(100);
+
+  }
+  prev = current;
+}
+
+void loop()
+{
+  handle_button();
+  switch (counter) {
+    case 0:
+      value = set_value();
+
+      break;
+    case 1:
+      _delay_ms(1000);
+      match_value();
+      counter++;
+      break;
+    case 2:
+      Serial.println("Done");
+      break;
+  }
+  </aside>
+</section>
+<section>
+  <h2>Oefening #5</h2>
+  <p>
+    Maak een oefening waarbij je met 2 external interrupts dezelfde trigger
+    kunt sturen naar de main loop. Buiten het sturen van deze trigger telt de ene
+    interrupt een gedeelte counter omhoog en de andere omlaag
+  </p>
+  <aside class="notes">
+volatile int counter = 0;
+void setup()
+{
+  DDRD &= ~(1 << DDD2);
+  EICRA |= ((1 << ISC00) | (1 << ISC01))  ;
+  EICRA |= ((1 << ISC10) | (1 << ISC11))  ;
+  EIMSK |= ((1 << INT0) | (1 << INT1));
+  Serial.begin(9600);
+  sei();
+}
+
+void loop()
+{
+  if (changed){
+    Serial.println(counter);
+    changed = 0;
+  }
+}
+
+ISR(INT0_vect)
+{
+  changed = 1;
+  counter++;
+};
+
+ISR(INT1_vect)
+{
+  changed = 1;
+  counter--;
+}
+  </aside>
+</section>
+<section>
+  <h2>Oefening #6</h2>
+  <p>
+    Maak een programma waarmee je een pin change interrupt kan opvangen op pin A2 en A3 van de arduino. Elke specifieke pin triggert een specifieke state die in een switch word verhandeld
+  </p>
+  <aside class="notes">
+volatile int state = 0;
+void setup()
+{
+  Serial.begin(9600);
+
+  PCICR |= (1 << PCIE2);    // set PCIE0 to enable PCMSK0 scan
+  PCMSK2 |= ((1 << PCINT2) | (1 << PCINT3));  // set PCINT0 to trigger an interrupt on state change
+}
+
+void loop()
+{
+  switch (state) {
+    case 0:
+      Serial.println("Idle");
+      while (!state);
+      break;
+    case 1:
+      Serial.println("State 1");
+      state = 0;
+      break;
+    case 2:
+      Serial.println("Idle");
+      while (!state);
+      break;
+  }
+}
+
+ISR (PCINT2_vect)
+{
+  if ((PINC >> PIN2) & 0x1) state = 1;
+  else if ((PINC >> PIN3) & 0x1) state = 2;
+
+}
+  </aside>
+</section>

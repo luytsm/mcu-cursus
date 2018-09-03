@@ -1,0 +1,1391 @@
+---
+title: "Handleiding: C/C++ voor het Arduino platform"
+description:  "Vaakt gebruikte C/C++ paradigma op het Arduino platform"
+reveal:
+---
+<section>
+  <h1>Handleiding: C/C++ voor het Arduino platform</h1>
+</section>
+<section>
+  <section>
+    <h1>Preprocessor</h1>
+  </section>
+  <section>
+    <h2>Preprocessor</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Beginnend met <em>#</em></li>
+        <li>One-Liners</li>
+        <li>Geen <em>;</em></li>
+        <li>Een stap voor compilatie</li>
+        <ul>
+          <li>Substitutie</li>
+        </ul>
+        <li>Gebruik</li>
+        <ul>
+          <li>Directives</li>
+          <li>Macros</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre><code class="Arduino">
+        #define THIS_EXISTS
+        #ifdef THIS_EXIST
+          //THEN DO THIS
+        #endif
+
+        #include &ltfile&gt
+
+        #define PI 3.14
+
+        #define EDIT_BIT(bit) (1 &lt&lt BIT )
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Directives</h2>
+    <small>
+      <table style="height: 600px;">
+        <tbody>
+          <tr>
+            <th style="width:20%">Directive</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>#define</td>
+            <td>Substitutes a preprocessor macro.</td>
+          </tr>
+          <tr>
+            <td>#include</td>
+            <td>Inserts a particular header from another file.</td>
+          </tr>
+          <tr>
+            <td>#undef</td>
+            <td>Undefines a preprocessor macro.</td>
+          </tr>
+          <tr>
+            <td>#ifdef</td>
+            <td>Returns true if this macro is defined.</td>
+          </tr>
+          <tr>
+            <td>#ifndef</td>
+            <td>Returns true if this macro is not defined.</td>
+          </tr>
+          <tr>
+            <td>#if</td>
+            <td>Tests if a compile time condition is true.</td>
+          </tr>
+          <tr>
+            <td>#else</td>
+            <td>The alternative for #if.</td>
+          </tr>
+          <tr>
+            <td>#elif</td>
+            <td>#else and #if in one statement.</td>
+          </tr>
+          <tr>
+            <td>#endif</td>
+            <td>Ends preprocessor conditional.</td>
+          </tr>
+          <tr>
+            <td>#error</td>
+            <td>Prints error message on stderr.</td>
+          </tr>
+        </tbody>
+      </table> 
+    </small>
+  </section>
+  <section>
+    <h2>Macros</h2>
+    <div style="float: left; width: 50%">
+      <ul>
+        <li>#define</li>
+        <ul>
+          <li>Object-Like Macro</li>
+          <li>Function-Like Macro</li>
+        </ul>
+        <li>Substitutie</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%">
+      <pre><code class="Arduino">
+        #define THIS_EXISTS
+
+        #define PI 3.14
+
+        #define EDIT_BIT(bit) (1 &lt&lt BIT )
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Verschill Macro en Functies</h2>
+    <small>
+      <table>
+        <tr>
+          <th>Macro</th>
+          <th>Functie</th>
+        </tr>
+        <tr>
+          <td>Macro is Preprocessed</td>
+          <td>Function is Compiled</td>
+        </tr>
+        <tr>
+          <td>No Type Checking</td>
+          <td>Type Checking is Done</td>
+        </tr>
+        <tr>
+          <td>Code Length Increases</td>
+          <td>Code Length remains Same</td>
+        </tr>
+        <tr>
+          <td>Use of macro can lead
+            to side effect</td>
+          <td>No side Effect</td>
+        </tr>
+        <tr>
+          <td>Speed of Execution is Faster</td>
+          <td>Speed of Execution is Slower</td>
+        </tr>
+        <tr>
+          <td>Before Compilation macro name is replaced by macro value</td>
+          <td>During function call , Transfer of Control takes place</td>
+        </tr>
+        <tr>
+          <td>Useful where small code appears many time</td>
+          <td>Useful where large code appears many time</td>
+        </tr>
+        <tr>
+          <td>Generally Macros do not extend beyond one line</td>
+          <td>Function can be of any number of lines</td>
+        </tr>
+        <tr>
+          <td>Macro does not Check Compile Errors</td>
+          <td>Function Checks Compile Errors</td>
+        </tr>
+      </table>
+    </small>
+  </section>
+  <section>
+    <h2>Conditionele Macros</h2>
+    <pre><code class="Arduino">
+#define DEBUG
+#define LOG
+
+#ifdef DEBUG
+  #define DEBUG_INIT() sDebug[128];
+  #define DEBUG_PRINTHEX(T, v) Serial.print(T); sprintf(sDebug, "%x\n\r", v); Serial.print(sDebug);
+  #define DEBUG_PRINTDEC(T, v) Serial.print(T); sprintf(sDebug, "%d\n\r", v); Serial.print(sDebug);
+  #define DEBUG_HALT() (Serial.available() == 0); Serial.setTimeout(1); Serial.readBytes(sDebug, 1);
+#endif
+
+#ifdef LOG
+  #define LOG_INIT sLog[128];
+  #define LOG_PRINTHEX(T, v) Serial.print(T); sprintf(sLog, "%x\n\r", v); Serial.print(sLog);
+  #define LOG_PRINTDEC(T, v) Serial.print(T); sprintf(sLog, "%d\n\r", v); Serial.print(sLog);
+  #define LOG_HALT() while(Serial. available() == 0); Serial.setTimeout(1); Serial.readBytes(sLog, 1);
+#endif
+    </code></pre>
+  </section>
+  <section>
+    <h2>Optimalisatie</h2>
+    <div style="float: left; width: 33%;">
+      <p>Test Code met Variabele</p>
+      <pre><code class="Arduino">
+        #include <stdio.h>
+        static const  foo =  6;
+
+        int  main() {
+          printf("%d", foo);
+          return 0;
+        }
+      </code></pre>
+      <p>Test Code met Macro</p>
+      <pre><code class="Arduino">
+        #include <stdio.h>
+        #define foo 6
+
+        int  main() {
+          printf("%d",foo);
+          return 0;
+        }
+      </code></pre>
+    </div>
+    <div style="float: left; width: 33%;">
+      <p>Gecompileerde ASM Code met Variabele</p>
+      <pre><code class="asm">
+        push rbp
+        mov rbp,rsp
+        sub rsp,0x20
+        call d <main+Oxd>
+        mov eax,0x6
+        mov edx,eax
+        lea rcx,[rip+Ox4]
+        call 20 <main+0x20>
+        mov eax,0x0
+        add rsp,0x20
+        pop rbp
+        ret
+        nop
+      </code></pre>
+      <p>Gecompileerde ASM Code met Macro</p>
+      <pre><code class="asm">
+        push rbp
+        mov rbp,rsp
+        sub rsp,0x20
+        call d <main+Oxd>
+        mov edx,0x6
+        lea rcx,[rip+Ox0]
+        call le <main+Oxle>
+        mov eax,0x0
+        add rsp,0x20
+        pop rbp
+        ret
+        nop
+      </code></pre>
+    </div>
+    <div style="float: left; width: 33%;">
+      <p>Gecompileerde Code</p>
+      <pre><code class="asm">
+        sub rsp,Ox28
+        call 9 <main+0x9>
+        lea rcx,[rip+Ox0]
+        mov edx,0x6
+        call 1a <main+Oxla>
+        xor eax,eax
+        add rsp,Ox28
+        ret
+        nop
+      </code></pre>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Header Files</h1>
+  </section>
+  <section>
+    <h2>Header Files</h2>
+    <ul>
+      <li>Source file: <em>.cpp</em></li>
+      <li>Header file: <em>.h</em></li>
+      <li>Gebruikt voor</li>
+      <ul>
+        <li>definiëren van:</li>
+        <ul>
+          <li>Functie prototypes</li>
+          <li>Variabelen</li>
+          <li>Macros</li>
+        </ul>
+        <li>Bevat geen logica</li>
+        <li>"#include" in source file</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Header file gebruiken</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Door preprocessor te gebruiken</li>
+        <li>Declareer dit in het begin van de source file</li>
+        <ul>
+          <li>#include "TestHeader.h"</li>
+          <ul>
+            <li>"Zoekt in folder"</li>
+          </ul>
+          <li>#include &ltTestHeader.h&gt</li>
+          <ul>
+            <li>"Zoekt in PATH"</li>
+          </ul>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre>
+        <code class="Arduino">
+          #include "mylib.h"
+          #include &ltmylib.h&gt
+          int main(){
+          }
+        </code>
+      </pre>
+    </div>
+  </section>
+  <section>
+    <h2>Werking include</h2>
+    <div class="fragment current-visible" style="position: absolute; z-index: 901; width: 60%;">
+      <em><b>test_header.h</b></em>
+      <pre><code class="Arduino">
+          int ledPin = 7;
+      </code></pre>
+    </div>
+    <div class="fragment current-visible" style="position: absolute; z-index: 901; width: 60%;">
+      <em><b>myproject.ino</b></em>
+      <pre><code class="Arduino">
+          #include "test_header.h"
+          int state = HIGH;
+
+          void setup(){
+            //DO SOMETHING
+          }
+
+          void loop(){
+            //DO SOMETHING
+          }
+      </code></pre>
+    </div>
+    <div class="fragment current-visible" style="position: absolute; z-index: 901; width: 60%;">
+      <em><b>myproject.ino</b></em>
+      <pre><code class="Arduino">
+          int ledPin = 7;
+          int state = HIGH;
+
+          void setup(){
+            //DO SOMETHING
+          }
+
+          void loop(){
+            //DO SOMETHING
+          }
+      </code></pre>
+  </section>
+  <section>
+    <h2>Include Guard</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Geen ambiguïteit </li>
+        <li>Geen 2 dezelfde includes</li>
+        <li>Kan file size verkleinen</li>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre><code class="Arduino">
+        #ifndef _TEST_LIB_H_
+        #define _TEST_LIB_H_
+
+          /***************/
+          /*             */ 
+          /*    YOUR     */ 
+          /*    CODE     */ 
+          /*    HERE     */ 
+          /*             */ 
+          /***************/
+
+        #endif
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Werking Include Guard</h2>
+    <div style="float: left; width: 33%; height: 600px;">
+      <p><em>mystruct.h</em></p>
+      <pre><code class="Arduino">
+        struct myStruct{
+          int x;
+          double y;
+          char z;
+        };
+      </code></pre>
+    </div>
+    <div style="float: left; width: 33%; height: 600px;">
+      <p><em>myproject.ino</em></p>
+      <pre><code class="Arduino">
+        #include "mystruct.h"
+        #include "mystruct.h"
+
+        void setup(){
+          //DO SOMETHING
+        }
+
+        void loop(){
+          //DO SOMETHING
+        }
+      </code></pre>
+    </div>
+    <div style="float: left; width: 34%; height: 600px;">
+      <p><em>myproject.ino</em></p>
+      <pre><code class="Arduino">
+        struct myStruct{
+          int x;
+          double y;
+          char z;
+        };
+        // Dubbele declaratie 
+        // Compile Error
+        struct myStruct{ 
+          int x;         
+          double y;
+          char z;
+        };
+
+        void setup(){
+          //DO SOMETHING
+        }
+
+        void loop(){
+          //DO SOMETHING
+        }
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Werking Include Guard</h2>
+    <div style="float: left; width: 33%; height: 600px;">
+      <p><em>mystruct.h</em></p>
+      <pre><code class="Arduino">
+        #ifndef _TEST_LIB_H_
+        #define _TEST_LIB_H_
+
+        struct myStruct{
+          int x;
+          double y;
+          char z;
+        };
+        #endif
+      </code></pre>
+    </div>
+    <div style="float: left; width: 33%; height: 600px;">
+      <p><em>myproject.ino</em></p>
+      <pre><code class="Arduino">
+        #include "mystruct.h"
+        #include "mystruct.h"
+
+        void setup(){
+          //DO SOMETHING
+        }
+
+        void loop(){
+          //DO SOMETHING
+        }
+      </code></pre>
+    </div>
+    <div style="float: left; width: 34%; height: 600px;">
+      <p><em>myproject.ino</em></p>
+      <pre><code class="Arduino">
+        struct myStruct{
+          int x;
+          double y;
+          char z;
+        };
+        // Geen compile error
+
+        void setup(){
+          //DO SOMETHING
+        }
+
+        void loop(){
+          //DO SOMETHING
+        }
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Conditional Include</h2>
+    <div style="float: left; width: 50%;">
+      <ul>
+        <li>Selectief Include</li>
+        <li>Specifieke output afhankelijk van compile opties</li>
+        <ul>
+          <li>Cross Compatibility</li>
+          <li>Code verkleinen</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 50%;">
+      <pre><code class="Arduino">
+#ifndef _AVR_IO_H_
+#define _AVR_IO_H_
+
+#include <avr/sfr_defs.h>
+
+#if defined (__AVR_AT94K__)
+#  include <avr/ioat94k.h>
+#elif defined (__AVR_AT43USB320__)
+#  include <avr/io43u32x.h>
+#elif defined (__AVR_AT43USB355__)
+#endif
+
+#endif /* _AVR_IO_H_ */
+
+      </code></pre>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Classes</h1>
+  </section>
+  <section>
+    <h2>Classes</h2>
+    <ul>
+      <li>Class Definitions</li>
+      <li>Class Accces Modifiers</li>
+      <li>Class Member Functions</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Class Definitions</h2>
+    <pre><code class="Arduino">
+      class Box {
+        public:
+          double length;         // Length of a box
+          double breadth;        // Breadth of a box
+          double height;         // Height of a box
+          double getVolume(void);// Returns box volume
+      };
+    </code></pre>
+  </section>
+  <section>
+    <h2>Class Accces Modifiers</h2>
+    <div style="float: left; width: 60%">
+      <ul>
+        <li>public</li>
+        <ul>
+          <li>Members toegankelijk buiten de class</li>
+          <li>Geen set/get</li>
+        </ul>
+        <li>protected</li>
+        <ul>
+          <li>Members toegangelijk voor child classes</li>
+          <li>Overerving niet vaak gebruik op het Arduino platform</li>
+        </ul>
+        <li>private</li>
+        <ul>
+          <li>Members alleen toegankelijk voor class members</li>
+          <li>Set / Get nodig</li>
+          <li>Default optie</li>
+        </ul>
+      </ul>
+    </div>
+    <div style="float: left; width: 40%">
+      <pre><code class="Arduino">
+        class Base {
+
+          public:
+
+          // public members go here
+
+          protected:
+
+          // protected members go here
+
+          private:
+
+          // private members go here
+      }
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Class Members Function</h2>
+    <div style="float: left; width: 50%;">
+      <em><b>Inline Functie</b></em>
+      <pre><code class="Arduino">
+          class Box {
+             public:
+                double length;      // Length of a box
+                double breadth;     // Breadth of a box
+                double height;      // Height of a box
+
+                double getVolume(void) {
+                   return length * breadth * height;
+                }
+          };
+      </code></pre>
+    </div>
+    <div style="float: left; width: 50%;">
+      <em><b>Functie met Scope Resolution Operator</b></em>
+      <pre><code class="Arduino">
+          class Box {
+             public:
+                double length;      // Length of a box
+                double breadth;     // Breadth of a box
+                double height;      // Height of a box
+          };
+
+          double Box::getVolume(void) {
+            return length * breadth * height;
+          }
+      </code></pre>
+    </div>
+  </section>
+  <section>
+    <h2>Example</h2>
+    <div style="float: left; width: 50%;">
+      <em><b>Morse.h</b></em>
+      <pre><code class="Arduino">
+        #ifndef Morse_h
+        #define Morse_h
+
+        #include "Arduino.h"
+
+        class Morse
+        {
+          public:
+            Morse(int pin);
+            void dot();
+            void dash();
+          private:
+            int _pin;
+        };
+
+        #endif
+      </code></pre>
+    </div>
+    <div style="float: left; width: 50%;">
+      <em><b>Morse.cpp</b></em>
+      <pre><code class="Arduino">
+        Morse::Morse(int pin)
+        {
+          pinMode(pin, OUTPUT);
+          _pin = pin;
+        }
+
+        void Morse::dot()
+        {
+          digitalWrite(_pin, HIGH);
+          delay(250);
+          digitalWrite(_pin, LOW);
+          delay(250);  
+        }
+
+        void Morse::dash()
+        {
+          digitalWrite(_pin, HIGH);
+          delay(1000);
+          digitalWrite(_pin, LOW);
+          delay(250);
+        }
+      </code></pre>
+    </div>
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Pointers</h1>
+  </section>
+  <section>
+    <h2>Wat is een pointer</h2>
+    <p>
+    <em>Een pointer is een variabele dat een geheugen locatie bevat van  andere
+      elementen in de code. Een pointer de adressen van volgende elementen bevatten</em>
+    </p>
+    <ul>
+      <li>Een adres</li>
+      <li>Variabelen</li>
+      <li>Functies</li>
+      <li>Pointers</li>
+    </ul>
+    <p class="fragment"><b>Geheugen is adresseerbare blok bits!</b></p>
+
+  </section>
+  <section>
+    <h2>Wat is een pointer</h2>
+    <ul>
+      <h5>
+        <li>Zorgt voor efficiëntere code </li>
+        <li>Verhoogt de complexiteit</li>
+        <li>Pointers hangen nauw samen met arrays</li>
+        <li>Pointer hangt vast aan een datatype</li>
+      </h5>
+    </ul>
+  </section>
+  <section>
+    <h2>Wat is een pointer</h2>
+    <img style="height: 5OOpx;" src="img/pointers.png" alt="">
+  </section>
+  <section>
+    <h2>Pointers Declaren</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <div style="width: 40%">
+        <p>
+        <pre><code class="Arduino">
+    int number = 10;
+    int *pointer = &number;
+      </pre></code>
+      Je wijst een adres toe aan een pointer
+        </p>
+      </div>
+      <img style="height: 500px;" src="img/declaring_pointers.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Pointer Operators</h2>
+    <ul>
+      <h5>
+        <li>Adres <i>&amp</i></li>
+        <ul>
+          <li>Met &amp vraag je het adres op van een variable</li>
+        </ul>
+        <li>Dereferencing <i>*</i></li>
+        <ul>
+          <li>Met * vraag je de achterliggende data op, * ook de indirection operator genoemd.</li>
+        </ul>
+      </h5>
+  </section>
+  <section>
+    <h2>Pointer Voorbeelden</h2>
+    <table>
+      <tr>
+        <td>Declaratie</td>
+        <td>Value</td>
+        <td>Adres</td>
+      </tr>
+      <tr>
+        <td>int Val = 2</td>
+        <td>2</td>
+        <td>54428</td>
+      </tr>
+      <tr>
+        <td>int *pVal = &Val</td>
+        <td>54428</td>
+        <td>97880</td>
+      </tr>
+      <tr>
+        <td>int secVal = *pVal</td>
+        <td>2</td>
+        <td>97932</td>
+      </tr>
+      <tr>
+        <td>*pVal = 5</td>
+        <td>5</td>
+        <td>54428</td>
+      </tr>
+      <tr>
+        <td>pVal = pVal + 1</td>
+        <td>54444 <i>(+16)</i></td>
+        <td>97880</td>
+      </tr>
+    </table>
+  </section>
+  <section>
+    <h2>Dus ...</h2>
+    <ul>
+      <li>int *p = &c</li>
+      <ul>
+        <li>De pointer p wijst naar het locatie van c</li>
+      </ul>
+      <li>int k = *p </li>
+      <ul>
+        <li>k is gelijk aan de achterliggende data van p</li>
+      </ul>
+      <li>*p = 0</li>
+      <ul>
+        <li>De achterliggende data = 0</li>
+      </ul>
+      <li>*j = *p</li>
+      <ul>
+        <li>De achterliggende data van j is gelijk aan de achterliggende data van p</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <ul>
+      <li>Declareer 3 integers x, y en z met de respectievelijke waardes 1, 5, 155</li>
+      <li>Declareer 3 pointers p_x, p_y, p_z die verwijzen naar de geheugen locaties van x,y,z </li>
+      <li>Print de waardes af van de achterliggende data van de pointers als ook de locaties </li>
+    </ul>
+  </section>
+  <section>
+    <h2>Volgorde van bewerkingen</h2>
+    <ul>
+      <li>* en &amp hebben voorrang op rekenkundige operators </li>
+      <li>*, &amp, ++ en -- hebben dezelfde priorieit</li>
+      <li>* en &amp worden van rechts naar links geëvalueerd</li>
+      <li>*p++ en (*p)++ zijn verschillend</li>
+      <ul>
+        <li>*p++ verhoogt het adres opgeslagen in p en haalt daarna de achterliggende data van het nieuwe adres op</li>
+        <li>(*p)++ verhoogte de achterliggende data op adres p</li>
+      </ul>
+    </ul>
+  </section>
+  <section>
+    <h2>Volgorde van bewerkingen</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <div style="width: 40%;">
+        <p><b>Veronderstel dat</b></p>
+        <ul>
+          <li>char c = 5</li>
+          <li>char *p</li>
+          <li>p = &c</li>
+        </ul>
+      </div> 
+      <img src="img/pointers_precedence.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Swap Functie</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <ul style="width: 50%;">
+        <li class="fragment">Het volgende stuk code swap de variabelen niet</li>
+        <li class="fragment">Er word een lokale kopie gemaakt</li>
+        <li class="fragment">Dit noemt Pass By Value</li>
+        <li class="fragment">De originele data word beschermt</li>
+      </ul>
+      <div>
+        <pre><code class="Arduino">
+void swap(int x, int y){
+  int tmp;
+  tmp = x
+  x = y;
+  y = tmp;
+}
+void main(void){
+  int a = 10;
+  int b = 13;
+
+  swap (a, b);
+}
+/*y == ? && z == ?*/
+        </code></pre>
+        <img class="fragment" src="img/pass_by_val.png" alt="">
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Pass By Reference</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <ul style="width: 50%;">
+        <li class="fragment">De data wisselt tussen de variabelen</li>
+        <li class="fragment">Toegang tot de variabele is mogelijk door indirecte toegang</li>
+        <li class="fragment">Data moet niet gedupliceerd worden</li>
+        <li class="fragment">Pass By Reference</li>
+        <li class="fragment">Concept bestaat ook in andere programmeer talen</li>
+      </ul>
+      <div>
+        <pre><code class="Arduino">
+void swap(int *x, int *y){
+  int tmp;
+  tmp = *x
+  *x = *y;
+  *y = tmp;
+}
+void main(void){
+  int a = 10;
+  int b = 13;
+
+  swap (&a, &b);
+}
+/*y == ? && z == ?*/
+        </code></pre>
+        <img class="fragment" src="img/pass_by_ref.png" alt="">
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <ul>
+      <li>Declareer 3 integers x, y en z met de respectievelijke waardes 1, 5, 155</li>
+      <li>Schuif vanuit een functie de waarde x naar y, y naar z en z naar x</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Pointers & Arrays</h2>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <ul style="width: 50%;">
+      <li>Arrays is een blok van dezelfde data types</li>
+      <li>Een array kan beschouwd worden als een pointer van hetzelfde type</li>
+      <li>Een pointer kan een startpunt zijn voor een array</li>
+    </ul>
+    <div>
+      <pre><code class="Arduino">
+int *p
+int a[1O]
+
+p = &(a[2]);
+
+/*Dan klopt het volgende*/
+*p = a[2];
+*(p+ 1) = a[3];
+      </code></pre>
+      <img src="img/arrays_pointers.png" alt="">
+    </div>
+    <div>
+  </section>
+  <section>
+    <h2>Gevaren van pointers</h2>
+    <ul>
+      <li>Rechtstreekse manipulatie van het geheugen</li>
+      <li>Kent geen out of bounds</li>
+      <ul>
+        <pre><code class="Arduino">
+int a[1O]
+int *p = &(a[0]);
+int i = a[11] //error
+int j = *(p + 15) //mogelijk
+        </code></pre>
+      </ul>
+      <li>Datatypes zijn niet belangrijk (void *pointer)</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Null Terminated C String</h2>
+		<ul>
+		  <li>In C worden alle char arrays getermineerd door '\O'</li>
+      <ul>
+        <li>char *x = "hello" == "hello\0"</li>
+        <li>char x[4] = "hello" == "hello\0"</li>
+      </ul>
+		  <li>Dit maakt het mogelijk om simpels char arrays te kunnen  manipuleren</li>
+		  <li></li>
+		</ul>
+     
+    <pre class="fragment"><code class="Arduino">
+nt strlen(char *s) /* added by RJH; source: K&R p99 */
+{
+  int n;
+
+  for(n = 0; *s != '\0'; s++)
+  {
+    n++;
+  }
+  return n;
+}
+    </code></pre>
+  </section>
+  <section>
+    <h2>Lengte van een object</h2>
+    <div style="display: flex;">
+    <ul style="width: 50%;">
+      <li>Pointer is een adres</li>
+      <li>Pointers geven niet altijd een lengte mee
+      <li>Functies mbt tot buffers hebben meestal beide nodig</li>
+      <pre class="fragment"><code class="Arduino">
+void RF24::read(void *buf, uint8_t  len)
+bool RF24::write(const void *buf, uint8_t len)
+      </code></pre>
+      <li>De groote van een element - sizeof()</li>
+    </ul>
+    <div style="width: 50%;">
+    <pre class="fragment"><code class="Arduino">
+int data[10]="Hello World"
+for (int i = 0; i < sizeof(data)/sizof(int); i++){
+  //dosomething
+}
+    </code></pre>
+    <pre class="fragment"><code class="Arduino">
+int data[10]="Hello World"
+ write(data, sizeof(data));
+    </code></pre>
+    </div>
+    </div>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    Schrijf een functie met pointers waar je een 2 arrays aan elkaar rijgt (concat)
+  </section>
+</section>
+<section>
+  <section>
+    <h1>Bit Operaties</h1>
+  </section>
+  <section>
+    <h2>Manipulatie op bitniveau</h2>
+    <ul>
+      <h5>
+        <li>Microcontroller werkt met registers</li>
+        <li>Meer controle, Meer kracht</li>
+        <li>Efficiëntie</li>
+      </h5>
+    </ul>
+  </section>
+  <section>
+    <h1>Stel je eens voor?</h1>
+  </section>
+  <section>
+    <h2>Status van een lamp</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <ul style="width: 60%; ">
+        <h5>
+          <li>Status van een lamp: 1 ? 0</li>
+          <li>1 bit informatie</li>
+          <li>sizeof(int) = 4 bytes</li>
+          <ul>
+            <li>Overkill</li>
+          </ul>
+          <li>Kleinste datatype = </li>
+          <ul>
+            <li class="fragment">Byte</li>
+          </ul>
+          <li class="fragment">Oplossing</li>
+          <ul>
+            <li class="fragment">Data verzamelen in één element</li>
+          </ul>
+        </h5>
+      </ul>
+      <img class="plain" style="height: 400px; background: none ;" src="img/light_bulb.png" alt="">
+    </div>
+  </section>
+  <section>
+    <h2>Bitwise Operators</h2>
+    <table>
+      <tbody><tr>
+          <th>Symbol</th>
+          <th>Operator</th>
+        </tr>
+        <tr>
+          <td>&amp;</td>
+          <td>bitwise AND</td>
+        </tr>
+        <tr>
+          <td>|</td>
+          <td>bitwise inclusive OR</td>
+        </tr>
+        <tr>
+          <td>^</td>
+          <td>bitwise XOR (eXclusive OR)</td>
+        </tr>
+        <tr>
+          <td>&lt;&lt;</td>
+          <td>left shift</td>
+        </tr>
+        <tr>
+          <td>&gt;&gt;</td>
+          <td>right shift</td>
+        </tr>
+        <tr>
+          <td>~</td>
+          <td>bitwise NOT (one's complement) (unary)</td>
+        </tr>
+      </tbody></table>
+  </section>
+  <section>
+    <h2>Bitwise Operators</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Bitwise AND (&)</h3>
+        <table class="wikitable">
+          <tbody><tr>
+              <th>bit a</th>
+              <th>bit b</th>
+              <th>a &amp; b (a AND b)</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody></table>
+          <pre><code>
+11001000 & 
+10111000 = 
+-------- 
+10001000
+          </code></pre>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Bitwise OR (|)</h3>
+        <table>
+          <tbody><tr>
+              <th>bit a</th>
+              <th>bit b</th>
+              <th>a | b (a OR b)</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+          </tbody></table>
+          <pre><code style="he">
+11001110 | 
+10011000 =
+-------- 
+11011110
+          </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Bitwise Operators</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Bitwise XOR (^)</h3>
+        <table class="wikitable">
+          <tbody><tr>
+              <th>bit a</th>
+              <th>bit b</th>
+              <th>a ^ b (a XOR b)</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </tbody></table>
+          <pre><code>
+11001110 ^
+10011000 =
+-------- 
+01010110
+          </code></pre>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Bitwise OR (|)</h3>
+        <table class="wikitable">
+          <tbody><tr>
+              <th>bit a</th>
+              <th>~a (complement of a)</th>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </tbody></table>
+          <pre><code>
+
+~ 11001110
+---------- 
+= 00110001
+          </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Bitwise Operators</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Left Shift</h3>
+        <pre><code>
+  11001110 &lt&lt 1
+  -------- 
+= 10011100
+        </code></pre>
+        <pre><code>
+  11001110 &lt&lt 5
+  -------- 
+= 11000000 
+        </code></pre>
+        <ul class="fragment">
+          <h5>
+            <li class="fragment">Opvullen met 0</li>
+            <li class="fragment">Maal 2</li>
+          </h5>
+        </ul>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 50%;">
+        <h3>Right  Shift</h3>
+        <pre><code>
+  11001110 &gt&gt 1
+  -------- 
+= 01100111
+        </code></pre>
+        <pre><code>
+  11001110 &gt&gt 5
+  -------- 
+= 00000110
+        </code></pre>
+        <ul class="fragment">
+          <h5>
+            <li class="fragment">Opvullen met 0</li>
+            <li class="fragment">Delen door 2</li>
+          </h5>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Testje</h2>
+    <a href="https://www.cs.ucsb.edu/~pconrad/cs16/topics/bitOps/?formForQuestion3Response=120">Klik Hier</a>
+  </section>
+  <section>
+    <h2>Bitwise Assigment</h2>
+    <table class="wikitable sortable jquery-tablesorter">
+      <thead><tr>
+          <th>Symbol</th>
+          <th>Operator</th>
+        </tr></thead><tbody>
+          <tr>
+            <td><code>&amp;=</code></td>
+            <td>bitwise AND assignment</td>
+          </tr>
+          <tr>
+            <td><code>|=</code></td>
+            <td>bitwise inclusive OR assignment</td>
+          </tr>
+          <tr>
+            <td><code>^=</code></td>
+            <td>bitwise exclusive OR assignment</td>
+          </tr>
+          <tr>
+            <td><code>&lt;&lt;=</code></td>
+            <td>left shift assignment</td>
+          </tr>
+          <tr>
+            <td><code>&gt;&gt;=</code></td>
+            <td>right shift assignment</td>
+          </tr>
+        </tbody><tfoot></tfoot></table>
+  </section>
+  <section>
+    <h2>Bit mask</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+        <h3>Bits Activeren</h3>
+        <pre><code>
+    10010101   10100101
+ OR 11110000   11110000
+  = 11110101   11110101
+        </code></pre>
+        <pre><code class="c">
+byte x = 0x95A5;
+byte y = 0xF0F0
+byte z = x | y;
+byte z = 0xF5F5;
+        </code></pre>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+        <h3>Bits (De)Selecteren</h3>
+        <pre><code>
+    10010101   10100101
+AND 00001111   00001111
+  = 00000101   00000101
+        </code></pre>
+        <pre><code class="c">
+byte x = 0x95A5;
+byte y = 0x0F0F
+byte z = x & y;
+byte z = 0x05F5;
+        </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Bit mask</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+        <h3>Bitwaarde togglen</h3>
+        <pre><code>
+    10011101   10010101
+XOR 00001111   11111111
+  = 10010010   01101010
+        </code></pre>
+        <pre><code class="c">
+byte x = 0x9D95;
+byte y = 0x0FFF
+byte z = x ^ y;
+byte z = 0x926A;
+        </code></pre>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; width: 30%;">
+        <h3>Bitwaarde opvragen</h3>
+        <pre><code>
+    10011101   10010101
+AND 00001000   00001000
+  = 00001000   00000000
+        </code></pre>
+        <pre><code class="c">
+byte x = 0x97A5;
+byte y = 0x0808;
+byte z = x & y;
+byte z = 0x0808;
+        </code></pre>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Vaak gebruikte operaties</h2>
+    <ul>
+      <li><b>Set a bit</b></li>
+      <pre style="width: 300px;"><code> bit_fld |= (1 << n)</code></pre>
+      <li><b>Clear a bit</b></li>
+      <pre style="width: 300px;"><code> bit_fld &= ~(1 << n)</code></pre>
+      <li><b>Toggle a bit</b></li>
+      <pre style="width: 300px;"><code> bit_fld ^= (1 << n)</code></pre>
+      <li><b>Test a bit</b></li>
+      <pre style="width: 300px;"><code> bit_fld & (1 << n)</code></pre>
+    </ul>
+  </section>
+  <section>
+    <h2>Voorbeelden</h2>
+    <p><b>Write a function setbits(x,p,n,y) that returns x with the n bits that begin at position p set to the rightmost n bits of y, leaving the other bits unchanged.</b></p>
+    <pre><code class="c">
+unsigned setbits(unsigned x, int p, int n, unsigned y)
+{
+  return (x & ((~0 << (p + 1)) | (~(~0 << (p + 1 - n))))) | ((y & ~(~0 << n)) << (p + 1 - n));
+               }
+    </code></pre>
+  </section>
+  <section>
+    <h2>Voorbeelden</h2>
+    <p><b>Write a function invert(x,p,n) that returns x with the n bits that begin at position p inverted (i.e., 1 changed into 0 and vice versa), leaving the others unchanged.</b></p>
+    <pre><code class="c">
+unsigned invert(unsigned x, int p, int n)
+{
+    return x ^ (~(~0U << n) << p);
+               }
+    </code></pre>
+  </section>
+  <section>
+    <h2>Oefening</h2>
+    <ul>
+      <li>Schrijf een rotate left (ROL) functie</li>
+      <li>Maak gebruik van unsigned integers</li>
+      <li>Gebruik <a href="circuits.io">circuits.io</a></li>
+    </ul>
+  </section>
+  <section>
+    <h2>Oplossing</h2>
+    <pre><code class="Arduino">
+byte rol(byte b, byte amount)
+{
+	amount = amount % 8;
+	uint8_t tmp = b;
+	tmp = (tmp >> (8-amount)) | (tmp << amount);
+	return tmp;
+}
+    </code></pre>
+  </section>
+</section>
