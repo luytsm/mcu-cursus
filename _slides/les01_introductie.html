@@ -4,227 +4,43 @@ description: "Wat houdt het vak Microcontrollers juist in?"
 reveal:
 ---
 <section>
-  <h1>{{ page.title }}</h1>
+  <h1>Microcontrollers</h1>
+  <h2>Algemene Introductie</h2>
 </section>
-<section>
-  <div class="vcontainer">
-    <h2>Wat gaan we zien?</h2>
+<section> 
+  <h2>Wat is een microcontroller</h2>
+  <div class="hcontainer">
     <ul>
-      <li>Arduino hardware platform </li>
-      <li>Arduino software libraries</li>
-      <li>AVR architectuur en instructieset</li>
-      <li>C/C++ ontwikkeling voor embedded systemen</li>
-      <li>Embedded systeem design</li>
-      <li>Verwerken van analoge sensor data</li>
-      <li>IO operaties</li>
-      <li>Interfacing met PC toepassingen</li>
-      <li>Embedded software bibliotheken</li>
-      <li>Logging en debugging</li>
-      <li>Interrupts: timer en comparator</li>
+      <h4 class="fragment"><li>Een Integrated Circuit dat een computer systeem bevat.</li></h4>
+      <h4 class="fragment"><li>Het is geen CPU maar het bevat er één</li></h4>
+      <h4 class="fragment"><li>Tot op een zekere hoogte is een microcontroller "self-sustaining"</li></h4>
+      <ul class="fragment">
+        <li>Er zijn nog enkele randcomponenten nodig zoals een voeding, programmer, ...</li>
+      </ul>
     </ul>
-    <a href="https://bamaflexweb.ap.be/BMFUIDetailxOLOD.aspx?a=101442&b=5&c=1">Voor meer info: zie ECTS fiche</a>
-  </div>
-</section>
-<section>
-  <h2>Hoe gaan we dat zien?</h2>
-  <ul>
-    <li>Inwerken in microcontrollers mbv Arduino</li>
-    <li>Weg strippen van de Arduino software libraries</li>
-  </ul>
-
-</section>
-<section>
-  <div class="vcontainer">
-    <h3>Waarom?</h3>
-    <div class=hcontainer style='align-items:baseline;'>
-      <div class="fragment"style="float: left; width: 60%;">
-        <h3>Blink met de Arduinio libraries</h3>
-        <pre><code style="height: 375px;" class="Arduinio">
-#include &ltArduino.h&gt
-
-void setup()
-{
-    pinMode(LED_BUILTIN, OUTPUT);
-}
-
-void loop()
-{
-    digitalWrite(LED_BUILTIN, HIGH);
-    delay(1000);
-    digitalWrite(LED_BUILTIN, LOW);
-    delay(1000);
-}
-        </code></pre>
-        <p class="fragment">Compiled size: 1034 bytes (3.2%)</p>
-      </div>
-      <div class="fragment" style="float: left; width: 60%;">
-        <h3>blink zonder Arduino library</h3>
-        <pre><code style="height: 375px;"class="Arduino">
-#include &ltavr/io.&gt
-#include &ltutil/delay.h&gt
-
-int main(void)
-{
-    DDRB = 1 &lt&lt 5;
-    while (1)
-    {
-        _delay_ms(500);
-        PORTB ^= 1 &lt&lt 5;
-    }
-  return 0;
-}
-        </code></pre>
-        <p class="fragment">Compiled size: 158 bytes (0.5%)</p>
-      </div>
+    <div class="vcontainer">
+      <img style="height: 300px" src="img/atmega328p-pu.png" alt="">
+      <img style="height: 300px; "src="img/layout_microcontroller.png" alt="">
     </div>
   </div>
 </section>
 <section>
-  <h2>Wat gaan we doen in de labos</h2>
+  <h2>Dus we hebben hardware nodig?</h2>
   <ul>
-    <li>Basis IO Operaties</li>
-    <li>Communicatie met de seriele poort</li>
-    <li>Interrupts</li>
-    <li>Chronometer</li>
-    <li>Thermostaat</li>
-    <li>....</li>
-  </ul>
-</section>
-<section>
-  <h2>Evaluatievorm</h2>
-  <table>
-    <tr>
-      <td>Kennistoets</td>
-      <td>30%</td>
-      <td>Digitaal examen</td>
-    </tr>
-    <tr>
-      <td>Vaardigheidstoets</td>
-      <td>50%</td>
-      <td>Praktisch examen</td>
-    </tr>
-    <tr>
-      <td>Vaardigheidstoets</td>
-      <td>20%</td>
-      <td>2 Testmomenten doorheen het jaar.</td>
-    </tr>
-  </table>
-</section>
-<section>
-  <h2>Regels</h2>
-  <ul>
-    <li>Optijd komen</li>
-    <li>Deur toe = wachten</li>
-    <li>Geen hoofddeksels</li>
-    <li>Alleen water is toegestaan in de lokalen</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Wat is een microcontroller?</h2>
-  <div style="float: left;">
+    <h4 class="fragment"><li>We maken gebruiken van een ontwikkelingsplatform</li></h4>
     <ul>
-      <li>Voorziet rekenkracht in een klein pakketje</li>
-      <li>Integrated Circuit</li>
-      <li>Bevat meerdere componenten</li>
-      <li>Self contained</li>
-      <li>Gebruikt in embedded systemen</li>
+      <h4 class="fragment"><li>Arduino</li></h4>
+      <h4 class="fragment"><li>Specifiek: Arduino Nano</li></h4>
     </ul>
-  </div>
-  <div style="float: right; width: 30%;">
-    <img src="img/atmega328p.jpg" alt="">
-  </div>
-</section>
-<section>
-  <h2>Gebruik</h2>
-  <ul>
-    <li>Embedded Systemen</li>
-    <li>Spelcomputers <a href="http://www.pcworld.com/article/162588/inside_game_boy.html">(Game Boy)</a></li>
-    <li>Smartphones</li>
-    <li>Dag dagelijkse items</li>
-    <li>...</li>
-  </ul>
-  <img src="img/gameboy.jpg" style="float: right; width: 40%;" alt="">
-</section>
-<section>
-  <h2>Getting started</h2>
-  <ul>
-    <li>Wat voor hardware hebben we nu eigenlijk nodig?</li>
-    <li>Hoe programmeren we nu een microcontroller?</li>
-    <li>Programmeertaal</li>
-    <li>Arduino</li>
-  </ul>
-</section>
-<section>
-  <h2>Getting started: Hardware</h2>
-  <div style="height: 200px;">
+    <h4 class="fragment"><li>Je krijgt een uitleenkit met alle nodige materialen voor het labo</li></h4>
+    <h4 class="fragment"><li>Een puur hardware vak?</li></h4>
     <ul>
-      <li>Dev Kits</li>
-      <li>Barebones</li>
-    </ul>
-  </div>
-  <div>
-    <img src="img/gecko_board.jpg" style="float: left; width: 40%;" alt="">
-    <img src="img/standalone.png" style="float: right; width: 40%;" alt="">
-  </div>
-</section>
-<section>
-  <h2>Getting Started: Programmatie</h2>
-  <ul>
-    <li>Programmers</li>
-    <li>Bootloaders</li>
-  </ul>
-</section>
-<section>
-  <h2>Programmer</h2>
-  <ul style="float:left; width: 65%;">
-    <li>Extern toestel data schrijft op het geheugen van de microcontroller</li>
-    <li>Dit is omslachtig</li>
-    <ul>
-      <li>Extra hardware</li>
-      <li>Compatibiliteit</li>
-    </ul>
-    <li>Wordt nog gebruikt voor productie</li>
-    <li>Voor ontwikkeling: Bootloader</li>
-  </ul>
-  <img class="plain" src="img/sam-ice.png" style="float: right; width: 30%; background: none;" alt="">
-</section>
-<section>
-  <h2>Bootloader</h2>
-  <ul>
-    <li>Hetzelfde concept als de bootloader van een computer</li>
-    <ul>
-      <li>Vertelt CPU waar het operating systeem staat</li>
-      <li>Ook mogelijk om het "OS" te overschrijven</li>
-    </ul>
-    <li>Werking Arduino Uno</li>
-    <ul>
-      <li>Data wordt verstuurt vanuit PC</li>
-      <li>ATmega8u2 zet data om van USB naar UART</li>
-      <li>ATmega8u2 reset ATmega328p
-        <li>ATmega8u2 stuurt data door naar ATmega328p</li>
-        <li>ATmega328p detecteert data op de UART binnen een tijds interval na reset</li>
-        <li>Bootloader op ATmega kopieert data naar het flash geheugen</li>
-        <li>Tijdsinterval afgelopen, ATmega328p boot met bestaande code</li>
+      <h4 class="fragment"><li>Nee, een microcontroller heeft een specifieke functionaliteit die de nodige programmatie vereist</li></h4>
     </ul>
   </ul>
 </section>
-
 <section>
-  <h2>Getting Started: Programmeertaal</h2>
-  <p>C/C++</p>
-  <pre><code class="cpp">
-  static void txDelay (ostime_t reftime, u1_t secSpan) {
-      reftime += rndDelay(secSpan);
-      if( LMIC.globalDutyRate == 0  ||  (reftime - LMIC.globalDutyAvail) > 0 ) {
-          LMIC.globalDutyAvail = reftime;
-          LMIC.opmode |= OP_RNDTX;
-      }
-  }
-  </code></pre>
-</section>
-<section>
-  <h2>Getting Started: Arduino</h2>
+  <h2>Arduino .... Wat is dat? </h2>
   <ul>
     <li>Platform</li>
     <li>Hardware</li>
@@ -234,43 +50,47 @@ int main(void)
 </section>
 <section>
   <h2>Arduino: Platform</h2>
-  <h1>Arduino </br>≠ </br>Microcontroller</h1>
-</section>
-<section>
-  <h2>Arduino: Platform</h2>
   <ul>
-    <li>Fast electronics prototyping tool</li>
-    <li>Doelpubliek: Designers / Elektronica leken</li>
-    <li>Voorziet:</li>
+    <h4><li>Fast electronics prototyping tool</li></h4>
+    <h4><li>Doelpubliek: Designers / Elektronica leken</li></h4>
+    <h4><li>Voorziet:</li></h4>
     <ul>
-      <li>Hardware</li>
-      <li>Software</li>
-      <li>IDE</li>
-      <li>Documentatie</li>
+      <h4><li>Hardware</li></h4>
+      <h4><li>Software</li></h4>
+      <h4><li>IDE</li></h4>
+      <h4><li>Documentatie</li></h4>
     </ul>
-    <li>Veel resources beschikbaar</li>
+    <h4><li>Veel resources beschikbaar</li></h4>
   </ul>
+  <img src="img/arduino_logo.png" style="float: right; width: 40%;" alt="">
 </section>
 <section>
   <h2>Arduino platform</h2>
-  <ul>
-    <li>Inexpensive</li>
-    <li>Cross-Platform</li>
-    <li>Simple, clear programming environment</li>
-    <li>Open source and extensible software</li>
-    <li>Open source and extensible hardware</li>
-  </ul>
+    <ul>
+      <h4><li>Voordelen</li></h4>
+      <ul>
+        <h4><li>Inexpensive</li></h4>
+        <h4><li>Cross-Platform</li></h4>
+        <h4><li>Simple, clear programming environment</li></h4>
+        <h4><li>Open source and extensible software</li></h4>
+        <h4><li>Open source and extensible hardware</li></h4>
+      </ul>
+    </ul>
   <img src="img/arduino_logo.png" style="float: right; width: 40%;" alt="">
 </section>
 <section>
   <h2>Arduino: Hardware</h2>
   <ul>
-    <li>Arduino Boards</li>
-    <li>Boards zijn gebaseerd rond een microcontroller</li>
-    <li>Boards voorzien de nodige hardware om met de microcontroller te werken.</li>
-    <li>Boards zijn uitbreidbaar met shields</li>
-    <li>Verschillende boards met specifieke doelen.</li>
+    <h4><li>Arduino Boards</li></h4>
+    <h4><li>Boards zijn gebaseerd rond een microcontroller</li></h4>
+    <ul>
+      <h4><li>Remember: Arduino != Microcontroller</li></h4>
+    </ul>
+    <h4><li>Boards voorzien de nodige hardware om met de microcontroller te werken.</li></h4>
+    <h4><li>Boards zijn uitbreidbaar met shields</li></h4>
+    <h4><li>Verschillende boards met specifieke doelen.</li></h4>
   </ul>
+  <img src="img/arduino_logo.png" style="float: right; width: 40%;" alt="">
 </section>
 <section>
   <h2>Arduino: Boards</h2>
@@ -321,37 +141,289 @@ int main(void)
   </div>
 </section>
 <section>
-  <h2>ATmega328p</h2>
-  <ul style="float:left; width: 65%;">
-    <li>Lid van de AVR Microcontroller familie</li>
+  <h2>Arduino: Uno</h2>
+  <div style="float:left; "></div>
+  <ol start="8" style="width: 45%;">
+    <li>Digitale IO pinnen</li>
+    <li>Analoge IO pinnen</li>
+    <li>Voeding / ground / referentie spanningen</li>
+  </ol>
+  <div style="float:right; width: 45%;">
+    <img src="img/arduino_components.png" class="plain" style="background: none;" alt="">
+  </div>
+</section>
+<section>
+  <h2>Arduino Uno vs Arduino Nano</h2>
+  <div class="hcontainer">
+    <img class="plain" style="background: none; width: 500px;" src="img/arduino_uno_board_top.png" alt="">
+    <img class="plain" style="background: none; width: 500px;" src="img/arduino_nano_board.png" alt="">
+    <div class="vcontainer" style="display: block; width: 400px; text-align: left;" >
+      <h4 class="fragment">Wat zijn de verschillen</h4>
+      <ul>
+        <li class="fragment">Vormfactor</li>
+        <li class="fragment">Power opties</li>
+      </ul>
+      <h4 class="fragment">Wat zijn de gelijkenissen </h4>
+      <ul>
+        <li class="fragment">De microcontroller (ATmega328p)</li>
+        <li class="fragment">Pinout</li>
+      </ul>
+      <h4 class="fragment">Waarom</h4>
+      <ul>
+        <li class="fragment">Nano is makkelijk te gebruiken met een breadboard</li>
+      </ul>
+
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Waar kunnen een microcontroller voor gebruiken ?</h2>
+  <h1 class="fragment">Embedded Systemen</h1>
+  <div class="hcontainer">
+    <img class="fragment plain" style="background: none; height: 400px; "src="img/game_boy.png" alt="">
+    <img class="fragment plain" style="background: none; height: 400px; "src="img/hearing_aid.png" alt="">
+    <img class="fragment plain" style="background: none; height: 400px; "src="img/remote_control.png" alt="">
+    <img class="fragment plain" style="background: none; height: 400px; "src="img/smart_light_bulb.png" alt="">
+    <img class="fragment plain" style="background: none; height: 400px; "src="img/asset_tracker.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Systemen ....</h2>
+  <h3 class="fragment">Een microcontroller is een stukje programeerbare hardware</h3>
+  <h3 class="fragment">Op zijn eigen is de functionaliteit gelimiteerd dus zoeken we naar een input en out voor de microcontroller</h3>
+  <h3 class="fragment">We hebben dus extra componenten nodig....</h3>
+  <h3 class="fragment">We zoeken naar een "toetsenbord, muis en scherm" voor een microcontroller</h3>
+  <h3 class="fragment">We zoeken peripherals</h3>
+</section>
+<section>
+  <h2>Arduino Peripherals</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+    <h4>Wat zijn peripherals</h4>
     <ul>
-      <li>Ontworpen door Atmel</li>
-      <li>8bit (bus breedte)</li>
-      <li>Aangepaste harvard architectuur</li>
-      <li>Flash memory ipv EEPROM</li>
-      <li>Populair door makkelijk beschikbare tools en Arduino</li>
+      <h4 class="fragment"><li>Hardware elementen</li></h4>
+      <h4 class="fragment"><li>Koppelen extra functionaliteit aan Arduino</li></h4>
+      <h4 class="fragment"><li>Actuators en Sensors</li></h4>
+      <h4 class="fragment"><li>Nood aan randcompontenten</li></h4>
+      <h4 class="fragment"><li>Opbouwen van schakeling</li></h4>
+    </ul>
+    </div>
+    <div class="vcontainer">
+      <h4 class="fragment">Voorbeelden</h4>
+      <ul>
+        <div class="hcontainer fragment">
+          <h4><li style="width: 500px;">7 segment 4 digit display</li></h4>
+          <img class="plain" style="height: 200px; background: none; "src="./img/7segment4d.png" alt="">
+        </div>
+        <div class="hcontainer fragment">
+          <h4><li style="width: 500px;">Pushbutton</li></h4>
+          <img class="plain" style="height: 200px; background: none; "src="./img/pushbutton_large.png" alt="">
+        </div>
+        <div class="hcontainer fragment">
+          <h4><li style="width: 500px;">Ultrasone Afstandsensor</li></h4>
+          <img class="plain" style="height: 200px; background: none; "src="./img/hc-sr04.png" alt="">
+        </div>
+        <div class="hcontainer fragment">
+          <h4><li style="width: 500px;">LCD 16x2</li></h4>
+          <img class="plain" style="height: 200px; background: none; "src="./img/lcd16x2.png" alt="">
+        </div>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Arduino: Shields</h2>
+  <div class="hcontainer">
+    <ul>
+      <h4 class="fragment"><li>Addons voor de boards</li></h4>
+      <h4 class="fragment"><li>Extra functionaliteit</li></h4>
+      <h4 class="fragment"><li>Complexere schakeling van Arduino Peripherals en andere elektronische componenten</li></h4>
+      <ul>
+        <h4 class="fragment"><li>Motorsturing</li></h4>
+        <h4 class="fragment"><li>LCD</li></h4>
+        <h4 class="fragment"><li>Communicatie</li></h4>
+        <h4 class="fragment"><li><b>Protoboard</b></li></h4>
+        <h4 class="fragment"><li>...</li></h4>
+      </ul>
+      <h4 class="fragment"><li>Standaard vorm factor</li></h4>
+      <h4 class="fragment"><li>Ready To Use</li></h4>
+      <h4 class="fragment"><li>Veel resources beschikbaar voor een eigen ontwerp</li></h4>
+    </ul>
+    <div class="vcontainer">
+      <h4 class="fragment">Voorbeelden</h4>
+      <ul>
+        <div class="hcontainer fragment">
+          <h4><li style="width: 500px;">Joystick Shield</li></h4>
+          <img class="plain" style="height: 200px; background: none; "src="./img/joystick_shield.png" alt="">
+        </div>
+        <div class="hcontainer fragment">
+          <h4><li style="width: 500px;">Protoshield</li></h4>
+          <img class="plain" style="height: 200px; background: none; "src="./img/protoshield.png" alt="">
+        </div>
+        <div class="hcontainer fragment">
+          <h4><li style="width: 500px;">Shieldstack</li></h4>
+          <img class="plain" style="height: 200px; background: none; "src="./img/shield_stack.png" alt="">
+        </div>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Arduino Open Source Hardware</h2>
+  <ul>
+    <h4><li>Schematics zijn beschikbaar</li></h4>
+    <h4><li>Veel klonen beschikbaar</li></h4>
+    <h4><li>Goedkopere alternatieven </li></h4>
+    <h4><li>Rechtstreeks bestellen uit China</li></h4>
+  </ul>
+  <img src="img/seeeduino.jpg" style="float: right; width: 40%;" alt="">
+</section>
+<section data-background-image="img/arduino_uno_schematic.jpg" data-background-size="contain" data-background-color="#ffffff">
+</section>
+<section>
+  <h2>Wat gaan wij met een microcontroller doen?</h2>
+  <h1 class="fragment">Wat zit er in de Microcontroller Kit ?</h1>
+  <table class="fragment">
+     <tr><td>CD4066E Quad Switch<td>Speakertje</td><td>Arduino Nano</td><td>CNY17-3 - Optocoupler</td></tr>
+     <tr><td>23LC1024-I/P - SRAM</td><td>Rotary Encoder</td><td>LCD 16x2</td><td>ATtiny</td></tr>
+     <tr><td>330R</td><td>1k</td><td>4k7</td><td>10k</td></tr>
+     <tr><td>LED GEEL</td><td>LED ROOD</td><td>LED GROEN</td><td>Pushbutton</td></tr>
+     <tr><td>7 Segment 4 Digit</td><td>Breadboard</td><td>10k trimmer</td><td>Afstandsensor Ultrasoon</td></tr>
+     <tr><td>USB kabel</td><td>Breadboard kabels</td><td>Servo</td><td>BT module</td></tr>
+     <tr><td>100 nf</td><td>1 uf</td><td>10 uf</td><td>2N7000</td></tr>
+  </table>
+</section>
+<section>
+  <h2>Wat gaan wij met een microcontroller doen?</h2>
+  <h1>Mogelijke opdrachten</h1>
+  <ul>
+    <h4><li> Kennismaking met Kit, Oefeningen maken op gebruik van individuele componenten, Arduino as DUT </li></h4>
+    <h4><li> Opdrachten met verschillende componenten te gelijk / Interrupts Maken van chronometer met 7 segment </li></h4>
+    <h4><li> Werken met een ATtiny </li></h4>
+    <h4><li> Seriële communicatie met een ATtiny (i2c)</li></h4>
+    <h4><li> Mini Project: Maken van menu LCD met Rotary Encoder </li></h4>
+  </ul>
+</section>
+<section>
+  <h2>Arduino .... Wat is dat? </h2>
+  <ul>
+    <h4><li>Platform</li></h4>
+    <h4><li>Hardware</li></h4>
+    <h2><li>Software</li></h4>
+    <h4><li>Resources</li></h4>
+  </ul>
+</section>
+<section>
+  <h2>Arduino: Software</h2>
+  <ul>
+    <h4><li>De microcontroller op een Arduino bord word in C/C++ geprogrammeerd</li></h4>
+    <ul>
+      <h4><li>Arduino is geen programeertaal</li></h4>
+    </ul>
+    <h4><li>Beschikbaar stellen van libraries</li></h4>
+    <ul>
+      <h4><li>Libraries zijn geschreven in C/C++</li></h4>
+      <h4><li>Neemt abstractie van de hardware</li></h4>
+        <ul>
+          <h4><li>Code kan voor meerdere boards compileren</li></h4>
+          <h4><li>Werking van de microcontroller is verstopt</li></h4>
+        </ul>
+      </ul>
+    <h4><li>Gebaseerd op:</li></h4>
+    <ul>
+      <h4><li>Wiring</li></h4>
+      <h4><li>Processing</li></h4>
+      <h4><li>avr-libc</li></h4>
     </ul>
   </ul>
-  <img src="img/atmega328p-pu.png" class="plain" style="float: right; width: 30%; background: none;" alt="">
+</section>
+<section>
+  <div class="vcontainer">
+    <h3>Programmeren van een Arduino kan op 2 manieren</h3>
+    <div class=hcontainer>
+      <div class="fragment"style=" width: 700px;">
+        <h3>Blink met de Arduinio libraries</h3>
+        <pre><code style="height: 375px;" class="Arduinio">
+#include &ltArduino.h&gt
+
+void setup()
+{
+    pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
+}
+        </code></pre>
+      </div>
+      <div class="fragment" style="width: 700px">
+        <h3>blink zonder Arduino libraries</h3>
+        <pre><code style="height: 375px;"class="Arduino">
+#include &ltavr/io.&gt
+#include &ltutil/delay.h&gt
+
+int main(void)
+{
+    DDRB = 1 &lt&lt 5;
+    while (1)
+    {
+        _delay_ms(500);
+        PORTB ^= 1 &lt&lt 5;
+    }
+  return 0;
+}
+        </code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Dit was het eerste deel van Microcontrollers</h2>
+  <h1 class="fragment">Het vak is Microcontrollers niet Arduino</h1>
+  <h4 class="fragment">Arduino is een simpele manier om met een microcontroller prototypes te maken</h4>
+  <h4 class="fragment">Arduino's originele doelpubliek waren designers</h4>
+  <h2 class="fragment">Als studenten Elektronica - ICT willen we weten hoe een microcontroller van binnen werkt </h2>
+</section>
+<section>
+  <h2>Welke Microcontroller staat er op de Arduino Nano</h2>
+  <h1 class="fragment">ATMega328p</h1>
 </section>
 <section>
   <h2>ATmega328p</h2>
   <ul style="float:left; width: 65%;">
-    <li>8bit mcu</li>
-    <li>2 timers</li>
-    <li>6 PWM kanalen</li>
-    <li>8 kanaals 10bit adc </li>
-    <li>6 kanaals 8bit adc </li>
-    <li>UART</li>
-    <li>SPI</li>
-    <li>I²C</li>
-    <li>Watchdog</li>
-    <li>Comperator</li>
-    <li>23 programmeerbare lijnen</li>
+    <h4><li>Lid van de AVR Microcontroller familie</li></h4>
+    <ul>
+      <h4><li>Ontworpen door Atmel</li></h4>
+      <h4><li>8bit (bus breedte)</li></h4>
+      <h4><li>Aangepaste harvard architectuur</li></h4>
+      <h4><li>Flash memory ipv EEPROM</li></h4>
+      <h4><li>Populair door makkelijk beschikbare tools en Arduino</li></h4>
+    </ul>
   </ul>
   <img src="img/atmega328p-pu.png" class="plain" style="float: right; width: 30%; background: none;" alt="">
 </section>
 <section data-background-image="img/avr_block_diagram.png" data-background-size="contain" data-background-color="#ffffff">
+</section>
+<section>
+  <h2>ATmega328p</h2>
+  <ul style="float:left; width: 65%;">
+    <h4><li>8bit mcu</li></h4>
+    <h4><li>2 timers</li></h4>
+    <h4><li>6 PWM kanalen</li></h4>
+    <h4><li>8 kanaals 10bit adc </li></h4>
+    <h4><li>6 kanaals 8bit adc </li></h4>
+    <h4><li>UART</li></h4>
+    <h4><li>SPI</li></h4>
+    <h4><li>I²C</li></h4>
+    <h4><li>Watchdog</li></h4>
+    <h4><li>Comperator</li></h4>
+    <h4><li>23 programmeerbare lijnen</li></h4>
+  </ul>
+  <img src="img/atmega328p-pu.png" class="plain" style="float: right; width: 30%; background: none;" alt="">
 </section>
 <section>
   <h2>ATmega Datasheet</h2>
@@ -367,18 +439,269 @@ int main(void)
     <li><a href="https://www.sparkfun.com/tutorials/223">Tutorial: Datasheets lezen</a></li>
     <li>FYI: Datasheets ATmega328p - 444 blz.</li>
   </ul>
+  <p>
+    <h3 class="fragment">Tegen het eind van het semester moet jullie dit documenten begrijpen en gebruiken om microcontroller toepassing te maken</h3>
+  </p>
 </section>
 <section>
-  <h2>Arduino: Uno</h2>
-  <div style="float:left; "></div>
-  <ol start="8" style="width: 45%;">
-    <li>Digitale IO pinnen</li>
-    <li>Analoge IO pinnen</li>
-    <li>Voeding / ground / referentie spanningen</li>
-  </ol>
-  <div style="float:right; width: 45%;">
-    <img src="img/arduino_components.png" class="plain" style="background: none;" alt="">
+  <div class="vcontainer">
+    <h3>Waarom?</h3>
+    <div class=hcontainer>
+      <div class="fragment"style=" width: 700px;">
+        <h3>Blink met de Arduinio libraries</h3>
+        <pre><code style="height: 375px;" class="Arduinio">
+#include &ltArduino.h&gt
+
+void setup()
+{
+    pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
+}
+        </code></pre>
+        <p class="fragment">Compiled size: 1034 bytes (3.2%)</p>
+      </div>
+      <div class="fragment"style=" width: 700px;">
+        <h3>blink zonder Arduino library</h3>
+        <pre><code style="height: 375px;"class="Arduino">
+#include &ltavr/io.&gt
+#include &ltutil/delay.h&gt
+
+int main(void)
+{
+    DDRB = 1 &lt&lt 5;
+    while (1)
+    {
+        _delay_ms(500);
+        PORTB ^= 1 &lt&lt 5;
+    }
+  return 0;
+}
+        </code></pre>
+        <p class="fragment">Compiled size: 158 bytes (0.5%)</p>
+      </div>
+    </div>
   </div>
+</section>
+<section>
+  <h2>De hardware kunnen we ook verkleinen</h2>
+  <img src="img/barebone_arduino.png" alt="">
+</section>
+<section>
+  <h2>Oplossing Mogelijk Vaardigheidsexamen</h2>
+  <pre><code class="arduino">
+enum states  {IDLE = 'i', SET = 's', GET = 'g', TOGGLE = 't', COMPARE = 'c'};
+uint8_t set_value, last_adc_val;
+
+
+volatile uint8_t state = IDLE;
+uint8_t last_state = GET;
+
+
+void setup() {
+  Serial.begin(9600);
+  ADMUX |= (1 << REFS0) | (1 << MUX2) | (1 << MUX0);
+  ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0) | (1 << ADATE) | (1 << ADEN) | (1 << ADSC);
+
+  DDRD |= (1 << DDD3);
+  DDRB |= (1 << DDB1) | (1 << DDB2) | (1 << DDB3);
+
+  EICRA |= ((1 << ISC10) | (1 << ISC11))  ;
+  EIMSK |= (1 << INT1);
+
+  TCCR0A = 0;
+  TCCR0B = 0;
+  TCCR1A = 0;
+  TCCR1B = 0;
+
+  TCCR1A |= (1 << WGM10) | (1 << WGM00) | (1 << COM1A1) | (1 << COM1B1);
+  TCCR1B |= (1 << CS11) | (1 << CS10);
+
+  TCCR2A |= (1 << WGM20) | (1 << COM0A1);
+  TCCR2B |= (1 << CS22);
+}
+
+ISR(INT1_vect) {
+  state = COMPARE;
+}
+
+void set_values() {
+  Serial.print("Geef de  waarde in: ");
+  set_value = Serial.parseInt();
+  Serial.println(set_value);
+
+}
+
+void toggle() {
+  EIMSK ^= (1 << INT1);
+}
+
+void compare() {
+  int diff = set_value - ADC / 4;  
+  if (diff < 0) {
+    OCR2A = 0;
+    OCR1AL = abs(diff);
+  }
+  if (diff > 0) {
+    OCR1AL = 0;
+    OCR2A = abs(diff);
+  }
+}
+
+
+void loop() {
+  if (Serial.available()) state = Serial.read();
+  if (state != last_state) {
+    switch (state) {
+      case (IDLE):
+        Serial.println("Entered Idle State");
+        break;
+      case (SET):
+        set_values();
+        break;
+      case (GET):
+        Serial.println("Current ADC value: ");
+        Serial.println(ADC / 4);
+        break;
+      case (TOGGLE):
+        toggle();
+        break;
+      case (COMPARE):
+        compare();
+        break;
+    }
+    last_state = state;
+  }
+  if (last_state != TOGGLE) OCR1BL = ADC / 4;
+
+}
+  </code></pre>
+</section>
+<section>
+  <h2>Dit was de contextuele schetsing van het vak Microcontrollers</h2>
+  <h1>Nu de praktische zaken</h1>
+</section>
+<section>
+  <h2>Lesgevers</h2>
+  <div class="vcontainer">
+    <div class="hcontainer">
+      <div class="vcontainer" style="width: 700px;">
+        <h4>Geert Vanhulle</h4>
+        <ul>
+          <li>Labos in Module 1</li>
+          <li>Theorie in Module 2</li>
+          <li>geert.vanhulle@ap.be</li>
+        </ul>
+
+      </div>
+      <div class="vcontainer" style="width: 700px;">
+        <h4>Maarten Luyts</h4>
+        <ul>
+          <li>Labos in Module 2</li>
+          <li>Theorie in Module 1</li>
+          <li>maarten.luyts@ap.be</li>
+        </ul>
+      </div>
+    </div>
+    <img src="img/brodown.gif" alt="">
+    <h4>Heb je vraag? Stuur een email naar ons beide</h4>
+  </div>
+</section>
+<section>
+  <h2>Voorlopige Planning</h2>
+  <table class="tableizer-table">
+<thead><tr><th>Week</th><th>Theorie</th><th>&nbsp;</th><th>Labo</th><th>&nbsp;</th><th>&nbsp;</th></tr>
+ <tr><th>&nbsp;</th><th>Wie</th><th>Wat</th><th>Wie</th><th>Wat</th><th>Deadline studenten</th></tr></thead><tbody>
+ <tr><td>M1W1</td><td>MALU</td><td>Introductie</td><td>GVH</td><td>Kennismaking Kit, Beginner Tutorials, DUT</td><td>M1W3</td></tr>
+ <tr><td>M1W2</td><td>MALU</td><td>Algemene IO operaties + Interrupts</td><td>GVH</td><td>Basis combinatie opdracht  (gebruik verschillende componten) </td><td>M1W4</td></tr>
+ <tr><td>M1W3</td><td>MALU</td><td>Serïele communicatie</td><td>GVH</td><td>Werken met een ATtiny </td><td>M1W5</td></tr>
+ <tr><td>M1W4</td><td>MALU</td><td>C/C++ Fundementals + Libraries maken</td><td>GVH</td><td>Seriële communicatie met een ATtiny </td><td>M1W6</td></tr>
+ <tr><td>M1W5</td><td>MALU</td><td>Bit Operaties + Intro IO operaties (ADC)</td><td>GVH</td><td>Mini Project: Maken van menu LCD met Rotary Encoder (individueel)</td><td>M1EX1</td></tr>
+ <tr><td>M1W6</td><td>MALU</td><td>IO Operaties</td><td>GVH</td><td>Basis IO Operaties met registers #1</td><td>M1EX1</td></tr>
+ <tr><td>M1EX1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>Vaardigheidstoets + Tonen werking Mini Project</td><td>M1EX1</td></tr>
+</tbody></table>
+</section>
+<section>
+  <h2>Voorlopige Planning</h2>
+  <table class="tableizer-table">
+<thead><tr><th>Week</th><th>Theorie</th><th>&nbsp;</th><th>Labo</th><th>&nbsp;</th><th>&nbsp;</th></tr>
+ <tr><th>&nbsp;</th><th>Wie</th><th>Wat</th><th>Wie</th><th>Wat</th><th>Deadline studenten</th></tr></thead><tbody>
+ <tr><td>M2W1</td><td>GVH</td><td>Interrupts</td><td>MALU</td><td>Basis IO Operaties met registers #2</td><td>M2W3</td></tr>
+ <tr><td>M2W2</td><td>GVH</td><td>Interrupts</td><td>MALU</td><td>Interrupts #1</td><td>M2W4</td></tr>
+ <tr><td>M2W3</td><td>GVH</td><td>TImers</td><td>MALU</td><td>Interrupts #2</td><td>M2W5</td></tr>
+ <tr><td>M2W4</td><td>GVH</td><td>TImers</td><td>MALU</td><td>TImers #1</td><td>M2W6</td></tr>
+ <tr><td>M2W5</td><td>GVH</td><td>Seriële communicatie</td><td>MALU</td><td>TImers #2</td><td>M2W7</td></tr>
+ <tr><td>M2W6</td><td>GVH</td><td>Power Managment</td><td>MALU</td><td>Seriële communicatie</td><td>M2W7</td></tr>
+ <tr><td>M2W7</td><td>GVH</td><td>Reserveles</td><td>MALU</td><td>Mini Test</td><td>&nbsp;</td></tr>
+ <tr><td>M2EX1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td>M2EX2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+ <tr><td>M2EX3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td></td></tr>
+</tbody></table>
+</section>
+<section>
+  H<h2>Evaluatievorm</h2>
+  <table>
+    <tr>
+      <td>Kennistoets</td>
+      <td>30%</td>
+      <td>Digitaal examen</td>
+    </tr>
+    <tr>
+      <td>Vaardigheidsexamen</td>
+      <td>50%</td>
+      <td>Mondeling praktisch examen</td>
+    </tr>
+    <tr>
+      <td>Vaardigheidstoets</td>
+      <td>20%</td>
+      <td>2 Testmomenten doorheen het jaar.</td>
+    </tr>
+  </table>
+</section>
+<section>
+  <h2>Regels</h2>
+  <ul>
+    <li>Optijd komen</li>
+    <ul>
+      <li>Bent u te laat, dan moet je inkom betalen</li>
+      <li>Betalen doe je door het opkuisen van het labo</li>
+      <li>Lees: the job  of your life</li>
+    </ul>
+    <li>Geen eten, alleen drinken in een sluitbare container</li>
+    <li>U komt niet in de kasten in het labolokaal</li>
+    <li>Werk in rust</li>
+    <li>Vaste werkplek in het labo</li>
+    <li>Heb respect voor het materiaal</li>
+    <li>Ruim op na het labo</li>
+  </ul>
+</section>
+<section>
+  <h2>Getting started met Arduino</h2>
+  <ul>
+    <h4><li>Hoe maak ik een schakeling?</li></h4>
+    <h4><li>Programmeeromgeving ?</li></h4>
+    <h4><li>Hoe krijgen we onze code op de Arduino ?</li></h4>
+    <h4><li>Basisoefening ?</li></h4>
+  </ul>
+</section>
+<section>
+  <h4>Hoe maak ik een schakeling ?</h2>
+  <h2 class="fragment">Eerst moeten we weten wat de pinnen van een Arduino doen</h1>
+  <h4 class="fragment">We kunnen dit opzoeken in de datasheet</h4>
+  <h4 class="fragment">Hierin staan de pinnen van de ATMega328P niet die van de Arduino. Er is wel een mapping</h4>
+  <h4 class="fragment">We vinden dit terug in een pinout diagramma</h4>
+</section>
+<section data-background-image="img/arduino_nano_pinout.png" data-background-size="contain" data-background-color="#ffffff">
+</section>
+<section data-background-image="img/atmega328p-au-pinout.png" data-background-size="contain" data-background-color="#ffffff">
+</section>
+<section data-background-image="img/atmega328p-pu-pinout.png" data-background-size="contain" data-background-color="#ffffff">
 </section>
 <section>
   <h2>IO Pinnen</h2>
@@ -410,109 +733,20 @@ int main(void)
   <h2>Analoge IO Pinnen</h2>
   <ul>
     <li>Kan spanningen uitlezen</li>
-    <li>Zet deze spanning om naar een discrete waarde</li>
-    <li>Mapping van 0v tot 5v naar een waarde van 0 tot 1013
+    <ul>
+      <li>Zet deze spanning om naar een discrete waarde</li>
+      <li>Mapping van 0v tot 5v naar een waarde van 0 tot 1023
+    </ul>
     <li>Kan een "spanning schrijven"</li>
+    <ul>
+      <li>Een digitale waarde omzetten in fysisch signaal</li>
+      <li>Mapping van de waarde 0 tot 255 naar een signaal van 0v tot 5v</li>
+    </ul>
     <li>Kan dubbel gebruikt worden als een digitale pin</li>
   </ul>
 </section>
-<section data-background-image="img/arduino_pinout.jpg" data-background-size="contain" data-background-color="#ffffff">
-</section>
 <section>
-  <h2>Wat gebruiken wij</h2>
-  <div class="hcontainer">
-    <div class="vcontainer">
-      <h5>Arduino Nano</h5>
-      <ul>
-        <li>Compacte versie van de Uno</li>
-        <li>Gebaseerd op de ATmega328p</li>
-        <li>Waarom? Breadboard friendly</li>
-      </ul>
-    </div>
-   <img style="width: 40%;" src="./img/arduino_nano.jpg" alt="">
-  </div>
-</section>
-<section>
-  <h2>Arduino Opensource Hardware</h2>
-  <ul>
-    <li>Schematics zijn beschikbaar</li>
-    <li>Veel klonen beschikbaar</li>
-    <li>Goedkopere alternatieven </li>
-    <li>Aliexpress</li>
-  </ul>
-  <img src="img/seeeduino.jpg" style="float: right; width: 40%;" alt="">
-</section>
-<section data-background-image="img/arduino_uno_schematic.jpg" data-background-size="contain" data-background-color="#ffffff">
-</section>
-<section>
-  <h2>Arduino: Shields</h2>
-  <ul>
-    <li>Addons voor de boards</li>
-    <li>Extra functionaliteit</li>
-    <ul>
-      <li>Motorsturing</li>
-      <li>LCD</li>
-      <li>Communicatie</li>
-      <li><b>Protoboard</b></li>
-      <li>...</li>
-    </ul>
-    <li>Standaard vorm factor</li>
-    <li>Ready To Use</li>
-    <li>Veel resources beschikbaar voor een eigen ontwerp</li>
-  </ul>
-</section>
-<section>
-  <h2>Arduino: Shields</h2>
-  <img class="plain" src="img/joystick_shield.png" style="float: left; width: 33%; background: none;" alt="">
-  <img class="plain" src="img/protoshield.png" style="float: left; width: 33%; background: none;" alt="">
-  <img class="plain" src="img/shield_stack.png" style="float: left; width: 33%; background: none;" alt="">
-</section>
-<section>
-  <h2>Arduino Peripherals</h2>
-  <div class="hcontainer">
-    <div class="vcontainer">
-    <h4>Wat zijn peripherals</h4>
-    <ul>
-      <li>Hardware elementen</li>
-      <li>Koppelen extra functionaliteit aan Arduino</li>
-      <li>Actuators en Sensors</li>
-      <li>Nood aan randcompontenten</li>
-      <li>Opbouwen van schakeling</li>
-    </ul>
-    <h4>Voorbeelden</h4>
-    <ul>
-      <li>7 segment 4 digit display</li>
-      <li>IR Afstandsensor</li>
-      <li>Ultrasone afstandsensor</li>
-    </ul>
-    </div>
-    <div class="vcontainer">
-      <img class="plain" style="height: 200px; background: none; "src="./img/7segment4d.png" alt="">
-      <img class="plain" style="height: 200px; background: none; "src="./img/hrc-sr04.jpg" alt="">
-      <img class="plain" style="height: 200px; background: none; "src="./img/ir_distance_sensor.jpg" alt="">
-    </div>
-  </div>
-</section>
-<section>
-  <h2>Arduino: Software</h2>
-  <ul>
-    <li>Beschikbaar stellen van libraries</li>
-    <li>Gebaseerd op:</li>
-    <ul>
-      <li>Wiring</li>
-      <li>Processing</li>
-      <li>avr-libc</li>
-    </ul>
-    <li>C++ Gebaseerde taal</li>
-    <li>Neemt abstractie van de hardware</li>
-    <ul>
-      <li>Code kan voor meerdere boards compileren</li>
-      <li>Werking van de microcontroller is verstopt</li>
-    </ul>
-  </ul>
-</section>
-<section>
-  <h2>Arduino: Getting Started</h2>
+  <h2>Arduino Programmeer omgeving</h2>
   <ul>
     <li>Arduino IDE installeren</li>
     <li>Example openen</li>
@@ -630,6 +864,48 @@ int main(void)
     <li>Board selecteren</br> <i><b>Tools > Board > Arduino Nano / Duemilanove / Uno</i></b></li>
   </ul>
 </section>
+<section>
+  <h2>Getting Started: Programmatie</h2>
+  <ul>
+    <li>Programmers</li>
+    <li>Bootloaders</li>
+  </ul>
+</section>
+<section>
+  <h2>Programmer</h2>
+  <ul style="float:left; width: 65%;">
+    <li>Extern toestel data schrijft op het geheugen van de microcontroller</li>
+    <li>Dit is omslachtig</li>
+    <ul>
+      <li>Extra hardware</li>
+      <li>Compatibiliteit</li>
+    </ul>
+    <li>Wordt nog gebruikt voor productie</li>
+    <li>Voor ontwikkeling: Bootloader</li>
+  </ul>
+  <img class="plain" src="img/sam-ice.png" style="float: right; width: 30%; background: none;" alt="">
+</section>
+<section>
+  <h2>Bootloader</h2>
+  <ul>
+    <li>Hetzelfde concept als de bootloader van een computer</li>
+    <ul>
+      <li>Vertelt CPU waar het operating systeem staat</li>
+      <li>Ook mogelijk om het "OS" te overschrijven</li>
+    </ul>
+    <li>Werking Arduino Uno</li>
+    <ul>
+      <li>Data wordt verstuurt vanuit PC</li>
+      <li>ATmega8u2 zet data om van USB naar UART</li>
+      <li>ATmega8u2 reset ATmega328p
+        <li>ATmega8u2 stuurt data door naar ATmega328p</li>
+        <li>ATmega328p detecteert data op de UART binnen een tijds interval na reset</li>
+        <li>Bootloader op ATmega kopieert data naar het flash geheugen</li>
+        <li>Tijdsinterval afgelopen, ATmega328p boot met bestaande code</li>
+    </ul>
+  </ul>
+</section>
+
 <section>
 <h2>Basis IO Operaties</h2>
 <ul>
