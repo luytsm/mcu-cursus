@@ -704,6 +704,14 @@ void loop() {
 <section data-background-image="img/atmega328p-pu-pinout.png" data-background-size="contain" data-background-color="#ffffff">
 </section>
 <section>
+  <h1>Pinout Takeaway</h1>
+  <h2>De Arduino pinnen zijn gemapt op de pinnen van de microcontroller</h2>
+  <h2>Specifieke functionaliteit van de microcontroller zijn gemapt op specifieke pinnen </h2>
+  <h4 class="fragment">D0 en D1 zijn RX en TX Pinnen --> Communicatie met PC</h4>
+  <h4 class="fragment">D2 en D3 zijn interrupt pinnen --> Zie later</h4>
+  <h4 class="fragment">D3,D5,D6,D9,D10,D11 zijn PWM pinnen --> AnalogWrite</h4>
+</section>
+<section>
   <h2>IO Pinnen</h2>
   <ul>
     <li>Literatuur: General Purpose In/Out (GPIO)</li>
@@ -866,42 +874,50 @@ void loop() {
 </section>
 <section>
   <h2>Getting Started: Programmatie</h2>
-  <ul>
-    <li>Programmers</li>
-    <li>Bootloaders</li>
-  </ul>
+  <div class="vcontainer">
+    <img class="plain fragment" src="img/simple_compile.png" alt="">
+    <img class="plain fragment" src="img/code_to_arduino_how.png" alt="">
+    <img class="plain fragment" src="img/code_to_arduino_programmer.png" alt="">
+    <img class="plain fragment" src="img/code_to_arduino_bootloader.png" alt="">
+  </div>
 </section>
 <section>
   <h2>Programmer</h2>
-  <ul style="float:left; width: 65%;">
-    <li>Extern toestel data schrijft op het geheugen van de microcontroller</li>
-    <li>Dit is omslachtig</li>
-    <ul>
-      <li>Extra hardware</li>
-      <li>Compatibiliteit</li>
+  <div class="hcontainer">
+    <ul style="float:left; width: 65%;">
+      <h4 class="fragment"><li>Extern toestel data schrijft op het geheugen van de microcontroller</li></h4>
+      <h4 class="fragment"><li>Dit is omslachtig</li></h4>
+      <ul>
+        <h4 class="fragment"><li>Extra hardware</li></h4>
+        <h4 class="fragment"><li>Compatibiliteit</li></h4>
+      </ul>
+      <h4 class="fragment"><li>Wordt nog gebruikt voor productie</li></h4>
+      <h4 class="fragment"><li>Voor ontwikkeling: Bootloader</li></h4>
+      <h4 class="fragment"><li>Arduino as ISP</li></h4>
     </ul>
-    <li>Wordt nog gebruikt voor productie</li>
-    <li>Voor ontwikkeling: Bootloader</li>
-  </ul>
-  <img class="plain" src="img/sam-ice.png" style="float: right; width: 30%; background: none;" alt="">
+    <div class="vcontainer">
+      <img class="plain fragment" src="img/sam-ice.png" style=" width: 600px; background: none;" alt="">
+      <img class="plain fragment" src="img/arduino_nano_isp_attiny_bb.png" style=" width: 600px; background: none;" alt="">
+    </div>
+  </div>
 </section>
 <section>
   <h2>Bootloader</h2>
-  <ul>
+  <ul class="fragment">
     <li>Hetzelfde concept als de bootloader van een computer</li>
     <ul>
       <li>Vertelt CPU waar het operating systeem staat</li>
       <li>Ook mogelijk om het "OS" te overschrijven</li>
     </ul>
-    <li>Werking Arduino Uno</li>
+    <li class="fragment">Werking Arduino Nano</li>
     <ul>
-      <li>Data wordt verstuurt vanuit PC</li>
-      <li>ATmega8u2 zet data om van USB naar UART</li>
-      <li>ATmega8u2 reset ATmega328p
-        <li>ATmega8u2 stuurt data door naar ATmega328p</li>
-        <li>ATmega328p detecteert data op de UART binnen een tijds interval na reset</li>
-        <li>Bootloader op ATmega kopieert data naar het flash geheugen</li>
-        <li>Tijdsinterval afgelopen, ATmega328p boot met bestaande code</li>
+      <li class="fragment">Data wordt verstuurt vanuit PC</li>
+      <li class="fragment">ATmega8u2 zet data om van USB naar UART</li>
+      <li class="fragment">ATmega8u2 reset ATmega328p
+        <li class="fragment">ATmega8u2 stuurt data door naar ATmega328p</li>
+        <li class="fragment">ATmega328p detecteert data op de UART binnen een tijds interval na reset</li>
+        <li class="fragment">Bootloader op ATmega kopieert data naar het flash geheugen</li>
+        <li class="fragment">Tijdsinterval afgelopen, ATmega328p boot met bestaande code</li>
     </ul>
   </ul>
 </section>
@@ -965,6 +981,7 @@ void loop() {
         <li>Hoog (5V)</li>
         <li>Laag (0V)</li>
       </ul>
+      <li>Gebruik: Aansturen LED, Signaal geven aan IC(Motorsturing)</li>
       <li>Meer info: <a href="https://www.arduino.cc/en/Reference/DigitalWrite">klik hier</a></li>
     </ul>
 
@@ -992,6 +1009,7 @@ void loop() {
     <li>High (1)</li>
     <li>Low (0)</li>
   </ul>
+  <li>Gebruik: Uitlezen drukknop</li>
   <li>Meer info: <a href="https://www.arduino.cc/en/Reference/DigitalRead">klik hier</a></li>
 </ul>
 
@@ -1025,6 +1043,7 @@ void loop() {
         <li>min 0 - 0V</li>
       </ul>
       <li>PWM</li>
+      <li>Gebruik: Precies aansturen LED, Precies signaal geven aan IC(Motorsturing)</li>
       <li>Meer info: <a href="https://www.arduino.cc/en/Reference/DigitalWrite">klik hier</a></li>
     </ul>
   </div>
@@ -1044,20 +1063,22 @@ void loop() {
 }
   </code></pre>
 <ul class="blist">
-  <li>Uitlezen van een voltage signaal</li>
+  <li>Uitlezen van een variabel voltage signaal</li>
   <ul>
     <li>max 255 - 5V</li>
     <li>min 0 - 0V</li>
   </ul>
-  <li>PWM</li>
+  <li>Gebruik: Uitlezen van een potentiometer, Uitlezen van een NTC, Uitlezen van sensorsignaal</li>
 </ul>
 </div>
 </section>
 <section>
-  <h2>Nu kan je starten met de labos</h2>
-</section>
-<section>
-  <h2>Wat ga je allemaal kunnen?</h2>
+  <h2>Oefeningen</h2>
+  <ul>
+    <li>Aansturen van LED (met en zonder PWM)</li>
+    <li>Uitlezen van PWM Signaal en Potentiometer</li
+    <li>Uitlezen van een drukknop</li>
+  </ul>
 </section>
 <section>
   <h2>Projecten Smart Systems</h2>
