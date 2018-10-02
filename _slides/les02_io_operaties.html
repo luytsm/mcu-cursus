@@ -56,143 +56,6 @@ void loop() {
 </section>
 <section>
   <h2>PinMode</h2>
-<div class="hcontainer">
-  <pre style="width: 50%;"><code class="cpp">
-void setup() {
-pinMode(LED_BUILTIN, OUTPUT); 
-pinMode(POTPIN, INPUT);
-pinMode(BTNPIN, INPUT_PULLUP);
-
-
-void loop() {
-  //doSomething
-}
-  </code></pre>
-<ul>
-  <li>Een pin kan 3 states aannemen</li>
-  <li>OUTPUT: schrijven naar de pin</li>
-  <li>INPUT: lezen van de pin</li>
-  <li>INPUT_PULLUP: INPUT + voorgeschakelde weerstand</li>
-  <li>Dezelfde functie voor de analoge en digitale pinnen</li>
-  <li>Meer info: <a href="https://www.arduino.cc/en/Reference/PinMode">klik hier</a></li>
-</ul>
-
-</div>
-
-
-</section>
-<section>
-<h2>DigitalWrite</h2>
-  <div class="hcontainer">
-  <pre style="width: 50%;"><code class="cpp">
-void setup() {
-pinMode(LED_BUILTIN, OUTPUT);
-
-
-void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
-}
-    </code></pre>
-
-    <ul>
-      <li>Schrijven van constante waarde</li>
-      <ul>
-        <li>Hoog (5V)</li>
-        <li>Laag (0V)</li>
-      </ul>
-      <li>Meer info: <a href="https://www.arduino.cc/en/Reference/DigitalWrite">klik hier</a></li>
-    </ul>
-
-  </div>
-</section>
-<section>
-  <h2>DigitalRead</h2>
-<div class="hcontainer">
-  <pre style="width: 50%;"><code class="cpp">
-void setup() {
-  pinMode(pushButton, INPUT);
-  pinMode(LED_BUILTIN, OUTPUT);
-}
-
-void loop() {
-  // read the input pin:
-  int buttonState = digitalRead(pushButton);
-  digitalWrite(LED_BUILTIN, buttonState);
-}
-  </code></pre>
-<ul class="blist">
-  <li>Uitlezen van een pin</li>
-  <li>Specifieke treshold (TLL niveaus) voor de omzetting naar een constante waarde</li>
-  <ul>
-    <li>High (1)</li>
-    <li>Low (0)</li>
-  </ul>
-  <li>Meer info: <a href="https://www.arduino.cc/en/Reference/DigitalRead">klik hier</a></li>
-</ul>
-
-</div>
-</section>
-<section>
-<h2>AnalogWrite</h2>
-  <div class="hcontainer">
-  <pre style="width: 50%;"><code class="cpp">
-void setup() {
-  pinMode(ledPin, OUTPUT);
-}
-
-void loop() {
-  for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
-    analogWrite(ledPin, fadeValue);
-    delay(30);
-  }
-
-  for (int fadeValue = 255 ; fadeValue >= 0; fadeValue -= 5) {
-    analogWrite(ledPin, fadeValue);
-    delay(30);
-  }
-}
-    </code></pre>
-
-    <ul>
-      <li>Schrijven van een voltage naar een pin</li>
-      <ul>
-        <li>max 255 - 5V</li>
-        <li>min 0 - 0V</li>
-      </ul>
-      <li>PWM</li>
-      <li>Meer info: <a href="https://www.arduino.cc/en/Reference/DigitalWrite">klik hier</a></li>
-    </ul>
-  </div>
-</section>
-<section>
-  <h2>AnalogRead</h2>
-<div class="hcontainer">
-  <pre style="width: 50%;"><code class="cpp">
-void setup() {
-  Serial.begin(9600);
-}
-
-void loop() {
-  int sensorValue = analogRead(A0);
-  Serial.println(sensorValue);
-  delay(1); 
-}
-  </code></pre>
-<ul class="blist">
-  <li>Uitlezen van een voltage signaal</li>
-  <ul>
-    <li>max 255 - 5V</li>
-    <li>min 0 - 0V</li>
-  </ul>
-  <li>PWM</li>
-</ul>
-</div>
-</section>
-<section>
-  <h2>PinMode</h2>
   <div class="hcontainer">
   <pre style="width: 35%;"><code class="arduino">
 void setup() {
@@ -206,9 +69,11 @@ void loop() {
     </code></pre>
     <ul class="blist">
       <h5><li>Een pin kan 3 states aannemen</li></h5>
-      <h5><li>OUTPUT: schrijven naar de pin</li></h5>
-      <h5><li>INPUT: lezen van de pin</li></h5>
-      <h5><li>INPUT_PULLUP: INPUT + voorgeschakelde weerstand</li></h5>
+      <ul>
+        <h5><li>OUTPUT: schrijven naar de pin</li></h5>
+        <h5><li>INPUT: lezen van de pin</li></h5>
+        <h5><li>INPUT_PULLUP: INPUT + voorgeschakelde weerstand</li></h5>
+      </ul>
       <h5><li>Dezelfde functie voor de analoge en digitale pinnen</li></h5>
       <h5><li>Meer info: <a href="https://www.arduino.cc/en/Reference/PinMode">klik hier</a></li></h5>
     </ul>
@@ -233,8 +98,8 @@ void loop() {
     <ul>
       <h5><li>Schrijven van constante waarde</li></h5>
       <ul>
-        <li>Hoog (5V)</li>
-        <li>Laag (0V)</li>
+        <h4><li>Hoog (5V)</li></h4>
+        <h4><li>Laag (0V)</li></h4>
       </ul>
     </ul>
 
@@ -276,8 +141,8 @@ void loop() {
       <h5><li>Uitlezen van een pin</li></h5>
       <h5><li>Specifieke treshold (TLL niveaus) voor de omzetting naar een constante waarde</li></h5>
       <ul>
-        <li>High (1)</li>
-        <li>Low (0)</li>
+        <h4><li>High (1)</li></h4>
+        <h4><li>Low (0)</li></h4>
       </ul>
     </ul>
   </div>
@@ -369,7 +234,7 @@ void loop() {
     </div>
     <div class="vcontainer">
       <h3>Uitlezen van IR Sensor</h3>
-      <img src="img/mosfet_as_switch.png" alt="">
+      <img src="img/arduino_ir_distance_sensor.png" alt="">
     </div>
   </div>
 </section>
@@ -440,7 +305,7 @@ void loop() {
 </section>
 <section>
   <h2>Hoe kom dit?</h2>
-  <h4>Generiek Diagram GPIO</h4>
+  <h4>Generiek Diagram GPIO (Niet simpel een draadje aansluiten)</h4>
   <img src="img/pin_atmega328p.png" alt="">
 </section>
 
