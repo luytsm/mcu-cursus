@@ -22,14 +22,14 @@ reveal:
     <h4><li>Arduino is een USB Device op onze computer</li></h4>
     <h4><li>ATmega328p heeft geen USB Functionaliteit</li></h4>
     <ul>
-      <li>ATmega328p gebruikt UART om te communiceren met een PC</li>
+      <h4><li>ATmega328p gebruikt UART om te communiceren met een PC</li></h4>
     </ul>
     <h4><li class="fragment">Er is een extra chip aanwezig</li></h4>
     <h4><li class="fragment">Hoe communiceren</li></h4>
     <ul>
-      <li class=fragment>Serial object</li>
-      <li class=fragment>Serial.print en println</li>
-      <li class=fragment>Seriële Monitor</li>
+      <h4><li class=fragment>Serial object</li></h4>
+      <h4><li class=fragment>Serial.print en println</li></h4>
+      <h4><li class=fragment>Seriële Monitor</li></h4>
     </ul>
   </ul>
 </section>
@@ -39,12 +39,12 @@ reveal:
     <h4><li>Universal Asynchronous Receiver Transmitter</li></h4>
     <h4><li>Asynchrone Interface</li></h4>
     <ul>
-      <li>Geen gemeenschappelijke klok</li>
-      <li>Vereist wel een correcte instelling</li>
+      <h4><li>Geen gemeenschappelijke klok</li></h4>
+      <h4><li>Vereist wel een correcte instelling</li></h4>
     </ul>
     <h4><li>Vereist 2 draden</li></h4>
     <ul>
-      <li>Full Duplex mogelijk</li>
+      <h4><li>Full Duplex mogelijk</li></h4>
     </ul>
     <h4><li>Werkt op TTL levels</li></h4>
     <h4><li>Simpel</li></h4>
@@ -57,11 +57,11 @@ reveal:
   <h2>UART Frame</h2>
   <div style="float: left; width: 35%">
     <ul>
-      <li>IDLE - Lijn in rust</li>
-      <li>St - Start bit</li>
-      <li>(n) - Data bits</li>
-      <li>P - Parity Bit</li>
-      <li>Sp - Stop Bits</li>
+      <h4><li>IDLE - Lijn in rust</li></h4>
+      <h4><li>St - Start bit</li></h4>
+      <h4><li>(n) - Data bits</li></h4>
+      <h4><li>P - Parity Bit</li></h4>
+      <h4><li>Sp - Stop Bits</li></h4>
     </ul>
   </div>
   <div style="float: left; width: 65%">
@@ -74,14 +74,14 @@ reveal:
     <ul>
       <h4><li>IDLE</li></h4>
       <ul>
-        <li>Lijn in rust</li>
-        <li>Altijd een logisch hoog signaal</li>
+        <h4><li>Lijn in rust</li></h4>
+        <h4><li>Altijd een logisch hoog signaal</li></h4>
       </ul>
       <h4><li>St</li></h4>
       <ul>
-        <li>Start Bits</li>
-        <li>Signaleert de start van een frame</li>
-        <li>Altijd een logisch laag signaal</li>
+        <h4><li>Start Bits</li></h4>
+        <h4><li>Signaleert de start van een frame</li></h4>
+        <h4><li>Altijd een logisch laag signaal</li></h4>
       </ul>
     </ul>
   </div>
@@ -95,18 +95,18 @@ reveal:
     <ul>
       <h4><li>(n)</li></h4>
       <ul>
-        <li>Aantal data bits</li>
-        <li>Min 5 - Max 9</li>
-        <li>Meestal 8</li>
+        <h4><li>Aantal data bits</li></h4>
+        <h4><li>Min 5 - Max 9</li></h4>
+        <h4><li>Meestal 8</li></h4>
       </ul>
       <h4><li>P</li></h4>
       <ul>
-        <li>Parity bits</li>
-        <li>Error controle</li>
+        <h4><li>Parity bits</li></h4>
+        <h4><li>Error controle</li></h4>
         <ul>
-          <li>≠ Error correctie</li>
+          <h4><li>≠ Error correctie</li></h4>
         </ul>
-        <li>Meestal niet gebruikt</li>
+        <h4><li>Meestal niet gebruikt</li></h4>
       </ul>
     </ul>
   </div>
@@ -121,14 +121,14 @@ reveal:
     <ul>
       <h4><li>Mode</li></h4>
       <ul>
-        <li>Odd</li>
+        <h4><li>Odd</li></h4>
         <ul>
           <small>
             <li>`P_(even) = d_(n - 1) \oplus ... \oplus d_(2) \oplus d_(1) \oplus d_(0) \oplus 0`</li>
             <li>`P_(even) = \sum_{i=0}^n [i = 1] % 2`</li>
           </small>
         </ul>
-        <li>Even</li>
+        <h4><li>Even</li></h4>
         <ul>
           <small>
             <li>`P_(odd) = d_(n - 1) \oplus ... \oplus d_(2) \oplus d_(1) \oplus d_(0) \oplus 0`</li>
@@ -180,27 +180,27 @@ reveal:
     <ul>
       <li>St</li>
       <ul>
-        <li>Stop Bits</li>
-        <li>Altijd een logisch hoog signaal</li>
-        <li>Min: 1 - Max: 2</li>
+        <h4><li>Stop Bits</li></h4>
+        <h4><li>Altijd een logisch hoog signaal</li></h4>
+        <h4><li>Min: 1 - Max: 2</li></h4>
         <ul>
-          <li>Meestal 1</li>
-          <li>2 Stop bits is een artifact</li>
+          <h4><li>Meestal 1</li></h4>
+          <h4><li>2 Stop bits is een artifact</li></h4>
         </ul>
       </ul>
-      <li>St/IDLE</li>
+      <h4><li>St/IDLE</li></h4>
       <ul>
-        <li>Volgend frame of stoppen met verzenden</li>
+        <h4><li>Volgend frame of stoppen met verzenden</li></h4>
       </ul>
     </ul>
   </div>
   <div style="float: left; width: 65%">
-    f<img src="img/uart_frame.png" style="height: 150px; vertical-aligment: center;"alt="">
+    <img src="img/uart_frame.png" style="height: 150px; vertical-aligment: center;"alt="">
   </div>
 </section>
 <section>
   <h2>UART Configuratie</h2>
-  <p>Uit opbouw van een UART Frame leiden we volgende configuratie mogelijkheden af: </p>
+  <h4><p>Uit opbouw van een UART Frame leiden we volgende configuratie mogelijkheden af: </p></h4>
   <ul>
     <li class="fragment">Aantal data bits</li>
     <li class="fragment">Parity bit</li>
@@ -212,30 +212,30 @@ reveal:
   <h2>Baud Rate</h2>
   <div style="float: left; width: 60%;">
     <ul>
-      <li>Modulatie snelheid</li>
+      <h4><li>Modulatie snelheid</li></h4>
       <ul>
-        <li>Aantal symbool veranderingen per seconde</li>
-        <li>In digitale systemen = bits per second (bps)</li>
+        <h4><li>Aantal symbool veranderingen per seconde</li></h4>
+        <h4><li>In digitale systemen = bits per second (bps)</li></h4>
       </ul>
-      <li>Keuze afhankelijk van kloksnelheid </li>
+      <h4><li>Keuze afhankelijk van kloksnelheid </li></h4>
       <ul>
-        <li>Voor meer info zie pagina 199 datasheet ATmega328p</li>
+        <h4><li>Voor meer info zie pagina 199 datasheet ATmega328p</li></h4>
       </ul>
     </ul>
   </div>
   <div class="fragment" style="float: left; width: 40%;">
-    <p>Vaak voorkomende waarden</p>
+    <h4><p>Vaak voorkomende waarden</p></h4>
     <ul>
-      <li>9600</li>
-      <li>19200</li>
-      <li>57600</li>
-      <li>115200</li>
+      <h4><li>9600</li></h4>
+      <h4><li>19200</li></h4>
+      <h4><li>57600</li></h4>
+      <h4><li>115200</li></h4>
     </ul>
   </div>
 </section>
 <section>
   <h2>UART Configuratie</h2>
-  <p>Uit opbouw van een UART Frame leiden we volgende configuratie mogelijkheden af: </p>
+  <h4><p>Uit opbouw van een UART Frame leiden we volgende configuratie mogelijkheden af: </p></h4>
   <ul>
     <h4><li>Aantal data bits</li></h4>
     <h4><li>Parity bit</li></h4>
@@ -263,31 +263,31 @@ reveal:
 <section>
   <h2>UART Synchronisatie</h2>
   <ul>
-    <li>Asynchroon</li>
+    <h4><li>Asynchroon</li></h4>
     <ul>
-      <li>Geen klok</li>
+      <h4><li>Geen klok</li></h4>
     </ul>
-    <li>Afhankelijk van de correcte instellingen</li>
-    <li>Reciever moet weten wanneer te stoppen met sampelen</li>
+    <h4><li>Afhankelijk van de correcte instellingen</li></h4>
+    <h4><li>Reciever moet weten wanneer te stoppen met sampelen</li></h4>
     <ul>
-      <li>d.m.v. Stop Bit</li>
+      <h4><li>d.m.v. Stop Bit</li></h4>
     </ul>
-    <li>Reciever moeten weten wanneer te sampelen</li>
+    <h4><li>Reciever moeten weten wanneer te sampelen</li></h4>
     <ul>
-      <li>d.m.v. Start Bit</li>
+      <h4><li>d.m.v. Start Bit</li></h4>
     </ul>
-    <li>Er wordt meestal gesampeld op 16x de baud rate</li>
+    <h4><li>Er wordt meestal gesampeld op 16x de baud rate</li></h4>
   </ul>
 </section>
 <section>
   <h2>UART Synchronisatie</h2>
   <div style="float: left; width: 40%; text-align:left;">
-    <p>Start Synchronisatie</p>
+    <h4><p>Start Synchronisatie</p></h4>
     <ul>
-      <li>Start synchronisatie door detectie start bit</li>
+      <h4><li>Start synchronisatie door detectie start bit</li></h4>
       <ul>
-        <li>Start op de failing edge van de start bit</li>
-        <li>Start bit moet gedurdende een halve periode laag blijven
+        <h4><li>Start op de failing edge van de start bit</li></h4>
+        <h4><li>Start bit moet gedurdende een halve periode laag blijven</h4>
       </ul>
     </ul>
   </div>
@@ -298,13 +298,13 @@ reveal:
 <section>
   <h2>UART Synchronisatie</h2>
   <div style="float: left; width: 40%; text-align:left;">
-    <p>Einde Synchronisatie</p>
+    <h4><p>Einde Synchronisatie</p></h4>
     <ul>
-      <li>Einde synchronisatie door detectie stop bit</li>
+      <h4><li>Einde synchronisatie door detectie stop bit</li></h4>
       <ul>
-        <li>Geweten door configuratie</li>
-        <li>Correcte start</li>
-        <li>Wordt gedetecteerd door frame error</li>
+        <h4><li>Geweten door configuratie</li></h4>
+        <h4><li>Correcte start</li></h4>
+        <h4><li>Wordt gedetecteerd door frame error</li></h4>
       </ul>
     </ul>
   </div>
@@ -317,16 +317,16 @@ reveal:
   <h2>RS - 232</h2>
   <div style="float: left; width: 60%; text-align:left;">
     <ul>
-      <li>Uitbreiding op UART</li>
+      <h4><li>Uitbreiding op UART</li></h4>
       <ul>
-        <li>Andere signaal niveaus</li>
+        <h4><li>Andere signaal niveaus</li></h4>
         <li>Flow Control</li>
         <ul>
-          <li>Buiten de scope van dit vak</li>
-          <li><em>Off</em> gebruiken</li>
+          <h4><li>Buiten de scope van dit vak</li></h4>
+          <h4><li><em>Off</em> gebruiken</li></h4>
         </ul>
       </ul>
-      <li>Ondanks oude standaard nog steeds terug te vinden</li>
+      <h4><li>Ondanks oude standaard nog steeds terug te vinden</li></h4>
     </ul>
   </div>
   <div style="float: left; width: 40%;">
@@ -349,17 +349,17 @@ reveal:
 <section>
   <h2>UART & Arduino</h2>
   <ul>
-    <li>USB To UART</li>
+    <h4><li>USB To UART</li></h4>
     <ul>
-      <li>Meerdere seriële poorten mogelijk</li>
+      <h4><li>Meerdere seriële poorten mogelijk</li></h4>
     </ul>
-    <li>Serial Monitor</li>
-    <li>Seriële Data</li>
+    <h4><li>Serial Monitor</li></h4>
+    <h4><li>Seriële Data</li></h4>
     <ul>
-      <li>Formaat</li>
-      <li>Line Endings</li>
+      <h4><li>Formaat</li></h4>
+      <h4><li>Line Endings</li></h4>
     </ul>
-    <li>Serial</li>
+    <h4><li>Serial</li></h4>
   </ul>
 </section>
 <section data-background-image="img/usb_to_uart.png" data-background-size="contain" data-background-color="white"></section>
@@ -381,18 +381,42 @@ reveal:
   </div>
 </section>
 <section>
+  <h2>Niet elke Arduino is hetzelfde</h2>
+  <div class="hcontainer">
+    <div class="vcontainer" style="display: block; text-align: left";>
+      <h4>Arduino Micro</h4>
+      <ul>
+        <h4><li>Arduino gebaseerd op ATMega32u4</li></h4>
+        <h4><li>Native USB poort op microcontroller</li></h4>
+        <ul>
+          <h4><li>Geen host capaciteit wel device</li></h4>
+        </ul>
+        <h4><li>Heeft een vrije seriele poort</li></h4>
+        <h4><li>Meerdere boards gebaseerd op de ATMega32u4</li></h4>
+        <ul>
+          <h4><li>Arduino Leonardo</li></h4>
+          <h4><li>Arduino LilyPad</li></h4>
+          <h4><li>Sparkfun Pro Micro</li></h4>
+        </ul>
+      </ul>
+    </div>
+    <img src="img/arduino_micro.jpg" alt="">
+  </div>
+</section>
+<section data-background-image="img/arduino_micro_schematic.jpg" data-background-size="contain" data-background-color="white"></section>
+<section>
   <h2>USB to UART</h2>
   <div style="float: left; width: 50%;">
     <ul>
-      <li>Een arduino verbonden met een computer is zichtbaar in</li>
+      <h4><li>Een arduino verbonden met een computer is zichtbaar in</li></h4>
       <ul>
-        <li>Device Manager</li>
-        <li>Apparaatbeheer</li>
+        <h4><li>Device Manager</li></h4>
+        <h4><li>Apparaatbeheer</li></h4>
       </ul>
-      <li>Naamgeving:</li>
+      <h4><li>Naamgeving:</li></h4>
       <ul>
-        <li>Windows - COMX</li>
-        <li>Linux / Mac - /dev/ttyX</li>
+        <h4><li>Windows - COMX</li></h4>
+        <h4><li>Linux / Mac - /dev/ttyX</li></h4>
       </ul>
     </ul>
   </div>
@@ -404,12 +428,16 @@ reveal:
   <h2>Serial Monitor</h2>
   <div style="float: left; width: 50%;">
     <ul>
-      <li>Uitlezen van data</li>
-      <li>Sturen van seriële data</li>
-      <li>Instellen van</li>
+      <h4><li>Uitlezen van data</li></h4>
+      <h4><li>Sturen van seriële data</li></h4>
+      <h4><li>Instellen van</li></h4>
       <ul>
-        <li>Line ending</li>
-        <li>Baud rate</li>
+        <h4><li>Line ending</li></h4>
+        <h4><li>Baud rate</li></h4>
+      </ul>
+      <h4><li>Je beste vriend in het ontwikkelen van microcontroller applicaties</li></h4>
+      <ul>
+        <h4><li>Debugging door print statements</li></h4>
       </ul>
     </ul>
   </div>
@@ -420,12 +448,29 @@ reveal:
 <section data-background-image="img/ascii.gif" data-background-size="contain" data-background-color="white"></section>
 <section>
   <h2>Seriële Data: Formaat</h2>
-  <ul>
-    <li>Alle data over de uart lijn is ascii text</li>
-    <li>1 Teken = 1 Byte = 8 Bits</li>
-    <li>1 Teken = 1 char</li>
-    <li>Casten is nodig</li>
-  </ul>
+  <div class="hcontainer">
+    <ul style="width: 900px;">
+      <li>Alle data over de uart lijn is reeks van 8 bits</li>
+      <li>De reeks bits wegschrijven in een datatype geeft context</li>
+      <li>
+        <pre><code class="arduino">
+//reeks bits over de seriele poort - 00110001
+char x = Serial.read()
+Serial.println(x)
+//1
+
+//reeks bits over de seriele poort - 00110001
+unsigned int x = Serial.read()
+Serial.println(x)
+//49
+        </code></pre>
+      </li>
+    </ul>
+    <div class="vcontainer">
+      <img style="height: 300px;" src="img/uart_connections.png" alt="">
+      <img style="height: 300px;" src="img/ascii.gif" alt="">
+    </div>
+  </div>
 </section>
 <section>
   <img  class="plain" style="background: none;" src="img/line_ending.png" alt="">
@@ -435,19 +480,19 @@ reveal:
 <section>
   <h2>Seriële Data: Line Ending</h2>
   <ul>
-    <li>Het teken dat je mee geeft op het einde van een regel meegeeft</li>
+    <h4><li>Het teken dat je mee geeft op het einde van een regel meegeeft</li></h4>
     <ul>
-      <li><em>"Enteren"</em></li>
+      <h4><li><em>"Enteren"</em></li></h4>
     </ul>
-    <li>2 mogelijkheden / 4 combinaties</li>
+    <h4><li>2 mogelijkheden / 4 combinaties</li></h4>
     <ul>
-      <li>CR - Carriage Return</li>
-      <li>LF (NL) - Line Feed (Newline)</li>
+      <h4><li>CR - Carriage Return</li></h4>
+      <h4><li>LF (NL) - Line Feed (Newline)</li></h4>
     </ul>
-    <li>OS Afhankelijk in tekstfiles</li>
+    <h4><li>OS Afhankelijk in tekstfiles</li></h4>
     <ul>
-      <li>Windows - LF</li>
-      <li>Linux / OSX - LF + CR</li>
+      <h4><li>Windows - LF</li></h4>
+      <h4><li>Linux / OSX - LF + CR</li></h4>
     </ul>
   </ul>
 </section>
@@ -502,8 +547,8 @@ reveal:
         <h4><li>Meegeven baudrate</li></h4>
         <h4><li>Mogelijkheid voor uitgebreide UART config</li></h4>
         <ul>
-          <li>Standaard 8N1</li>
-          <li>Serial.begin(9600,SERIAL_8N2)</li>
+          <h4><li>Standaard 8N1</li></h4>
+          <h4><li>Serial.begin(9600,SERIAL_8N2)</li></h4>
         </ul>
       </ul>
     </div>
@@ -561,21 +606,112 @@ void loop(){
   </code></pre>
 </section>
 <section>
+  <h2>Formateren van print statements</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <pre><code class="arduin">
+void setup(){
+  //setup all the things
+  Serial.begin(9600);
+}
+
+void loop(){
+  //dothis
+  Serial.print(valueOfThis);
+  //dothat
+  Serial.println(valueOfThat);
+}
+      </code></pre>
+      <pre><code>
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+valueOfThisvalueOfThis
+valueOfThisvalueOfThat
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <pre><code class="arduin">
+void setup(){
+  //setup all the things
+  Serial.begin(9600);
+}
+
+void loop(){
+  //dothis
+  Serial.print("The Value of This is: ");
+  Serial.println(valueOfThis);
+  //dothat
+  Serial.print("The Value of That is: ");
+  Serial.println(valueOfThat);
+  Serial.println("");
+  //
+}
+      </code></pre>
+      <pre><code>
+The Value of This is: 85
+The Value of That is: Charel
+
+The Value of This is: 85
+The Value of That is: Charel
+
+The Value of This is: 85
+The Value of That is: Charel
+
+The Value of This is: 85
+The Value of That is: Charel
+
+The Value of This is: 85
+The Value of That is: Charel
+
+The Value of This is: 85
+The Value of That is: Charel
+
+The Value of This is: 85
+The Value of That is: Charel
+
+The Value of This is: 85
+The Value of That is: Charel
+
+The Value of This is: 85
+The Value of That is: Charel
+
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
   <div class="hcontainer">
     <div class="vcontainer">
       <h2>Oefening #1</h2>
-      <p>
-        Maak een programma waarmee je een string naar je programma kan wegschrijven
-        op de Arduino. De string word ingegeven via de seriele monitor. Je mag
-        enkel gebruik maken van Serial.read(). De uitgelezen string word
-        weggeschreven in een char array.
-      </p>
+      <h4><p>Maak een programma waarbij je wacht tot dat er een integer word ingegeven op de seriële monitor. Hierna lees je 3 integers uit.</p></h4>
     </div>
     <div class="vcontainer">
       <h2>Oefening #2</h2>
-      <p>
-        Maak de functie Serial.parseInt() na door gebruik te maken van Serial.read();
-      </p>
+      <h4><p>Maak een programma waarmee je een string naar je programma kan wegschrijven op de Arduino. De string word ingegeven via de seriele monitor. Je mag enkel gebruik maken van Serial.read(). De uitgelezen string word weggeschreven in een char array.</p></h4>
+    </div>
+    <div class="vcontainer">
+      <h2>Oefening #3</h2>
+      <h4><p>Maak de functie Serial.parseInt() na door gebruik te maken van Serial.read(). Dit voor getallen van tot 999.  </p></h4>
     </div>
   </div>
 </section>
@@ -585,21 +721,23 @@ void loop(){
 <section>
   <h2>SPI</h2>
   <ul>
-    <li>Serial Peripheral Interface</li>
-    <li>Master / Slave</li>
+    <h4><li>Serial Peripheral Interface</li></h4>
+    <h4><li>Master / Slave</li></h4>
     <ul>
-      <li>Een master</li>
-      <li>Meerde slaves</li>
+      <h4><li>Een master</li></h4>
+      <h4><li>Meerde slaves</li></h4>
     </ul>
-    <li>Synchrone communicatie</li>
-    <li>Maakt gebruikt van vier lijnen</li>
+    <h4><li>Synchrone communicatie</li></h4>
+    <h4><li>Maakt gebruikt van vier lijnen</li></h4>
     <ul>
-      <li>CLK (SCLK, SCK)</li>
-      <li>MOSI</li>
-      <li>MISO</li>
+      <h4><li>CLK (SCLK, SCK)</li></h4>
+      <h4><li>MOSI</li></h4>
+      <h4><li>MISO</li></h4>
       <li style="text-decoration: overline;">SS</li>
     </ul>
-    <li>Frequent gebruik voor communicatie met IC</li>
+    <h4><li>Het sturen en ontvangen word volledig door de master bepaald.</li></h4>
+    <h4><li>Response moeten handmatige geprogrammeerd worden</li></h4>
+    <h4><li>Frequent gebruik voor communicatie met IC</li></h4>
   </ul>
 </section>
 <section data-background-image="img/spi_wiring.png" data-background-size="contain" data-background-color="white"></section>
@@ -607,10 +745,10 @@ void loop(){
   <h2>SPI Modes</h2>
   <div style="float: left; width: 50%;">
     <ul>
-      <li>CPHA = 0 - Sample eerste edge clock</li>
-      <li>CPHA = 1 - Sample op eerste edge clock</li>
-      <li>CPOL = 0 - Sample op rising edge clock</li>
-      <li>CPOL = 1 - Sample op failing edge clock</li>
+      <h4><li>CPHA = 0 - Sample eerste edge clock</li></h4>
+      <h4><li>CPHA = 1 - Sample op eerste edge clock</li></h4>
+      <h4><li>CPOL = 0 - Sample op rising edge clock</li></h4>
+      <h4><li>CPOL = 1 - Sample op failing edge clock</li></h4>
     </ul>
   </div>
   <div style="float: left; width: 50%;">
@@ -624,14 +762,14 @@ void loop(){
 <section>
   <h2>I²C</h2>
   <ul>
-    <li>Inter - Integrated Circuit</li>
-    <li>a.k.a. Two Wire Interface</li>
+    <h4><li>Inter - Integrated Circuit</li></h4>
+    <h4><li>a.k.a. Two Wire Interface</li></h4>
     <ul>
-      <li>SDA - Serial Data</li>
-      <li>SCL - Serial Clock</li>
+      <h4><li>SDA - Serial Data</li></h4>
+      <h4><li>SCL - Serial Clock</li></h4>
     </ul>
-    <li>Synchrone communicatie</li>
-    <li>Multi - Master / Multi - Slave</li>
+    <h4><li>Synchrone communicatie</li></h4>
+    <h4><li>Multi - Master / Multi - Slave</li></h4>
   </ul>
 </section>
 <section data-background-image="img/iic_wiring.png" data-background-size="contain" data-background-color="white"></section>
@@ -775,6 +913,51 @@ void loop(){
 </section>
 <section data-background-image="img/iic_data_transfer.png" data-background-size="contain" data-background-color="white"></section>
 <section>
+  <h2>I²C Arduino voorbeeld</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h4>Master Reader</h4>
+      <pre><code class="Arduino">
+#include &ltWire.h&gt
+
+void setup() {
+  Wire.begin();        
+  Serial.begin(9600);  
+}
+
+void loop() {
+  Wire.requestFrom(8, 6);    
+  while (Wire.available()) {
+  char c = Wire.read(); 
+  Serial.print(c);     
+  }
+
+  delay(500);
+}
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <h4>Slave Sender</h4>
+      <pre><code class="Arduino">
+#include <Wire.h>
+
+void setup() {
+  Wire.begin(8);
+  Wire.onRequest(requestEvent); 
+}
+
+void loop() {
+  delay(100);
+}
+
+void requestEvent() {
+  Wire.write("hello "); 
+}
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
   <h1>Bit Banging</h1>
 </section>
 <section>
@@ -887,6 +1070,40 @@ void loop() {
     <h2>Waar te gebruiken</h2>
     <img src="img/bit_banging.png" alt="">
     <em><b>Communicatie tussen een Arduino en Bluetooth module</b></em>
+    <h4>Waarom maken we geen gebruik van D0 en D1?</h4>
+  </div>
+</section>
+<section>
+  <h2>Oefening #4: Bluetooth Echo</h2>
+  <ul>
+    <h4><li>Het is vrij eenvoudig om commandos van onze GSM naar een Arduino te sturen</li></h4>
+    <h4><li>Wat hebben we nodig: </li></h4>
+    <ul>
+      <h4><li>Arduino</li></h4>
+      <h4><li>Bluetooth Module (HC - 05 3.3V Module)</li></h4>
+      <h4><li>Serial Monitor App (Gratis te vinden in de Play Store)</li></h4>
+      <ul>
+        <h4><li>Bluetooth Terminal</li></h4>
+        <h4><li>Apple users vallen uit de boot</li></h4>
+      </ul>
+    </ul>
+  </ul>
+</section>
+<section>
+  <h2>Oefening #4: Bluetooth Echo</h2>
+  <div  class="hcontainer">
+    <ul style="width: 700px;">
+      <h4><li> Aansluiten: Waar moeten we rekening mee houden</li></h4>
+      <ul>
+        <h4><li class="fragment">TTL Niveaus</li></h4>
+        <h4><li class="fragment">TX en RX omwisselen</li></h4>
+      </ul>
+      <h4><li class="fragment">Opdracht: </li></h4>
+      <ul>
+        <h4><li class="fragment">Maak een echo applicatie waarmee je de string die verstuurd word over bluetooth getoond word op de seriele monitor</li></h4>
+      </ul>
+    </ul>
+    <img src="img/hc_05_hookup.jpg" alt="">
   </div>
 </section>
 
