@@ -905,14 +905,6 @@ void loop() {
   </div>
 </section>
 <section>
-  <h2>Voordelen</h2>
-  <ul>
-    <h4><li>Grootste voordeel: encapsulatie & verbergen complexiteit</li></h4>
-    <h4><li>"Standaard" Arduino gebruikers hoeven dit niet te doen/weten.</li></h4>
-    <h4><li>Dit is in principe niets meer dan het concept klasse uit OOP talen.</li></h4>
-  </ul>
-</section>
-<section>
   <h2>Oefening</h2>
   <div style="float: left; width: 33%;">
     <ol start="2">
@@ -978,7 +970,7 @@ void Morse::char_to_morse(char c){
   <h2>Wat is een pointer</h2>
   <p>
   <em>Een pointer is een variabele dat een geheugen locatie bevat van  andere
-    elementen in de code. Een pointer de adressen van volgende elementen bevatten</em>
+    elementen in de code. Een pointer kan de adressen van volgende elementen bevatten</em>
   </p>
   <ul>
     <li>Een adres</li>
@@ -996,7 +988,7 @@ void Morse::char_to_morse(char c){
       <li>Zorgt voor efficiëntere code </li>
       <li>Verhoogt de complexiteit</li>
       <li>Pointers hangen nauw samen met arrays</li>
-      <li>Pointer hangt vast aan een datatype</li>
+      <li>Pointer hangt niet vast aan een datatype (void *pointer)</li>
     </h5>
   </ul>
 </section>
@@ -1098,33 +1090,6 @@ void Morse::char_to_morse(char c){
   </ul>
 </section>
 <section>
-  <h2>Volgorde van bewerkingen</h2>
-  <ul>
-    <li>* en &amp hebben voorrang op rekenkundige operators </li>
-    <li>*, &amp, ++ en -- hebben dezelfde priorieit</li>
-    <li>* en &amp worden van rechts naar links geëvalueerd</li>
-    <li>*p++ en (*p)++ zijn verschillend</li>
-    <ul>
-      <li>*p++ verhoogt het adres opgeslagen in p en haalt daarna de achterliggende data van het nieuwe adres op</li>
-      <li>(*p)++ verhoogte de achterliggende data op adres p</li>
-    </ul>
-  </ul>
-</section>
-<section>
-  <h2>Volgorde van bewerkingen</h2>
-  <div style="display: flex; align-items: center; justify-content: center;">
-    <div style="width: 40%;">
-      <p><b>Veronderstel dat</b></p>
-      <ul>
-        <li>char c = 5</li>
-        <li>char *p</li>
-        <li>p = &c</li>
-      </ul>
-    </div> 
-    <img src="img/pointers_precedence.png" alt="">
-  </div>
-</section>
-<section>
   <h2>Swap Functie</h2>
   <div style="display: flex; align-items: center; justify-content: center;">
     <ul style="width: 50%;">
@@ -1191,12 +1156,40 @@ swap (&a, &b);
   </ul>
 </section>
 <section>
+  <h2>Volgorde van bewerkingen</h2>
+  <ul>
+    <li>* en &amp hebben voorrang op rekenkundige operators </li>
+    <li>*, &amp, ++ en -- hebben dezelfde priorieit</li>
+    <li>* en &amp worden van rechts naar links geëvalueerd</li>
+    <li>*p++ en (*p)++ zijn verschillend</li>
+    <ul>
+      <li>*p++ verhoogt het adres opgeslagen in p en haalt daarna de achterliggende data van het nieuwe adres op</li>
+      <li>(*p)++ verhoogte de achterliggende data op adres p</li>
+    </ul>
+  </ul>
+</section>
+<section>
+  <h2>Volgorde van bewerkingen</h2>
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <div style="width: 40%;">
+      <p><b>Veronderstel dat</b></p>
+      <ul>
+        <li>char c = 5</li>
+        <li>char *p</li>
+        <li>p = &c</li>
+      </ul>
+    </div> 
+    <img src="img/pointers_precedence.png" alt="">
+  </div>
+</section>
+<section>
   <h2>Pointers & Arrays</h2>
   <div style="display: flex; align-items: center; justify-content: center;">
     <ul style="width: 50%;">
     <li>Arrays is een blok van dezelfde data types</li>
-    <li>Een array kan beschouwd worden als een pointer van hetzelfde type</li>
-    <li>Een pointer kan een startpunt zijn voor een array</li>
+    <li>Het eerste element van een array kan beschouwd worden als een pointer van hetzelfde type</li>
+    <li>Door het adres opgeslagen in de pointer te veranderen kunnen we volgende elementen aanspreken</li>
+    <li>Elk array element wordt in opeenvolgende volgorde in het geheugen opgeslagen</li>
   </ul>
   <div>
     <pre><code class="Arduino">
@@ -1232,13 +1225,12 @@ int j = *(p + 15) //mogelijk
 <section>
   <h2>Null Terminated C String</h2>
   <ul>
-    <li>In C worden alle char arrays getermineerd door '\O'</li>
+    <li>In C worden alle char arrays getermineerd door '\0'</li>
     <ul>
       <li>char *x = "hello" == "hello\0"</li>
       <li>char x[4] = "hello" == "hello\0"</li>
     </ul>
     <li>Dit maakt het mogelijk om simpels char arrays te kunnen  manipuleren</li>
-    <li></li>
   </ul>
    
   <pre class="fragment"><code class="Arduino">
@@ -1261,21 +1253,25 @@ int strlen(char *s) /* added by RJH; source: K&R p99 */
     <li>Pointer is een adres</li>
     <li>Pointers geven niet altijd een lengte mee</li> 
     <li>Functies mbt tot buffers hebben meestal beide nodig</li>
-    <pre class="fragment"><code class="Arduino">
+    <pre><code class="Arduino">
 void RF24::read(void *buf, uint8_t  len)
 bool RF24::write(const void *buf, uint8_t len)
     </code></pre>
     <li>De groote van een element - sizeof()</li>
+    <ul>
+      <li>sizeof returnt de grote in het aantal bytes</li>
+      <li>sizeof(int) = 4</li>
+    </ul>
   </ul>
   <div style="width: 50%;">
-  <pre class="fragment"><code class="Arduino">
-int data[10]="Hello World"
+  <pre><code class="Arduino">
+char data[10]="Hello World"
 for (int i = 0; i < sizeof(data)/sizof(int); i++){
 //dosomething
 }
   </code></pre>
-  <pre class="fragment"><code class="Arduino">
-int data[10]="Hello World"
+  <pre><code class="Arduino">
+char data[10]="Hello World"
 write(data, sizeof(data));
   </code></pre>
   </div>
@@ -1308,20 +1304,36 @@ void *memcpy (void *dest, const void *src, size_t len)
 </section>
 <section>
   <h2>Union</h2>
-  <div class="hcontainer">
-    <div class="vcontainer">
-      <p>
-        A union is a variable that may hold {at different times> objects of different
+  <div class="vcontainer">
+    <div class="hcontainer">
+      <p style="width: 800px;">
+        A union is a variable that may hold (at different) times objects of different
         types and sizes, with the compiler keeping track of size and alignment requirements.
         Unions provide a way to manipulate different kinds of data in a single
         area of storage.
       </p>
-      <ul>
-        <li>Kan gebruik worden voor het combineren van verschillende data in een array</li>
-        <li></li>
+      <ul style="width: 800px;">
+        <li>acces</li>
+        <ul>
+          <li>union_name.member</li>
+          <li>union-name.member</li>
+        </ul>
+        <li>Maar een datatype per moment mogelijk</li>
+        <li>Alle datatypes gedeclareerd starten op dezelfde geheugen locatie</li>
       </ul>
     </div>
-    <div class="vcontainer">
+    <pre><code class="Arduino">
+union my_data {
+  int value;
+  char bytes[sizeof(int)];
+} this_data;    
+
+union my_data other_data
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Union Voorbeeld</h2>
       <pre><code class="Arduino">
 void setup(){
 
@@ -1372,6 +1384,120 @@ Byte 2: 2
 Byte 3: aa
 Val array: 694037456
       </code></pre>
+</section>
+<section>
+  <h2>Union Gebruik</h2>
+  <h4>In het Arduino I2C Master Reader/Slave Writer Voorbeeld</h4>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h4>Master Reader</h4>
+      <pre><code class="Arduino">
+#include &ltWire.h&gt
+
+const int MEMBERS = 3;
+const int SIZE = sizeof(unsigned short int) * 3 + 1; 
+
+union  {
+  unsigned short int vals_ints[MEMBERS];
+  unsigned char vals_chars[SIZE];
+} vals;
+
+void setup() {
+  Wire.begin();        
+  Serial.begin(9600);  
+}
+
+void loop() {
+  Wire.requestFrom(8,sizeof(unsigned short int)*3+1);    
+  if (Wire.available() == SIZE) {
+    Wire.readBytes(vals.vals_chars, SIZE);
+    for (int i = 0; i &lt MEMBERS; i++) Serial.println(vals.vals_ints[i]);
+  }
+
+  delay(500);
+}
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <h4>Slave Sender</h4>
+      <pre><code class="Arduino">
+#include <Wire.h>
+
+const int MEMBERS = 3;
+const int SIZE = sizeof(unsigned short int) * 3 + 1; 
+
+union  {
+  unsigned short int vals_ints[MEMBERS];
+  unsigned char vals_chars[SIZE];
+} vals;
+
+vals.vals_ints[0] = 0;
+vals.vals_ints[1] = 1;
+vals.vals_ints[2] = 2;
+
+
+void setup() {
+  Wire.begin(8);
+
+  Wire.onRequest(requestEvent); 
+}
+
+void loop() {
+  delay(100);
+}
+
+void requestEvent() {
+  Wire.write(vals.vals_chars); 
+}
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Typedef</h2>
+  <div class="hcontainer">
+    <ul>
+      <li>Creeren van nieuwe datatypes </li>
+      <li>Makkelijke toegang voor structs, unions</li>
+      <li>Creeren van architectuur afhankelijke code</li>
+    </ul>
+    <div class="vcontainer">
+      <h4>Zonder Typedef</h4>
+      <pre><code class="Arduino">
+union my_data {
+  int value;
+  char bytes[sizeof(int)];
+} this_data;    
+
+union my_data other_data
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <h4>Met Typedef</h4>
+      <pre><code class="Arduino">
+type_def union my_unions {
+  int value;
+  char bytes[sizeof(int)];
+} my_union;    
+
+my_union this_data
+my_union other_data
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Typedef - Architectuur afhankelijke code</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h4>Standaard Int Definities AVR (8bit)</h4>
+      <img src="img/stdint.png" alt="">
+      <a href="https://www.nongnu.org/avr-libc/user-manual/group__avr__stdint.html">Source</a>
+    </div>
+    <div class="vcontainer">
+      <h4>Standaard Int Definities Raspberry Pi (32bit)</h4>
+      <img src="img/stdint_pi.png" alt="">
+      <a href="http://www.raspberry-projects.com/pi/programming-in-c/memory/variables">Source</a>
     </div>
   </div>
 </section>
