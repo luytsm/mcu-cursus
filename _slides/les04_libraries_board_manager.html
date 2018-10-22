@@ -1,10 +1,10 @@
 ---
-title: "Les 4: Libraries en Board Manager"
+title: "Les 4: Libraries en C++"
 description:  "Gebruiken en maken van libraries voor de Arduino, gebruik maken van de board manager"
 reveal:
 ---
 <section>
-  <h1>Les 4: Libraries en Board Manager</h1>
+  <h1>Les 4: Libraries en C/C++</h1>
 </section>
 <section>
   <h2>Libraries</h2>
@@ -75,7 +75,7 @@ reveal:
   </div>
 </section>
 <section>
-  <h2>Handleiding: C/C++</h2>
+  <h2>Zelf een library maken</h2>
   <ul>
     <h4><li>Preprocessor</li></h4>
     <h4><li>Header Files</li></h4>
@@ -242,20 +242,17 @@ reveal:
   <h2>Conditionele Macros</h2>
   <pre><code class="Arduino">
 #define DEBUG
-#define LOG
 
 #ifdef DEBUG
-#define DEBUG_INIT() sDebug[128];
+#define DEBUG_INIT() char sDebug[128];
 #define DEBUG_PRINTHEX(T, v) Serial.print(T); sprintf(sDebug, "%x\n\r", v); Serial.print(sDebug);
 #define DEBUG_PRINTDEC(T, v) Serial.print(T); sprintf(sDebug, "%d\n\r", v); Serial.print(sDebug);
 #define DEBUG_HALT() (Serial.available() == 0); Serial.setTimeout(1); Serial.readBytes(sDebug, 1);
-#endif
-
-#ifdef LOG
-#define LOG_INIT sLog[128];
-#define LOG_PRINTHEX(T, v) Serial.print(T); sprintf(sLog, "%x\n\r", v); Serial.print(sLog);
-#define LOG_PRINTDEC(T, v) Serial.print(T); sprintf(sLog, "%d\n\r", v); Serial.print(sLog);
-#define LOG_HALT() while(Serial. available() == 0); Serial.setTimeout(1); Serial.readBytes(sLog, 1);
+#else
+#define DEBUG_INIT() 
+#define DEBUG_PRINTHEX(T, v) 
+#define DEBUG_PRINTDEC(T, v)
+#define DEBUG_HALT() 
 #endif
   </code></pre>
 </section>
@@ -264,74 +261,75 @@ reveal:
   <div class="hcontainer">
     <div style="width: 25%;" class="vcontainer" style>
       <p>Test Code met Variabele</p>
-      <pre><code class="Arduino">
-        #include <stdio.h>
-        static const  foo =  6;
-    
-        int  main() {
-          printf("%d", foo);
-          return 0;
-        }
+        <pre><code class="Arduino">
+#include &ltstdio.h&gt
+static const  foo =  6;
+
+int  main() {
+  printf("%d", foo);
+  return 0;
+}
       </code></pre>
       <p>Test Code met Macro</p>
       <pre><code class="Arduino">
-        #include <stdio.h>
-        #define foo 6
-    
-        int  main() {
-          printf("%d",foo);
-          return 0;
-        }
+#include &ltstdio.h&gt
+#define foo 6
+
+int  main() {
+  printf("%d",foo);
+  return 0;
+}
       </code></pre>
     </div>
     <div style="width: 35%;" class="vcontainer">
       <p>Gecompileerde ASM Code met Variabele</p>
       <pre><code class="asm">
-        push rbp
-        mov rbp,rsp
-        sub rsp,0x20
-        call d <main+Oxd>
-        mov eax,0x6
-        mov edx,eax
-        lea rcx,[rip+Ox4]
-        call 20 <main+0x20>
-        mov eax,0x0
-        add rsp,0x20
-        pop rbp
-        ret
-        nop
+push rbp
+mov rbp,rsp
+sub rsp,0x20
+call d <main+Oxd>
+mov eax,0x6
+mov edx,eax
+lea rcx,[rip+Ox4]
+call 20 <main+0x20>
+mov eax,0x0
+add rsp,0x20
+pop rbp
+ret
+nop
       </code></pre>
       <p>Gecompileerde ASM Code met Macro</p>
       <pre><code class="asm">
-        push rbp
-        mov rbp,rsp
-        sub rsp,0x20
-        call d <main+Oxd>
-        mov edx,0x6
-        lea rcx,[rip+Ox0]
-        call le <main+Oxle>
-        mov eax,0x0
-        add rsp,0x20
-        pop rbp
-        ret
-        nop
+push rbp
+mov rbp,rsp
+sub rsp,0x20
+call d <main+Oxd>
+mov edx,0x6
+lea rcx,[rip+Ox0]
+call le <main+Oxle>
+mov eax,0x0
+add rsp,0x20
+pop rbp
+ret
+nop
       </code></pre>
     </div>
     <div style="width: 25%;"class="vcontainer">
       <p>Gecompileerde Code</p>
       <pre><code class="asm">
-        sub rsp,Ox28
-        call 9 <main+0x9>
-        lea rcx,[rip+Ox0]
-        mov edx,0x6
-        call 1a <main+Oxla>
-        xor eax,eax
-        add rsp,Ox28
-        ret
-        nop
+sub rsp,Ox28
+call 9 <main+0x9>
+lea rcx,[rip+Ox0]
+mov edx,0x6
+call 1a <main+Oxla>
+xor eax,eax
+add rsp,Ox28
+ret
+nop
       </code></pre>
     </div>
   </div>
+  <h4>Vooruitgang in compiler technologie heeft er voor gezorgd dat de performatie tussen van preprocessors verdwenen is</h4>
 </section>
 <section>
   <h2>Header Files</h2>
@@ -866,41 +864,45 @@ reveal:
   <ol>
     <li>Quick Library</li>
     <ul>
-      <li>Steek deze debug statements in header file</li>
-      <li>Include dit in een bestaand project</li>
-      <li>Roept een *_INIT functie</li>
-      <li>Verify</li>
+      <li>Maak van debug.txt (te vinden op digitap) een quick library</li>
+      <li>Gebruik een include guard</li>
+      <li>Laat volgend stukje code werken</li>
     </ul>
   </ol>
   </div>
   <div style="float: left; width: 50%;">
-  <pre><code class="Arduino">
-#define DEBUG
-#define LOG
-
+  <div class="vcontainer">
+    <pre><code class="Arduino">
 #ifdef DEBUG
-#define DEBUG_INIT() sDebug[128];
+#define DEBUG_INIT() char sDebug[128];
 #define DEBUG_PRINTHEX(T, v) Serial.print(T); sprintf(sDebug, "%x\n\r", v); Serial.print(sDebug);
 #define DEBUG_PRINTDEC(T, v) Serial.print(T); sprintf(sDebug, "%d\n\r", v); Serial.print(sDebug);
 #define DEBUG_HALT() (Serial.available() == 0); Serial.setTimeout(1); Serial.readBytes(sDebug, 1);
+#else
+#define DEBUG_INIT()
+#define DEBUG_PRINTHEX(T, v) 
+#define DEBUG_PRINTDEC(T, v)
+#define DEBUG_HALT() 
 #endif
 
-#ifdef LOG
-#define LOG_INIT sLog[128];
-#define LOG_PRINTHEX(T, v) Serial.print(T); sprintf(sLog, "%x\n\r", v); Serial.print(sLog);
-#define LOG_PRINTDEC(T, v) Serial.print(T); sprintf(sLog, "%d\n\r", v); Serial.print(sLog);
-#define LOG_HALT() while(Serial. available() == 0); Serial.setTimeout(1); Serial.readBytes(sLog, 1);
-#endif
-  </code></pre>
+    </code></pre>
+    <pre><code class="Arduino">
+#include "debug.h"
+
+void setup() {
+  Serial.begin(9600);
+  DEBUG_INIT()
+  DEBUG_PRINTDEC("De waarde van X is: ", 89)
+  
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+} 
+    </code></pre>
   </div>
-</section>
-<section>
-  <h2>Voordelen</h2>
-  <ul>
-    <h4><li>Grootste voordeel: encapsulatie & verbergen complexiteit</li></h4>
-    <h4><li>"Standaard" Arduino gebruikers hoeven dit niet te doen/weten.</li></h4>
-    <h4><li>Dit is in principe niets meer dan het concept klasse uit OOP talen.</li></h4>
-  </ul>
+  </div>
 </section>
 <section>
   <h2>Oefening</h2>
@@ -908,7 +910,7 @@ reveal:
     <ol start="2">
       <li>Full Library</li>
       <ul>
-        <li>Conveert de Morse Class naar een full library</li>
+        <li>Conveert de Morse Class naar een full library (te vinden op digitap)</li>
         <ul>
           <li>Beschikbaar voor elke project</li>
           <li>Code Highlighting</li>
@@ -962,6 +964,540 @@ void Morse::char_to_morse(char c){
 
 </section>
 <section>
-  <h2>Board Manager</h2>
-  <img src="img/board_mgr.png" alt="">
+  <h1>Pointers</h1>
+</section>
+<section>
+  <h2>Wat is een pointer</h2>
+  <p>
+  <em>Een pointer is een variabele dat een geheugen locatie bevat van  andere
+    elementen in de code. Een pointer kan de adressen van volgende elementen bevatten</em>
+  </p>
+  <ul>
+    <li>Een adres</li>
+    <li>Variabelen</li>
+    <li>Functies</li>
+    <li>Pointers</li>
+  </ul>
+  <p class="fragment"><b>Geheugen is adresseerbare blok bits!</b></p>
+
+</section>
+<section>
+  <h2>Wat is een pointer</h2>
+  <ul>
+    <h5>
+      <li>Zorgt voor efficiëntere code </li>
+      <li>Verhoogt de complexiteit</li>
+      <li>Pointers hangen nauw samen met arrays</li>
+      <li>Pointer hangt niet vast aan een datatype (void *pointer)</li>
+    </h5>
+  </ul>
+</section>
+<section>
+  <h2>Wat is een pointer</h2>
+  <img style="height: 5OOpx;" src="img/pointers.png" alt="">
+</section>
+<section>
+  <h2>Pointers Declaren</h2>
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <div style="width: 40%">
+      <p>
+      <pre><code class="Arduino">
+  int number = 10;
+  int *pointer = &number;
+    </pre></code>
+    Je wijst een adres toe aan een pointer
+      </p>
+    </div>
+    <img style="height: 500px;" src="img/declaring_pointers.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Pointer Operators</h2>
+  <ul>
+    <h5>
+      <li>Adres <i>&amp</i></li>
+      <ul>
+        <li>Met &amp vraag je het adres op van een variable</li>
+      </ul>
+      <li>Dereferencing <i>*</i></li>
+      <ul>
+        <li>Met * vraag je de achterliggende data op, * ook de indirection operator genoemd.</li>
+      </ul>
+    </h5>
+</section>
+<section>
+  <h2>Pointer Voorbeelden</h2>
+  <table>
+    <tr>
+      <td>Declaratie</td>
+      <td>Value</td>
+      <td>Adres</td>
+    </tr>
+    <tr>
+      <td>int Val = 2</td>
+      <td>2</td>
+      <td>54428</td>
+    </tr>
+    <tr>
+      <td>int *pVal = &Val</td>
+      <td>54428</td>
+      <td>97880</td>
+    </tr>
+    <tr>
+      <td>int secVal = *pVal</td>
+      <td>2</td>
+      <td>97932</td>
+    </tr>
+    <tr>
+      <td>*pVal = 5</td>
+      <td>5</td>
+      <td>54428</td>
+    </tr>
+    <tr>
+      <td>pVal = pVal + 1</td>
+      <td>54444 <i>(+16)</i></td>
+      <td>97880</td>
+    </tr>
+  </table>
+</section>
+<section>
+  <h2>Dus ...</h2>
+  <ul>
+    <li>int *p = &c</li>
+    <ul>
+      <li>De pointer p wijst naar het locatie van c</li>
+    </ul>
+    <li>int k = *p </li>
+    <ul>
+      <li>k is gelijk aan de achterliggende data van p</li>
+    </ul>
+    <li>*p = 0</li>
+    <ul>
+      <li>De achterliggende data = 0</li>
+    </ul>
+    <li>*j = *p</li>
+    <ul>
+      <li>De achterliggende data van j is gelijk aan de achterliggende data van p</li>
+    </ul>
+  </ul>
+</section>
+<section>
+  <h2>Oefening</h2>
+  <ul>
+    <li>Declareer 3 integers x, y en z met de respectievelijke waardes 1, 5, 155</li>
+    <li>Declareer 3 pointers p_x, p_y, p_z die verwijzen naar de geheugen locaties van x,y,z </li>
+    <li>Print de waardes af van de achterliggende data van de pointers als ook de locaties </li>
+  </ul>
+</section>
+<section>
+  <h2>Swap Functie</h2>
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <ul style="width: 50%;">
+      <li class="fragment">Het volgende stuk code swap de variabelen niet</li>
+      <li class="fragment">Er word een lokale kopie gemaakt</li>
+      <li class="fragment">Dit noemt Pass By Value</li>
+      <li class="fragment">De originele data word beschermt</li>
+    </ul>
+    <div>
+      <pre><code class="Arduino">
+void swap(int x, int y){
+int tmp;
+tmp = x
+x = y;
+y = tmp;
+}
+void main(void){
+int a = 10;
+int b = 13;
+
+swap (a, b);
+}
+/*y == ? && z == ?*/
+      </code></pre>
+      <img class="fragment" src="img/pass_by_val.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Pass By Reference</h2>
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <ul style="width: 50%;">
+      <li class="fragment">De data wisselt tussen de variabelen</li>
+      <li class="fragment">Toegang tot de variabele is mogelijk door indirecte toegang</li>
+      <li class="fragment">Data moet niet gedupliceerd worden</li>
+      <li class="fragment">Pass By Reference</li>
+      <li class="fragment">Concept bestaat ook in andere programmeer talen</li>
+    </ul>
+    <div>
+      <pre><code class="Arduino">
+void swap(int *x, int *y){
+int tmp;
+tmp = *x
+*x = *y;
+*y = tmp;
+}
+void main(void){
+int a = 10;
+int b = 13;
+
+swap (&a, &b);
+}
+/*y == ? && z == ?*/
+      </code></pre>
+      <img class="fragment" src="img/pass_by_ref.png" alt="">
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Oefening</h2>
+  <ul>
+    <li>Declareer 3 integers x, y en z met de respectievelijke waardes 1, 5, 155</li>
+    <li>Schuif vanuit een functie de waarde x naar y, y naar z en z naar x</li>
+  </ul>
+</section>
+<section>
+  <h2>Volgorde van bewerkingen</h2>
+  <ul>
+    <li>* en &amp hebben voorrang op rekenkundige operators </li>
+    <li>*, &amp, ++ en -- hebben dezelfde priorieit</li>
+    <li>* en &amp worden van rechts naar links geëvalueerd</li>
+    <li>*p++ en (*p)++ zijn verschillend</li>
+    <ul>
+      <li>*p++ verhoogt het adres opgeslagen in p en haalt daarna de achterliggende data van het nieuwe adres op</li>
+      <li>(*p)++ verhoogte de achterliggende data op adres p</li>
+    </ul>
+  </ul>
+</section>
+<section>
+  <h2>Volgorde van bewerkingen</h2>
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <div style="width: 40%;">
+      <p><b>Veronderstel dat</b></p>
+      <ul>
+        <li>char c = 5</li>
+        <li>char *p</li>
+        <li>p = &c</li>
+      </ul>
+    </div> 
+    <img src="img/pointers_precedence.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Pointers & Arrays</h2>
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <ul style="width: 50%;">
+    <li>Arrays is een blok van dezelfde data types</li>
+    <li>Het eerste element van een array kan beschouwd worden als een pointer van hetzelfde type</li>
+    <li>Door het adres opgeslagen in de pointer te veranderen kunnen we volgende elementen aanspreken</li>
+    <li>Elk array element wordt in opeenvolgende volgorde in het geheugen opgeslagen</li>
+  </ul>
+  <div>
+    <pre><code class="Arduino">
+int *p
+int a[1O]
+
+p = &(a[2]);
+
+/*Dan klopt het volgende*/
+*p = a[2];
+*(p+ 1) = a[3];
+    </code></pre>
+    <img src="img/arrays_pointers.png" alt="">
+  </div>
+  <div>
+</section>
+<section>
+  <h2>Gevaren van pointers</h2>
+  <ul>
+    <li>Rechtstreekse manipulatie van het geheugen</li>
+    <li>Kent geen out of bounds</li>
+    <ul>
+      <pre><code class="Arduino">
+int a[1O]
+int *p = &(a[0]);
+int i = a[11] //error
+int j = *(p + 15) //mogelijk
+      </code></pre>
+    </ul>
+    <li>Datatypes zijn niet belangrijk (void *pointer)</li>
+  </ul>
+</section>
+<section>
+  <h2>Null Terminated C String</h2>
+  <ul>
+    <li>In C worden alle char arrays getermineerd door '\0'</li>
+    <ul>
+      <li>char *x = "hello" == "hello\0"</li>
+      <li>char x[4] = "hello" == "hello\0"</li>
+    </ul>
+    <li>Dit maakt het mogelijk om simpels char arrays te kunnen  manipuleren</li>
+  </ul>
+   
+  <pre class="fragment"><code class="Arduino">
+int strlen(char *s) /* added by RJH; source: K&R p99 */
+{
+  int n;
+
+  for(n = 0; *s != '\0'; s++)
+  {
+    n++;
+  }
+  return n;
+}
+  </code></pre>
+</section>
+<section>
+  <h2>Lengte van een object</h2>
+  <div style="display: flex;">
+  <ul style="width: 50%;">
+    <li>Pointer is een adres</li>
+    <li>Pointers geven niet altijd een lengte mee</li> 
+    <li>Functies mbt tot buffers hebben meestal beide nodig</li>
+    <pre><code class="Arduino">
+void RF24::read(void *buf, uint8_t  len)
+bool RF24::write(const void *buf, uint8_t len)
+    </code></pre>
+    <li>De groote van een element - sizeof()</li>
+    <ul>
+      <li>sizeof returnt de grote in het aantal bytes</li>
+      <li>sizeof(int) = 4</li>
+    </ul>
+  </ul>
+  <div style="width: 50%;">
+  <pre><code class="Arduino">
+char data[10]="Hello World"
+for (int i = 0; i < sizeof(data)/sizof(int); i++){
+//dosomething
+}
+  </code></pre>
+  <pre><code class="Arduino">
+char data[10]="Hello World"
+write(data, sizeof(data));
+  </code></pre>
+  </div>
+  </div>
+</section>
+<section>
+  <h2>Strings</h2>
+  <div class="hcontainer">
+    <ul>
+      <li>Op een micrcontroller werkt men niet graag met string maar null terminated arrays</li>
+      <li>Kijk zeker hier is: <a href="https://www.tutorialspoint.com/c_standard_library/string_h.htm">Werken met buffers</a></li>
+    </ul>
+    <pre><code class="c">
+#include <stddef.h>
+
+void *memcpy (void *dest, const void *src, size_t len)
+{
+  char *d = dest;
+  const char *s = src;
+  while (len--)
+    *d++ = *s++;
+  return dest;
+}
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Oefening</h2>
+  Schrijf een functie met pointers waar je een 2 arrays aan elkaar rijgt (concat)
+</section>
+<section>
+  <h2>Union</h2>
+  <div class="vcontainer">
+    <div class="hcontainer">
+      <p style="width: 800px;">
+        A union is a variable that may hold (at different) times objects of different
+        types and sizes, with the compiler keeping track of size and alignment requirements.
+        Unions provide a way to manipulate different kinds of data in a single
+        area of storage.
+      </p>
+      <ul style="width: 800px;">
+        <li>acces</li>
+        <ul>
+          <li>union_name.member</li>
+          <li>union-name.member</li>
+        </ul>
+        <li>Maar een datatype per moment mogelijk</li>
+        <li>Alle datatypes gedeclareerd starten op dezelfde geheugen locatie</li>
+      </ul>
+    </div>
+    <pre><code class="Arduino">
+union my_data {
+  int value;
+  char bytes[sizeof(int)];
+} this_data;    
+
+union my_data other_data
+    </code></pre>
+  </div>
+</section>
+<section>
+  <h2>Union Voorbeeld</h2>
+      <pre><code class="Arduino">
+void setup(){
+
+  union  {
+  unsigned short int vals_ints[3];
+  unsigned char vals_chars[sizeof(unsigned short int)*3+1];
+  } vals;
+  
+  vals.vals_ints[0] = 1;
+  vals.vals_ints[1] = 2;
+  vals.vals_ints[2] = 0xccAA;
+
+  printf("Loc struct: %p\n",(void*) &vals);
+  printf("Loc 1: %p\n",(void*) &vals.vals_ints[0]);
+  printf("Loc 2: %p\n",(void*) &vals.vals_ints[1]);
+  printf("Loc 3:%p\n",(void*) &vals.vals_ints[2]);
+  printf("Loc Array: %p\n",(void*) &vals.vals_chars);
+
+  printf("Val 1: %d\n",vals.vals_ints[0]);
+  printf("Val 2: %d\n",vals.vals_ints[1]);
+  printf("Val 3: %d\n",vals.vals_ints[2]);
+  printf("Byte 1: %u\n",vals.vals_chars[0]); //unsigned short int is 2 bytes lang  
+  printf("Byte 2: %u\n",vals.vals_chars[2]); //daarom 0 2 4 als index
+  printf("Byte 3: %x\n",vals.vals_chars[4]);
+  printf("Val array: %d\n",vals.vals_chars);
+  /*
+   *Let wel op de endianness, de integer word met litlle endianness opgeslagen
+   in het geheugen. Dit kan je zien met print van byte 3.
+   * */
+
+}
+
+void loop(){
+
+}
+
+/* OUTPUT
+Loc struct: 0x7ffc295e2bd0
+Loc 1: 0x7ffc295e2bd0
+Loc 2: 0x7ffc295e2bd2
+Loc 3:0x7ffc295e2bd4
+Loc Array: 0x7ffc295e2bd0
+Val 1: 1
+Val 2: 2
+Val 3: 52394
+Byte 1: 1
+Byte 2: 2
+Byte 3: aa
+Val array: 694037456
+      </code></pre>
+</section>
+<section>
+  <h2>Union Gebruik</h2>
+  <h4>In het Arduino I2C Master Reader/Slave Writer Voorbeeld</h4>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h4>Master Reader</h4>
+      <pre><code class="Arduino">
+#include &ltWire.h&gt
+
+const int MEMBERS = 3;
+const int SIZE = sizeof(unsigned short int) * 3 + 1; 
+
+union  {
+  unsigned short int vals_ints[MEMBERS];
+  unsigned char vals_chars[SIZE];
+} vals;
+
+void setup() {
+  Wire.begin();        
+  Serial.begin(9600);  
+}
+
+void loop() {
+  Wire.requestFrom(8,sizeof(unsigned short int)*3+1);    
+  if (Wire.available() == SIZE) {
+    Wire.readBytes(vals.vals_chars, SIZE);
+    for (int i = 0; i &lt MEMBERS; i++) Serial.println(vals.vals_ints[i]);
+  }
+
+  delay(500);
+}
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <h4>Slave Sender</h4>
+      <pre><code class="Arduino">
+#include <Wire.h>
+
+const int MEMBERS = 3;
+const int SIZE = sizeof(unsigned short int) * 3 + 1; 
+
+union  {
+  unsigned short int vals_ints[MEMBERS];
+  unsigned char vals_chars[SIZE];
+} vals;
+
+vals.vals_ints[0] = 0;
+vals.vals_ints[1] = 1;
+vals.vals_ints[2] = 2;
+
+
+void setup() {
+  Wire.begin(8);
+
+  Wire.onRequest(requestEvent); 
+}
+
+void loop() {
+  delay(100);
+}
+
+void requestEvent() {
+  Wire.write(vals.vals_chars); 
+}
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Typedef</h2>
+  <div class="hcontainer">
+    <ul>
+      <li>Creeren van nieuwe datatypes </li>
+      <li>Makkelijke toegang voor structs, unions</li>
+      <li>Creeren van architectuur afhankelijke code</li>
+    </ul>
+    <div class="vcontainer">
+      <h4>Zonder Typedef</h4>
+      <pre><code class="Arduino">
+union my_data {
+  int value;
+  char bytes[sizeof(int)];
+} this_data;    
+
+union my_data other_data
+      </code></pre>
+    </div>
+    <div class="vcontainer">
+      <h4>Met Typedef</h4>
+      <pre><code class="Arduino">
+type_def union my_unions {
+  int value;
+  char bytes[sizeof(int)];
+} my_union;    
+
+my_union this_data
+my_union other_data
+      </code></pre>
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Typedef - Architectuur afhankelijke code</h2>
+  <div class="hcontainer">
+    <div class="vcontainer">
+      <h4>Standaard Int Definities AVR (8bit)</h4>
+      <img src="img/stdint.png" alt="">
+      <a href="https://www.nongnu.org/avr-libc/user-manual/group__avr__stdint.html">Source</a>
+    </div>
+    <div class="vcontainer">
+      <h4>Standaard Int Definities Raspberry Pi (32bit)</h4>
+      <img src="img/stdint_pi.png" alt="">
+      <a href="http://www.raspberry-projects.com/pi/programming-in-c/memory/variables">Source</a>
+    </div>
+  </div>
 </section>
