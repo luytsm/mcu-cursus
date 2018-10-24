@@ -451,7 +451,7 @@ int main(void)
   <p><em>Zie Register Summary in datasheet</em></p>
 </section>
 <section>
-  <h4>Uitgaande van het Special Function Register moeten we effectief</br>tot op de eentjes en de nulletjes tot op bit niveau correct zetten</h4>
+  <h4>Uitgaande van het Special Function Register moeten we effectief</br>de eentjes en de nulletjes tot op bit niveau correct zetten</h4>
   <h2>Om dit te kunnen uitvoeren hebben we </h2>
   <h1>Tooling</h1>
   <h2>nodig</h2>
@@ -723,10 +723,7 @@ Compiling libraries...
 </section>
 <section>
   <h1>Nu terug naar de bits</h1>
-  <h2>Voordat we de juiste eentjes en nulletjes zetten moeten we die leren manipuleren vanuit code </h2>
-</section>
-<section>
-  <h1>IO Operaties Naturel</h1>
+  <h2>Voordat we de juiste eentjes en nulletjes kunnen zetten, moeten we die leren manipuleren vanuit code </h2>
 </section>
 <section>
   <h1>Bit Operaties</h1>
@@ -1035,7 +1032,7 @@ byte z = x ^ y // z = ?
       </code></pre>
       <pre class="fragment"><code>
 0x4C ^ // 0100 1100
-0x3  = // 0000 1011
+0xB  = // 0000 1011
 0x47   // 0100 0111
       </code></pre>
     </div>
@@ -1232,13 +1229,13 @@ byte z = 0x0808;
   <h2>Vaak gebruikte bit operaties</h2>
   <ul>
     <li><b>Set a bit</b></li>
-    <pre style="width: 300px;"><code> bit_fld |= (1 << n)</code></pre>
+    <pre style="width: 300px;"><code> my_byte |= (1 << n)</code></pre>
     <li><b>Clear a bit</b></li>
-    <pre style="width: 300px;"><code> bit_fld &= ~(1 << n)</code></pre>
+    <pre style="width: 300px;"><code> my_byte &= ~(1 << n)</code></pre>
     <li><b>Toggle a bit</b></li>
-    <pre style="width: 300px;"><code> bit_fld ^= (1 << n)</code></pre>
+    <pre style="width: 300px;"><code> my_byte ^= (1 << n)</code></pre>
     <li><b>Test a bit</b></li>
-    <pre style="width: 300px;"><code> bit_fld & (1 << n)</code></pre>
+    <pre style="width: 300px;"><code> my_byte & (1 << n)</code></pre>
   </ul>
 </section>
 <section>
@@ -1263,19 +1260,19 @@ byte z = 0x0808;
   <div class="hcontainer">
     <ul>
       <li>Zet bit 0 tot 3  van een byte</li>
-      <li class="fragment"><pre><code>bit_fld |= 0xF</code></pre></li>
+      <li class="fragment"><pre><code>my_byte |= 0xF</code></pre></li>
       <li>Zet bit 5 en 6 van een byte</li>
-      <li class="fragment"><pre><code>bit_fld |= (0x3 &lt&lt 5)</code></pre></li>
+      <li class="fragment"><pre><code>my_byte |= (0x3 &lt&lt 5)</code></pre></li>
       <li>Clear bit 4 van een byte</li>
-      <li class="fragment"><pre><code>bit_fld &= ~(1 &lt&lt  4)</code></pre></li>
+      <li class="fragment"><pre><code>my_byte &= ~(1 &lt&lt  4)</code></pre></li>
       <li>Clear bit 4 tot 7 een van byte </li>
-      <li class="fragment"><pre><code>bit_fld &= ~(0xF &lt&lt  4)</code></pre></li>
+      <li class="fragment"><pre><code>my_byte &= ~(0xF &lt&lt  4)</code></pre></li>
     </ul>  
     <ul>
       <li>Toggle bit 1 van een byte</li>
-      <li class="fragment"><pre><code>bit_fld ^= (1 &lt&lt  0)</code></pre></li>
+      <li class="fragment"><pre><code>my_byte ^= (1 &lt&lt  0)</code></pre></li>
       <li>Toggle bit 3 en 4 van een byte</li>
-      <li class="fragment"><pre><code>bit_fld ^= (0x3 &lt&lt  3)</code></pre></li>
+      <li class="fragment"><pre><code>my_byte ^= (0x3 &lt&lt  3)</code></pre></li>
       <li>Zet de 3 MSB bits van de byte 0x7A met de 3 LSB van de byte 0x2F</br>Zet de 3 LSB van 0x12 met de 3 MSB van 0x2F </li>
       <li class="fragment">
         <pre><code>
