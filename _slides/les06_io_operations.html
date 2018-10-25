@@ -77,8 +77,13 @@ reveal:
 <section>
   <h2>Poorten</h2>
   <div style="display: flex; align-items: center justify-content: center">
-    <img style="width: 45%; height: 500px; margin: auto;" src="img/atmega328-pinout.png" alt="">
-    <img style="width: 45%; height: 500px; margin: auto;" src="img/arduino_pinout.jpg" alt="">
+    <img style="height: 700px; margin: auto;" src="img/atmega328-pinout.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Poorten</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <img style="height: 900px; margin: auto;" src="img/arduino_nano_pinout.png" alt="">
   </div>
 </section>
 <section>
@@ -356,6 +361,23 @@ PORTC &= (1 << PORTC5)
 </section>
 <section>
   <h2>Oefening #1</h2>
+  <div style="display: flex; align-items: center justify-content: center">
+    <ul>
+      <h4><li>Als ik pin A3 wil gebruiken welke poort, spreek ik dan aan?</li></h4>
+      <li class="fragment">Poort C</li>
+      <h4><li>Wat is de pin nummer van RX in poort D</li></h4>
+      <li class="fragment">0 (PD0)</li>
+      <h4><li>Kan ik poort PC6 gebruiken</li></h4>
+      <li class="fragment">Niet direct</br>Pinnen hebben dubbele functionaliteit (meerdere blokjes verbonden aan de pins) Reset func heeft prioriteit over standaard GPIO functionaliteit. Als je de reset disabled kan je deze wel gebruiken maar dan werkt de bootloader niet meer</li>
+      
+      <h4><li>Als ik pin PB2 wil gebruiken, op welke Arduino pin moet ik mijn component aansluiten </li></h4>
+      <li class="fragment">D10</li>
+    </ul>
+    <img style="height: 900px; margin: auto;" src="img/arduino_nano_pinout.png" alt="">
+  </div>
+</section>
+<section>
+  <h2>Oefening #2</h2>
   <div style="display: flex; align-items: center justify-content: center;">
     <ul style="width: 40%">
       <h5>
@@ -379,7 +401,7 @@ void loop(){
   </div>
 </section>
 <section>
-  <h2>Oefening #2 </h2>
+  <h2>Oefening #3 </h2>
   <ul>
     <h5>
       <li>Vertrek van het schema van oef 1</li>
@@ -388,7 +410,7 @@ void loop(){
       </ul>
     </h5>
   </ul>
-  <h2>Oefening #3</h2>
+  <h2>Oefening #4</h2>
   <ul>
     <h5>
       <li>Vertrek van het schema van oef 1</li>
